@@ -14,33 +14,51 @@ function getSupabaseClient() {
   }
 }
 
+// ── Global Logout Helper ───────────────────────────────────────
+window.cerrarSesion = async () => {
+  const supabaseClient = getSupabaseClient();
+  if (supabaseClient) await supabaseClient.auth.signOut();
+  localStorage.removeItem("user_role");
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("pending_role");
+  localStorage.removeItem("demo_session");
+  
+  if (window.__spaNavigate) {
+    window.__spaNavigate("index.html");
+  } else {
+    window.location.href = "index.html"; // Ajustado para evitar rutas incorrectas en entornos locales
+  }
+};
+
 export function initAuth(root = document) {
+  // ── Sign Out buttons ───────────────────────────────────────────
+  // Agregamos listener a los botones dentro del DOM actual o contenedor (root)
+  root.querySelectorAll("[data-logout]").forEach(btn => {
+    if (!btn._logoutListener) {
+      btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await window.cerrarSesion();
+      });
+      btn._logoutListener = true;
+    }
+  });
+
+  // Si el root no es document (ej. SPA load), aseguramos que el log-out global del header persista con su listener.
+  if (root !== document) {
+    const headerLogout = document.getElementById("btn-logout");
+    if (headerLogout && !headerLogout._logoutListener) {
+      headerLogout.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await window.cerrarSesion();
+      });
+      headerLogout._logoutListener = true;
+    }
+  }
+
   const authRoot = root.querySelector("[data-auth-root]");
   if (!authRoot) return;
 
   const supabaseClient = getSupabaseClient();
-
-  // ── Global Logout Helper ───────────────────────────────────────
-  window.cerrarSesion = async () => {
-    if (supabaseClient) await supabaseClient.auth.signOut();
-    localStorage.removeItem("user_role");
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("pending_role");
-    localStorage.removeItem("demo_session");
-    if (window.__spaNavigate) {
-      window.__spaNavigate("index.html");
-    } else {
-      window.location.href = "/";
-    }
-  };
-
-  // ── Sign Out buttons ───────────────────────────────────────────
-  document.querySelectorAll("[data-logout]").forEach(btn => {
-    btn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      await window.cerrarSesion();
-    });
-  });
 
   // ── Auto-create profile & Onboarding routing (OAuth) ───────────
   if (supabaseClient && !window._authListenerAdded) {

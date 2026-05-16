@@ -146,13 +146,14 @@ function updateAuthUI() {
   const btnLogout = document.getElementById("btn-logout");
   const btnLogin = document.getElementById("btn-login");
 
+  const isDemo = localStorage.getItem("demo_session") === "true";
+  
   if (window.supabase) {
     const supabaseUrl = "https://oupbptgzfevkzzvscekj.supabase.co";
     const supabaseKey = "sb_publishable_Obya200r1UbgWVnMbuhhiw_Xto1ETSE";
     try {
       const client = window.supabase.createClient(supabaseUrl, supabaseKey);
       client.auth.getSession().then(({ data: { session } }) => {
-        const isDemo = localStorage.getItem("demo_session") === "true";
         if (session || isDemo) {
           btnLogout?.classList.remove("hidden");
           btnLogin?.classList.add("hidden");
@@ -162,13 +163,23 @@ function updateAuthUI() {
         }
       });
     } catch {
-      // Supabase not available, show login
+      // Supabase not available
+      if (isDemo) {
+        btnLogout?.classList.remove("hidden");
+        btnLogin?.classList.add("hidden");
+      } else {
+        btnLogout?.classList.add("hidden");
+        btnLogin?.classList.remove("hidden");
+      }
+    }
+  } else {
+    if (isDemo) {
+      btnLogout?.classList.remove("hidden");
+      btnLogin?.classList.add("hidden");
+    } else {
       btnLogout?.classList.add("hidden");
       btnLogin?.classList.remove("hidden");
     }
-  } else {
-    btnLogout?.classList.add("hidden");
-    btnLogin?.classList.remove("hidden");
   }
 }
 
