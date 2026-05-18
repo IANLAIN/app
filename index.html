@@ -55,6 +55,7 @@
     </div>
   </header>
 
+  <canvas id="hypercube-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
   <main id="app" class="app-shell" tabindex="-1" aria-live="polite">
     <div id="page-content">
       
@@ -92,5 +93,9 @@
   </footer>
 
   <script type="module" src="js/main.js"></script>
+  <script type="module">
+    import { initHypercube } from './js/hypercube.js';
+    initHypercube();
+  </script>
 </body>
 </html>
