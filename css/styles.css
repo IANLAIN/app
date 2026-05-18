@@ -1010,3 +1010,4 @@ button.is-loading {
     font-size: 2.5rem;
   }
 }
+body.is-home-route header .brand { opacity: 0; pointer-events: none; visibility: hidden; }

@@ -75,6 +75,12 @@ async function loadPage(path, { pushState = true, initialLoad = false } = {}) {
       upgradeInternalLinks(app);
       initPageInteractions(app);
       setActiveNav(resolvedPath);
+    if (resolvedPath === 'index.html') {
+      document.body.classList.add('is-home-route');
+    } else {
+      document.body.classList.remove('is-home-route');
+    }
+
       applyTranslations();
       updateAuthUI();
       initScrollAnimations(app);
@@ -101,6 +107,12 @@ async function loadPage(path, { pushState = true, initialLoad = false } = {}) {
     if (parsed.title) document.title = parsed.title;
     initPageInteractions(app);
     setActiveNav(resolvedPath);
+    if (resolvedPath === 'index.html') {
+      document.body.classList.add('is-home-route');
+    } else {
+      document.body.classList.remove('is-home-route');
+    }
+
     applyTranslations();
     updateAuthUI();
 

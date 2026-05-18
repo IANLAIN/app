@@ -20,13 +20,13 @@
     if (f === "dyslexic") document.documentElement.setAttribute("data-font", "dyslexic");
   </script>
 </head>
-<body>
+<body class="is-home-route">
   <a class="skip-link" href="#app">Ir al contenido principal</a>
 
   <header class="site-header">
     <a href="index.html" class="brand brand-link" data-nav>
       <span class="brand-mark">incluIA</span>
-      <span class="brand-tag" data-i18n="brand.tag">Talento neurodivergente, impacto real</span>
+      
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
       ☰ Menú
@@ -57,44 +57,13 @@
 
   <main id="app" class="app-shell" tabindex="-1" aria-live="polite">
     <div id="page-content">
-      <section id="hero" class="hero" aria-labelledby="hero-title">
-        <div class="hero-content">
-          <p class="eyebrow" data-i18n="landing.hero.eyebrow">Plataforma de inclusión laboral</p>
-          <h1 id="hero-title" data-i18n="landing.hero.title">Conecta talento neurodivergente con empresas listas para incluir</h1>
-          <p class="hero-text" data-i18n="landing.hero.text">
-            Diseñada para autismo, síndrome de Down y otras condiciones intelectuales y
-            psicosociales. Flujos claros, lenguaje simple y acompañamiento continuo para
-            candidatos y empresas aliadas.
-          </p>
-          <div class="button-row">
+      
+      <section id="hero" class="hero hero-minimal" aria-labelledby="hero-title" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
+        <div class="hero-content" style="text-align: center; max-width: none;">
+          <h1 id="hero-title" style="font-size: 5rem; margin-bottom: 2rem;">incluIA</h1>
+          <div class="button-row" style="justify-content: center;">
             <a class="btn btn-primary" href="pages/login.html" data-nav data-i18n="landing.hero.btn.login">Iniciar sesión</a>
             <a class="btn btn-ghost" href="pages/register.html" data-nav data-i18n="landing.hero.btn.register">Registrarse</a>
-          </div>
-          <div class="hero-badges">
-            <span class="chip" data-i18n="landing.hero.chip.wcag">WCAG 2.1</span>
-            <span class="chip" data-i18n="landing.hero.chip.ia">IA empática</span>
-            <span class="chip" data-i18n="landing.hero.chip.esg">ESG medible</span>
-          </div>
-        </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hero-illustration-placeholder">
-            <span class="hero-emoji">🧩</span>
-            <span class="hero-emoji">🤝</span>
-            <span class="hero-emoji">🌱</span>
-          </div>
-          <div class="stat-grid">
-            <article class="stat-card">
-              <p class="stat-value" data-i18n="landing.stat.1.val">94%</p>
-              <p class="stat-label" data-i18n="landing.stat.1.label">Satisfacción en onboarding</p>
-            </article>
-            <article class="stat-card">
-              <p class="stat-value" data-i18n="landing.stat.2.val">3.2x</p>
-              <p class="stat-label" data-i18n="landing.stat.2.label">Velocidad de adaptación</p>
-            </article>
-            <article class="stat-card">
-              <p class="stat-value" data-i18n="landing.stat.3.val">+48</p>
-              <p class="stat-label" data-i18n="landing.stat.3.label">Empresas aliadas</p>
-            </article>
           </div>
         </div>
       </section>
