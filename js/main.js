@@ -1,5 +1,5 @@
 /**
- * main.js — SPA Orchestrator for IncluIA
+ * main.js — SPA Orchestrator for incluIA
  * Handles page fetching, history navigation, and initializes all modules.
  */
 import { setupNavigation, setActiveNav } from "./navigation.js";

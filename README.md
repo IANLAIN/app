@@ -1,13 +1,13 @@
-# IncluIA | Documentación Técnica Completa 🧩
+# incluIA | Documentación Técnica Completa 🧩
 ### Plataforma de Inclusión Laboral Neuro-Accesible
 
-Esta documentación detalla la arquitectura, el funcionamiento y la estructura de archivos del proyecto **IncluIA**. Diseñado específicamente para usuarios con autismo, síndrome de Down y otras condiciones intelectuales y psicosociales, priorizando la baja carga cognitiva y la accesibilidad técnica (WCAG 2.1).
+Esta documentación detalla la arquitectura, el funcionamiento y la estructura de archivos del proyecto **incluIA**. Diseñado específicamente para usuarios con autismo, síndrome de Down y otras condiciones intelectuales y psicosociales, priorizando la baja carga cognitiva y la accesibilidad técnica (WCAG 2.1).
 
 ---
 
 ## 🏗️ Arquitectura del Sistema: SPA Engine
 
-IncluIA funciona como una **Single Page Application (SPA)** ligera construida con Vanilla JavaScript, sin frameworks pesados. 
+incluIA funciona como una **Single Page Application (SPA)** ligera construida con Vanilla JavaScript, sin frameworks pesados. 
 
 ### El Ciclo de Vida (Main Flow)
 1. **Shell (`index.html`)**: Es el contenedor principal que nunca se recarga. Contiene el Header, Footer y el contenedor `<main id="app">`.
