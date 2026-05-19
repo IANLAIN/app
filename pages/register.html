@@ -10,12 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
   <link rel="stylesheet" href="../css/styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const t = localStorage.getItem("app-theme") || "light";
-    document.documentElement.setAttribute("data-theme", t);
-    const f = localStorage.getItem("app-font");
-    if (f === "dyslexic") document.documentElement.setAttribute("data-font", "dyslexic");
+    const t = localStorage.getItem(app-theme) || light;
+    document.documentElement.setAttribute(data-theme, t);
+    const f = localStorage.getItem(app-font);
+    if (f === dyslexic) document.documentElement.setAttribute(data-font, dyslexic);
+    const u = localStorage.getItem(app-user-type);
+    if (u) document.documentElement.setAttribute(data-user-type, u);
+    const c = localStorage.getItem(app-candidate-type);
+    if (c) document.documentElement.setAttribute(data-candidate-type, c);
   </script>
 </head>
 <body>
@@ -31,9 +34,9 @@
     <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
       <ul class="nav-list">
         <li><a href="../index.html" data-nav data-i18n="nav.home">Inicio</a></li>
-        <li><a href="why.html" data-nav data-i18n="nav.why">¿Por qué incluIA?</a></li>
-        <li><a href="mentoring.html" data-nav data-i18n="nav.mentoring">Mentoría</a></li>
-        <li><a href="donate.html" data-nav data-i18n="nav.donate">Cómo apoyarnos</a></li>
+        <li><a href="why.html" data-nav data-i18n="nav.why" class="only-empresa">¿Por qué incluIA?</a></li>
+        <li><a href="mentoring.html" data-nav data-i18n="nav.mentoring" class="only-candidato">Mentoría</a></li>
+        <li><a href="donate.html" data-nav data-i18n="nav.donate" class="only-empresa">Cómo apoyarnos</a></li>
       </ul>
     </nav>
     <div class="header-actions">
@@ -62,21 +65,21 @@
 
           <div class="feature-list-compact">
             <div class="feature-list-item">
-              <span class="emoji">🧩</span>
+              <span class="emoji" aria-hidden="true">🧩</span>
               <div>
                 <h3>Menos pasos, más claridad</h3>
                 <p>Diseño pensado para reducir la carga cognitiva.</p>
               </div>
             </div>
             <div class="feature-list-item">
-              <span class="emoji">🛡️</span>
+              <span class="emoji" aria-hidden="true">🛡️</span>
               <div>
                 <h3>Autenticación segura con Google</h3>
                 <p>Tú decides qué información compartir y con quién.</p>
               </div>
             </div>
             <div class="feature-list-item">
-              <span class="emoji">✨</span>
+              <span class="emoji" aria-hidden="true">✨</span>
               <div>
                 <h3>Onboarding personalizado</h3>
                 <p>Ajustamos la experiencia a tus preferencias.</p>
@@ -103,7 +106,7 @@
 
             <div class="role-cards" data-role-cards>
               <button type="button" class="role-card" data-role="candidate" tabindex="0">
-                <span class="emoji">🧠</span>
+                <span class="emoji" aria-hidden="true">🧠</span>
                 <div class="role-card-content">
                   <span class="role-card-title">Candidato / Aliado <span class="chip chip-soft" style="font-size: 11px;">Candidato</span></span>
                   <span class="role-card-desc">Busco oportunidades laborales o apoyo a personas neurodivergentes.</span>
@@ -111,7 +114,7 @@
               </button>
 
               <button type="button" class="role-card" data-role="company" tabindex="0">
-                <span class="emoji">🏢</span>
+                <span class="emoji" aria-hidden="true">🏢</span>
                 <div class="role-card-content">
                   <span class="role-card-title">Reclutador / Manager <span class="chip chip-success" style="font-size: 11px;">Empresa</span></span>
                   <span class="role-card-desc">Quiero contratar talento neurodivergente de forma inclusiva.</span>
@@ -188,6 +191,7 @@
                       <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
                       <circle cx="12" cy="12" r="3"/>
                     </svg>
+                    <span class="eye-text" data-i18n="auth.toggle.show">Mostrar</span>
                   </button>
                 </div>
                 <div class="strength-bar-wrap">
@@ -211,7 +215,7 @@
               <div class="verification-tips">
                 <ul>
                   <li>Revisa tu carpeta de Spam.</li>
-                  <li>Busca el remitente <strong>noreply@mail.supabase.co</strong></li>
+                  <li>Busca el remitente <strong>noreply@incluia.org</strong></li>
                   <li>Espera al menos 2 minutos.</li>
                 </ul>
               </div>
@@ -232,17 +236,17 @@
   <footer class="site-footer">
     <div>
       <p class="footer-title" data-i18n="footer.title">incluIA by Design</p>
-      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura Supabase.</p>
+      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura robusta.</p>
       <div class="footer-meta">
         <span data-i18n="footer.meta">&copy; 2026 incluIA</span>
         <span>|</span>
-        <span class="ms-badge" data-i18n="footer.badge">Autenticación segura por Supabase</span>
+        <span class="ms-badge" data-i18n="footer.badge">Supported by Microsoft</span>
       </div>
     </div>
     <div class="footer-links">
       <a href="../index.html" data-nav data-i18n="footer.links.login">Producto</a>
       <a href="donate.html" data-nav data-i18n="footer.links.esg">Apoyo</a>
-      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring">Mentoría</a>
+      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato">Mentoría</a>
     </div>
   </footer>
 

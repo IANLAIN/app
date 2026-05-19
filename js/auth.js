@@ -1,38 +1,25 @@
 /**
- * auth.js — Supabase authentication + UX feedback
- * Handles Google OAuth, email/password login, registration wizard, and role selection.
+ * auth.js — Local Mock Authentication + UX feedback
+ * Handles Google OAuth (Mock), email/password login, registration wizard, and role selection.
  */
-const SUPABASE_URL = "https://oupbptgzfevkzzvscekj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Obya200r1UbgWVnMbuhhiw_Xto1ETSE";
 
-function getSupabaseClient() {
-  if (!window.supabase) return null;
-  try {
-    return window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  } catch {
-    return null;
-  }
-}
+import { t } from "./i18n.js";
 
 // ── Global Logout Helper ───────────────────────────────────────
 window.cerrarSesion = async () => {
-  const supabaseClient = getSupabaseClient();
-  if (supabaseClient) await supabaseClient.auth.signOut();
   localStorage.removeItem("user_role");
   localStorage.removeItem("user_id");
-  localStorage.removeItem("pending_role");
   localStorage.removeItem("demo_session");
   
   if (window.__spaNavigate) {
     window.__spaNavigate("index.html");
   } else {
-    window.location.href = "index.html"; // Ajustado para evitar rutas incorrectas en entornos locales
+    window.location.href = "index.html";
   }
 };
 
 export function initAuth(root = document) {
   // ── Sign Out buttons ───────────────────────────────────────────
-  // Agregamos listener a los botones dentro del DOM actual o contenedor (root)
   root.querySelectorAll("[data-logout]").forEach(btn => {
     if (!btn._logoutListener) {
       btn.addEventListener("click", async (e) => {
@@ -43,7 +30,6 @@ export function initAuth(root = document) {
     }
   });
 
-  // Si el root no es document (ej. SPA load), aseguramos que el log-out global del header persista con su listener.
   if (root !== document) {
     const headerLogout = document.getElementById("btn-logout");
     if (headerLogout && !headerLogout._logoutListener) {
@@ -58,67 +44,26 @@ export function initAuth(root = document) {
   const authRoot = root.querySelector("[data-auth-root]");
   if (!authRoot) return;
 
-  const supabaseClient = getSupabaseClient();
+  function updateDemoButtons() {
+    const userType = localStorage.getItem("app-user-type");
+    const demoCandidate = authRoot.querySelector(".btn-demo-candidato");
+    const demoCompany = authRoot.querySelector(".btn-demo-empresa");
+    if (!demoCandidate && !demoCompany) return;
 
-  // ── Auto-create profile & Onboarding routing (OAuth) ───────────
-  if (supabaseClient && !window._authListenerAdded) {
-    window._authListenerAdded = true;
-    supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN" && session) {
-        const user = session.user;
-        const isOAuth = user.app_metadata?.provider === "google";
+    const showCandidate = userType === "visitante" || userType === "candidato" || !userType;
+    const showCompany = userType === "visitante" || userType === "empresa" || !userType;
 
-        if (isOAuth) {
-          try {
-            const { data: profile } = await supabaseClient
-              .from("profiles")
-              .select("*")
-              .eq("id", user.id)
-              .single();
-
-            if (!profile) {
-              const pendingRole = localStorage.getItem("pending_role") || "candidate";
-              await supabaseClient.from("profiles").insert({
-                id: user.id,
-                email: user.email,
-                full_name: user.user_metadata?.full_name || "",
-                avatar_url: user.user_metadata?.avatar_url || "",
-                role: pendingRole,
-                onboarding_completed: false,
-                created_at: new Date().toISOString(),
-              });
-
-              localStorage.setItem("user_role", pendingRole);
-              localStorage.setItem("user_id", user.id);
-              if (window.__spaNavigate)
-                window.__spaNavigate("pages/onboarding.html");
-            } else {
-              localStorage.setItem("user_role", profile.role);
-              localStorage.setItem("user_id", user.id);
-
-              if (!profile.onboarding_completed) {
-                if (window.__spaNavigate)
-                  window.__spaNavigate("pages/onboarding.html");
-              } else {
-                if (window.__spaNavigate)
-                  window.__spaNavigate(
-                    `pages/dashboard-${profile.role}.html`
-                  );
-              }
-            }
-          } catch (err) {
-            console.error("Error checking profile:", err);
-          }
-        }
-      }
-    });
+    if (demoCandidate) demoCandidate.style.display = showCandidate ? "inline-flex" : "none";
+    if (demoCompany) demoCompany.style.display = showCompany ? "inline-flex" : "none";
   }
+
+  updateDemoButtons();
 
   // ── Shared status helpers ──────────────────────────────────────
   function setStatus(el, type, icon, text) {
     if (!el) return;
     el.className = `ms-status msg-${type}`;
-    el.innerHTML = `<span aria-hidden="true">${icon}</span> ${text}`;
+    el.textContent = text;
     el.removeAttribute("hidden");
   }
 
@@ -131,12 +76,8 @@ export function initAuth(root = document) {
   }
 
   // ── Redirect helper — SPA Router ───────────────────────────────
-  function redirectToDashboard() {
-    const role = localStorage.getItem("user_role") || "candidate";
-    const dest =
-      role === "company"
-        ? "pages/dashboard-company.html"
-        : "pages/dashboard-candidate.html";
+  function redirectToDashboard(role) {
+    const dest = role === "company" ? "pages/dashboard-company.html" : "pages/dashboard-candidate.html";
 
     if (window.__spaNavigate) {
       window.__spaNavigate(dest);
@@ -145,42 +86,29 @@ export function initAuth(root = document) {
     }
   }
 
-  // ── Google OAuth (Login) ───────────────────────────────────────
+  // ── Mock Google OAuth (Login) ───────────────────────────────────────
   root.querySelectorAll("[data-google-login]").forEach((btn) => {
-    const originalText =
-      btn.querySelector("span[data-i18n]")?.textContent ||
-      "Continuar con Google";
+    const originalText = btn.querySelector("span[data-i18n]")?.textContent || "Continuar con Google";
     const statusEl = authRoot.querySelector("[data-ms-status]");
 
     btn.addEventListener("click", async (e) => {
       e.preventDefault();
-      if (!supabaseClient) {
-        setStatus(statusEl, "error", "⚠️", "Función OAuth no disponible en modo offline de prueba.");
-        return;
-      }
-
       setLoading(btn, true, originalText);
       setStatus(statusEl, "info", "⏳", "Conectando con Google...");
 
-      const redirectTo = window.location.origin;
-
-      try {
-        const { error } = await supabaseClient.auth.signInWithOAuth({
-          provider: "google",
-          options: { redirectTo },
-        });
-        if (error) throw error;
-      } catch (err) {
-        console.error("OAuth error:", err.message);
-        setStatus(statusEl, "error", "⚠️", "Error al conectar con Google. Intenta de nuevo.");
-        setLoading(btn, false, originalText);
-      }
+      setTimeout(() => {
+        setStatus(statusEl, "success", "✅", "¡Sesión iniciada correctamente!");
+        localStorage.setItem("user_role", "candidate"); // Default mock
+        localStorage.setItem("user_id", "mock-google-user-id");
+        localStorage.setItem("demo_session", "true");
+        setTimeout(() => redirectToDashboard("candidate"), 800);
+      }, 1500);
     });
   });
 
   // ── Email/password forms (Login) ───────────────────────────────
   authRoot.querySelectorAll("form").forEach((form) => {
-    if (form.hasAttribute("data-register-form")) return; // Handled by wizard
+    if (form.hasAttribute("data-register-form")) return;
 
     const submitBtn = form.querySelector("[type='submit']");
     const originalBtnText = submitBtn?.textContent || "Entrar";
@@ -193,41 +121,17 @@ export function initAuth(root = document) {
       const tempEmail = emailEl?.value?.trim();
       const tempPass = passEl?.value;
       
-      // Auto-bypass para Cuentas de muestra (Bypass para Dashboard) incluso si Supabase falla
-      if (tempEmail === "demo.candidato@incluia.org" && tempPass === "Demo1234!") {
-        setStatus(statusEl, "success", "✅", "¡Sesión de muestra iniciada!");
-        localStorage.setItem("user_role", "candidate");
-        localStorage.setItem("demo_session", "true");
-        setTimeout(() => redirectToDashboard(), 800);
-        return;
-      }
-      if (tempEmail === "demo.empresa@incluia.org" && tempPass === "Demo1234!") {
-        setStatus(statusEl, "success", "✅", "¡Sesión de muestra iniciada!");
-        localStorage.setItem("user_role", "company");
-        localStorage.setItem("demo_session", "true");
-        setTimeout(() => redirectToDashboard(), 800);
-        return;
-      }
-
-      if (!supabaseClient) {
-        setStatus(statusEl, "error", "⚠️", "Backend no configurado. Vuelve a intentar en un momento.");
-        return;
-      }
-      const email = emailEl?.value?.trim();
-      const pass = passEl?.value;
-
       // Clear previous validation states
       [emailEl, passEl].forEach((el) => {
         if (el) el.classList.remove("error", "success");
       });
 
-      // Validations
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (!tempEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(tempEmail)) {
         emailEl?.classList.add("error");
         setStatus(statusEl, "error", "⚠️", "Por favor ingresa un correo válido.");
         return;
       }
-      if (!pass || pass.length < 8) {
+      if (!tempPass || tempPass.length < 8) {
         passEl?.classList.add("error");
         setStatus(statusEl, "error", "⚠️", "La contraseña debe tener al menos 8 caracteres.");
         return;
@@ -236,39 +140,21 @@ export function initAuth(root = document) {
       setLoading(submitBtn, true, originalBtnText);
       setStatus(statusEl, "info", "⏳", "Verificando credenciales...");
 
-
-      if (email === "demo.empresa@incluia.org" && pass === "Demo1234!") {
-        setStatus(statusEl, "success", "✅", "¡Sesión de muestra iniciada!");
-        localStorage.setItem("user_role", "company");
-        localStorage.setItem("demo_session", "true");
-        setTimeout(() => redirectToDashboard(), 800);
-        return;
-      }
-
-      try {
-        const result = await supabaseClient.auth.signInWithPassword({
-          email,
-          password: pass,
-        });
-
-        if (result.error) throw result.error;
-
+      setTimeout(() => {
+        let role = "candidate";
+        if (tempEmail.includes("empresa") || tempEmail === "demo.empresa@incluia.org") {
+          role = "company";
+        }
+        
         emailEl?.classList.add("success");
         passEl?.classList.add("success");
         setStatus(statusEl, "success", "✅", "¡Sesión iniciada correctamente!");
-
-        const finalRole =
-          result.data.user.user_metadata?.role || "candidate";
-        localStorage.setItem("user_role", finalRole);
-
-        setTimeout(() => redirectToDashboard(), 800);
-      } catch (err) {
-        console.error("Auth error:", err.message);
-        setStatus(statusEl, "error", "⚠️", "Correo o contraseña incorrectos.");
-        emailEl?.classList.add("error");
-      } finally {
-        setLoading(submitBtn, false, originalBtnText);
-      }
+        localStorage.setItem("user_role", role);
+        localStorage.setItem("user_id", "mock-local-user-id");
+        localStorage.setItem("demo_session", "true");
+        
+        setTimeout(() => redirectToDashboard(role), 800);
+      }, 1200);
     });
   });
 
@@ -276,20 +162,23 @@ export function initAuth(root = document) {
   function initPasswordToggle(input, btn) {
     if (!input || !btn) return;
     let visible = false;
+    const label = btn.querySelector(".eye-text");
+    const showText = t("auth.toggle.show", "Mostrar");
+    const hideText = t("auth.toggle.hide", "Ocultar");
+    const showAria = t("auth.toggle.show.aria", "Mostrar contraseña");
+    const hideAria = t("auth.toggle.hide.aria", "Ocultar contraseña");
+    if (label) label.textContent = showText;
 
     btn.addEventListener("click", () => {
       visible = !visible;
       input.type = visible ? "text" : "password";
-      btn.setAttribute(
-        "aria-label",
-        visible ? "Ocultar contraseña" : "Mostrar contraseña"
-      );
+      btn.setAttribute("aria-label", visible ? hideAria : showAria);
+      if (label) label.textContent = visible ? hideText : showText;
       btn.style.transform = "scale(1.25)";
       setTimeout(() => (btn.style.transform = "scale(1)"), 200);
     });
   }
 
-  // Init password toggles by proximity
   root.querySelectorAll(".input-wrap").forEach(wrap => {
     const input = wrap.querySelector("input[type='password'], .pass-input");
     const btn = wrap.querySelector(".eye-btn");
@@ -301,10 +190,10 @@ export function initAuth(root = document) {
     if (!input || !bar) return;
 
     const levels = [
-      { w: "25%", color: "#E57373", text: "Muy débil" },
-      { w: "50%", color: "#FFB74D", text: "Débil" },
-      { w: "75%", color: "#81C784", text: "Buena" },
-      { w: "100%", color: "#4D8FAC", text: "Muy fuerte ✓" },
+      { w: "25%", color: "var(--color-error)", text: "Muy débil" },
+      { w: "50%", color: "var(--color-warning)", text: "Débil" },
+      { w: "75%", color: "var(--color-success)", text: "Buena" },
+      { w: "100%", color: "var(--color-primary)", text: "Muy fuerte" },
     ];
 
     input.addEventListener("input", () => {
@@ -314,7 +203,7 @@ export function initAuth(root = document) {
       if (/[A-Z]/.test(v)) score++;
       if (/[0-9]/.test(v)) score++;
       if (/[^A-Za-z0-9]/.test(v)) score++;
-      const lvl = v.length === 0 ? null : levels[score - 1] || levels[0];
+      const lvl = v.length === 0 ? null : levels[Math.min(score, 3) || 0];
       bar.style.width = lvl ? lvl.w : "0%";
       bar.style.background = lvl ? lvl.color : "transparent";
       if (label) {
@@ -330,11 +219,11 @@ export function initAuth(root = document) {
   initStrengthBar(regPasswordInput, strengthBar, strengthLabel);
 
   // ── Register Wizard ─────────────────────────────────────────
-  initRegisterWizard(authRoot, supabaseClient);
+  initRegisterWizard(authRoot);
 }
 
 // ═══ REGISTER WIZARD ═══════════════════════════════════════════════
-function initRegisterWizard(root, supabase) {
+function initRegisterWizard(root) {
   const wizard = root.querySelector("[data-register-wizard]");
   if (!wizard) return;
 
@@ -400,7 +289,6 @@ function initRegisterWizard(root, supabase) {
         to.style.transition = "";
       }, 300);
 
-      // Update progress
       showStep(toStep);
     }, 260);
   }
@@ -423,14 +311,12 @@ function initRegisterWizard(root, supabase) {
     btnToStep2.addEventListener("click", () => {
       if (!selectedRole) return;
 
-      // Configure Step 2 UI based on role
       if (selectedRole === "company") {
         if (companyFields) companyFields.style.display = "block";
         if (googleBtnText) googleBtnText.textContent = "Continuar con Google corporativo";
         if (nameLabel) nameLabel.textContent = "Nombre y Apellido";
         if (formDividerText) formDividerText.textContent = "o completa el formulario";
-        if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-success">🏢 Empresa / Reclutador</span>';
-        // Set required on company fields
+        if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-success">Empresa / Reclutador</span>';
         const cn = root.querySelector("#reg-company-name");
         const cr = root.querySelector("#reg-company-role");
         if (cn) cn.required = true;
@@ -440,8 +326,7 @@ function initRegisterWizard(root, supabase) {
         if (googleBtnText) googleBtnText.textContent = "Continuar con Google";
         if (nameLabel) nameLabel.textContent = "Nombre completo";
         if (formDividerText) formDividerText.textContent = "o regístrate con correo";
-        if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-soft">🧠 Candidato / Aliado</span>';
-        // Remove required from company fields
+        if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-soft">Candidato / Aliado</span>';
         const cn = root.querySelector("#reg-company-name");
         const cr = root.querySelector("#reg-company-role");
         if (cn) cn.required = false;
@@ -464,29 +349,21 @@ function initRegisterWizard(root, supabase) {
   if (btnGoogleRegister) {
     btnGoogleRegister.addEventListener("click", async (e) => {
       e.preventDefault();
-      if (!supabase) {
-         setRegStatus("error", "⚠️", "Función OAuth no disponible en modo offline de prueba.");
-         return;
-      }
       btnGoogleRegister.disabled = true;
       const textEl = btnGoogleRegister.querySelector("[data-google-btn-text]");
       if (textEl) textEl.textContent = "Conectando...";
 
-      const roleForSupabase = selectedRole === "company" ? "company" : "candidate";
-      localStorage.setItem("user_role", roleForSupabase);
-      localStorage.setItem("pending_role", roleForSupabase);
+      const roleForMock = selectedRole === "company" ? "company" : "candidate";
+      localStorage.setItem("user_role", roleForMock);
+      localStorage.setItem("pending_role", roleForMock);
 
-      try {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: "google",
-          options: { redirectTo: window.location.origin },
-        });
-        if (error) throw error;
-      } catch (err) {
-        console.error("OAuth error:", err.message);
-        btnGoogleRegister.disabled = false;
-        if (textEl) textEl.textContent = "Continuar con Google";
-      }
+      setTimeout(() => {
+        localStorage.setItem("user_id", "mock-google-user-id");
+        localStorage.setItem("demo_session", "true");
+        const dest = roleForMock === "company" ? "pages/dashboard-company.html" : "pages/dashboard-candidate.html";
+        if (window.__spaNavigate) window.__spaNavigate(dest);
+        else window.location.href = dest;
+      }, 1500);
     });
   }
 
@@ -498,7 +375,7 @@ function initRegisterWizard(root, supabase) {
     function setRegStatus(type, icon, text) {
       if (!statusEl) return;
       statusEl.className = `ms-status msg-${type}`;
-      statusEl.innerHTML = `<span aria-hidden="true">${icon}</span> ${text}`;
+      statusEl.textContent = text;
       statusEl.removeAttribute("hidden");
     }
 
@@ -524,34 +401,11 @@ function initRegisterWizard(root, supabase) {
         submitBtn.classList.add("is-loading");
       }
 
-      const roleForSupabase = selectedRole === "company" ? "company" : "candidate";
-
-      // --- OFFLINE / DEMO BYPASS ---
-      if (email.startsWith("demo") || !supabase) {
-        setRegStatus("success", "✅", "¡Configuración de prueba exitosa!");
-        localStorage.setItem("user_role", roleForSupabase);
-        localStorage.setItem("demo_session", "true");
-        setTimeout(() => {
-          const dest = roleForSupabase === "company" ? "pages/dashboard-company.html" : "pages/dashboard-candidate.html";
-          if (window.__spaNavigate) window.__spaNavigate(dest);
-          else window.location.href = dest;
-        }, 1200);
-        return;
-      }
-      // ----------------------------
-
-      let metadata = { full_name: fullName, role: roleForSupabase };
-      let profileData = {
-        email,
-        full_name: fullName,
-        role: roleForSupabase,
-        onboarding_completed: false,
-      };
+      const roleForMock = selectedRole === "company" ? "company" : "candidate";
 
       if (selectedRole === "company") {
         const companyName = registerForm.querySelector("#reg-company-name")?.value.trim();
         const companyRole = registerForm.querySelector("#reg-company-role")?.value;
-        const companySize = registerForm.querySelector("#reg-company-size")?.value;
 
         if (!companyName || !companyRole) {
           setRegStatus("error", "⚠️", "Faltan datos de la empresa.");
@@ -562,70 +416,39 @@ function initRegisterWizard(root, supabase) {
           }
           return;
         }
-
-        metadata = {
-          ...metadata,
-          company_name: companyName,
-          company_role: companyRole,
-          company_size: companySize,
-        };
-        profileData = {
-          ...profileData,
-          company_name: companyName,
-          company_role: companyRole,
-          company_size: companySize,
-          verified: false,
-        };
       }
 
-      try {
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: metadata },
-        });
+      setTimeout(() => {
+        const verifyEmailEl = root.querySelector("[data-verify-email]");
+        if (verifyEmailEl) verifyEmailEl.textContent = email;
 
-        if (error) throw error;
-
-        // Upsert profile
-        if (data.user) {
-          profileData.id = data.user.id;
-          await supabase.from("profiles").upsert(profileData);
-
-          // Setup Step 3
-          const verifyEmailEl = root.querySelector("[data-verify-email]");
-          if (verifyEmailEl) verifyEmailEl.textContent = email;
-
-          // Attach resend logic
-          const btnResend = root.querySelector("[data-btn-resend]");
-          const resendStatus = root.querySelector("[data-resend-status]");
-          if (btnResend) {
-            btnResend.onclick = async () => {
-              btnResend.disabled = true;
-              await supabase.auth.resend({ type: "signup", email });
-              if (resendStatus) {
-                resendStatus.className = "ms-status msg-success";
-                resendStatus.innerHTML = "✅ Correo reenviado.";
-              }
-              setTimeout(() => {
-                btnResend.disabled = false;
-              }, 60000);
-            };
-          }
-
-          // Animate to Step 3
-          animateTransition(2, 3);
+        const btnResend = root.querySelector("[data-btn-resend]");
+        const resendStatus = root.querySelector("[data-resend-status]");
+        if (btnResend) {
+          btnResend.onclick = async () => {
+            btnResend.disabled = true;
+            if (resendStatus) {
+              resendStatus.className = "ms-status msg-success";
+              resendStatus.innerHTML = "✅ Correo reenviado.";
+            }
+            setTimeout(() => {
+              btnResend.disabled = false;
+            }, 60000);
+          };
         }
-      } catch (err) {
-        console.error("Signup error:", err.message);
-        setRegStatus("error", "⚠️", err.message);
-      } finally {
+        
+        localStorage.setItem("user_role", roleForMock);
+        localStorage.setItem("user_id", "mock-local-user-id");
+        localStorage.setItem("demo_session", "true");
+
+        animateTransition(2, 3);
+        
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = "Crear mi cuenta";
           submitBtn.classList.remove("is-loading");
         }
-      }
+      }, 1500);
     });
   }
 }

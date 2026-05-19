@@ -10,12 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
   <link rel="stylesheet" href="../css/styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const t = localStorage.getItem("app-theme") || "light";
-    document.documentElement.setAttribute("data-theme", t);
-    const f = localStorage.getItem("app-font");
-    if (f === "dyslexic") document.documentElement.setAttribute("data-font", "dyslexic");
+    const t = localStorage.getItem(app-theme) || light;
+    document.documentElement.setAttribute(data-theme, t);
+    const f = localStorage.getItem(app-font);
+    if (f === dyslexic) document.documentElement.setAttribute(data-font, dyslexic);
+    const u = localStorage.getItem(app-user-type);
+    if (u) document.documentElement.setAttribute(data-user-type, u);
+    const c = localStorage.getItem(app-candidate-type);
+    if (c) document.documentElement.setAttribute(data-candidate-type, c);
   </script>
 </head>
 <body>
@@ -38,26 +41,26 @@
       <div class="step-container active" id="step-1" data-multi="false">
         <h2 class="step-title">¿Cómo te describes?</h2>
         <div class="options-grid">
-          <div class="opcion-card" data-value="autismo">
+          <button type="button" class="opcion-card" data-value="autismo">
             <span class="emoji" aria-hidden="true">🧩</span>
             <span>Tengo autismo</span>
-          </div>
-          <div class="opcion-card" data-value="otras_condiciones">
+          </button>
+          <button type="button" class="opcion-card" data-value="otras_condiciones">
             <span class="emoji" aria-hidden="true">⚡</span>
             <span>Tengo otras condiciones intelectuales o psicosociales</span>
-          </div>
-          <div class="opcion-card" data-value="down">
+          </button>
+          <button type="button" class="opcion-card" data-value="down">
             <span class="emoji" aria-hidden="true">💙</span>
             <span>Tengo síndrome de Down</span>
-          </div>
-          <div class="opcion-card" data-value="otra">
+          </button>
+          <button type="button" class="opcion-card" data-value="otra">
             <span class="emoji" aria-hidden="true">🌈</span>
             <span>Otra neurodivergencia</span>
-          </div>
-          <div class="opcion-card" data-value="prefiero_no_decirlo">
+          </button>
+          <button type="button" class="opcion-card" data-value="prefiero_no_decirlo">
             <span class="emoji" aria-hidden="true">🤔</span>
             <span>Prefiero no decirlo</span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -65,30 +68,30 @@
       <div class="step-container" id="step-2" data-multi="false">
         <h2 class="step-title">¿Qué tipo de trabajo te interesa?</h2>
         <div class="options-grid">
-          <div class="opcion-card" data-value="tecnologia">
+          <button type="button" class="opcion-card" data-value="tecnologia">
             <span class="emoji" aria-hidden="true">💻</span>
             <span>Tecnología</span>
-          </div>
-          <div class="opcion-card" data-value="arte">
+          </button>
+          <button type="button" class="opcion-card" data-value="arte">
             <span class="emoji" aria-hidden="true">🎨</span>
             <span>Arte y diseño</span>
-          </div>
-          <div class="opcion-card" data-value="logistica">
+          </button>
+          <button type="button" class="opcion-card" data-value="logistica">
             <span class="emoji" aria-hidden="true">📦</span>
             <span>Logística</span>
-          </div>
-          <div class="opcion-card" data-value="ambiente">
+          </button>
+          <button type="button" class="opcion-card" data-value="ambiente">
             <span class="emoji" aria-hidden="true">🌱</span>
             <span>Medio ambiente</span>
-          </div>
-          <div class="opcion-card" data-value="atencion">
+          </button>
+          <button type="button" class="opcion-card" data-value="atencion">
             <span class="emoji" aria-hidden="true">📞</span>
             <span>Atención</span>
-          </div>
-          <div class="opcion-card" data-value="manufactura">
+          </button>
+          <button type="button" class="opcion-card" data-value="manufactura">
             <span class="emoji" aria-hidden="true">🔧</span>
             <span>Manufactura</span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -96,22 +99,22 @@
       <div class="step-container" id="step-3" data-multi="false">
         <h2 class="step-title">¿Cómo prefieres trabajar?</h2>
         <div class="options-grid">
-          <div class="opcion-card" data-value="casa">
+          <button type="button" class="opcion-card" data-value="casa">
             <span class="emoji" aria-hidden="true">🏠</span>
             <span>Desde casa</span>
-          </div>
-          <div class="opcion-card" data-value="oficina">
+          </button>
+          <button type="button" class="opcion-card" data-value="oficina">
             <span class="emoji" aria-hidden="true">🏢</span>
             <span>En oficina</span>
-          </div>
-          <div class="opcion-card" data-value="mixto">
+          </button>
+          <button type="button" class="opcion-card" data-value="mixto">
             <span class="emoji" aria-hidden="true">🔀</span>
             <span>Mixto</span>
-          </div>
-          <div class="opcion-card" data-value="nose">
+          </button>
+          <button type="button" class="opcion-card" data-value="nose">
             <span class="emoji" aria-hidden="true">🤷</span>
             <span>No sé aún</span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -119,22 +122,22 @@
       <div class="step-container" id="step-4" data-multi="false">
         <h2 class="step-title">¿Qué ambiente de trabajo te hace sentir mejor?</h2>
         <div class="options-grid">
-          <div class="opcion-card" data-value="silencioso">
+          <button type="button" class="opcion-card" data-value="silencioso">
             <span class="emoji" aria-hidden="true">🤫</span>
             <span>Silencioso</span>
-          </div>
-          <div class="opcion-card" data-value="musica">
+          </button>
+          <button type="button" class="opcion-card" data-value="musica">
             <span class="emoji" aria-hidden="true">🎵</span>
             <span>Con música</span>
-          </div>
-          <div class="opcion-card" data-value="equipo">
+          </button>
+          <button type="button" class="opcion-card" data-value="equipo">
             <span class="emoji" aria-hidden="true">👥</span>
             <span>En equipo</span>
-          </div>
-          <div class="opcion-card" data-value="solo">
+          </button>
+          <button type="button" class="opcion-card" data-value="solo">
             <span class="emoji" aria-hidden="true">👤</span>
             <span>Solo</span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -142,30 +145,30 @@
       <div class="step-container" id="step-5" data-multi="true">
         <h2 class="step-title">¿Qué habilidades tienes o quieres desarrollar? <br><small style="font-size:14px; font-weight:normal;">(selecciona hasta 3)</small></h2>
         <div class="options-grid">
-          <div class="opcion-card" data-value="computadores">
+          <button type="button" class="opcion-card" data-value="computadores">
             <span class="emoji" aria-hidden="true">🖥️</span>
             <span>Computadores</span>
-          </div>
-          <div class="opcion-card" data-value="datos">
+          </button>
+          <button type="button" class="opcion-card" data-value="datos">
             <span class="emoji" aria-hidden="true">📊</span>
             <span>Datos</span>
-          </div>
-          <div class="opcion-card" data-value="dibujo">
+          </button>
+          <button type="button" class="opcion-card" data-value="dibujo">
             <span class="emoji" aria-hidden="true">✏️</span>
             <span>Dibujo</span>
-          </div>
-          <div class="opcion-card" data-value="comunicacion">
+          </button>
+          <button type="button" class="opcion-card" data-value="comunicacion">
             <span class="emoji" aria-hidden="true">🗣️</span>
             <span>Comunicación</span>
-          </div>
-          <div class="opcion-card" data-value="orden">
+          </button>
+          <button type="button" class="opcion-card" data-value="orden">
             <span class="emoji" aria-hidden="true">📦</span>
             <span>Orden</span>
-          </div>
-          <div class="opcion-card" data-value="detalle">
+          </button>
+          <button type="button" class="opcion-card" data-value="detalle">
             <span class="emoji" aria-hidden="true">🔍</span>
             <span>Detalle</span>
-          </div>
+          </button>
         </div>
       </div>
 

@@ -10,14 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-  <!-- Supabase SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <!-- Prevent FOUC: apply saved theme immediately -->
   <script>
-    const t = localStorage.getItem("app-theme") || "light";
-    document.documentElement.setAttribute("data-theme", t);
-    const f = localStorage.getItem("app-font");
-    if (f === "dyslexic") document.documentElement.setAttribute("data-font", "dyslexic");
+    const t = localStorage.getItem(app-theme) || light;
+    document.documentElement.setAttribute(data-theme, t);
+    const f = localStorage.getItem(app-font);
+    if (f === dyslexic) document.documentElement.setAttribute(data-font, dyslexic);
+    const u = localStorage.getItem(app-user-type);
+    if (u) document.documentElement.setAttribute(data-user-type, u);
+    const c = localStorage.getItem(app-candidate-type);
+    if (c) document.documentElement.setAttribute(data-candidate-type, c);
   </script>
 </head>
 <body class="is-home-route">
@@ -34,9 +37,9 @@
     <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
       <ul class="nav-list">
         <li><a href="index.html" data-nav data-i18n="nav.home">Inicio</a></li>
-        <li><a href="pages/why.html" data-nav data-i18n="nav.why">¿Por qué incluIA?</a></li>
-        <li><a href="pages/mentoring.html" data-nav data-i18n="nav.mentoring">Mentoría</a></li>
-        <li><a href="pages/donate.html" data-nav data-i18n="nav.donate">Cómo apoyarnos</a></li>
+        <li><a href="pages/why.html" data-nav data-i18n="nav.why" class="only-empresa">¿Por qué incluIA?</a></li>
+        <li><a href="pages/mentoring.html" data-nav data-i18n="nav.mentoring" class="only-candidato">Mentoría</a></li>
+        <li><a href="pages/donate.html" data-nav data-i18n="nav.donate" class="only-empresa">Cómo apoyarnos</a></li>
       </ul>
     </nav>
     <div class="header-actions">
@@ -62,7 +65,7 @@
       <section id="hero" class="hero hero-minimal" aria-labelledby="hero-title" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
         <div class="hero-content" style="text-align: center; max-width: none;">
           <h1 id="hero-title" style="font-size: 5rem; margin-bottom: 2rem;">incluIA</h1>
-          <div class="button-row" style="justify-content: center;">
+          <div class="button-row auth-action-buttons" style="justify-content: center;">
             <a class="btn btn-primary" href="pages/login.html" data-nav data-i18n="landing.hero.btn.login">Iniciar sesión</a>
             <a class="btn btn-ghost" href="pages/register.html" data-nav data-i18n="landing.hero.btn.register">Registrarse</a>
           </div>
@@ -78,24 +81,27 @@
   <footer class="site-footer">
     <div>
       <p class="footer-title" data-i18n="footer.title">incluIA by Design</p>
-      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura Supabase.</p>
+      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura robusta.</p>
       <div class="footer-meta">
         <span data-i18n="footer.meta">&copy; 2026 incluIA</span>
         <span>|</span>
-        <span class="ms-badge" data-i18n="footer.badge">Autenticación segura por Supabase</span>
+        <span class="ms-badge" data-i18n="footer.badge">Supported by Microsoft</span>
       </div>
     </div>
     <div class="footer-links">
       <a href="index.html" data-nav data-i18n="footer.links.login">Producto</a>
-      <a href="pages/donate.html" data-nav data-i18n="footer.links.esg">Apoyo</a>
-      <a href="pages/mentoring.html" data-nav data-i18n="footer.links.mentoring">Mentoría</a>
+      <a href="pages/donate.html" data-nav data-i18n="footer.links.esg" class="only-empresa">Apoyo</a>
+      <a href="pages/mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato">Mentoría</a>
     </div>
   </footer>
 
   <script type="module" src="js/main.js"></script>
   <script type="module">
-    import { initHypercube } from './js/hypercube.js';
-    initHypercube();
+    const userType = localStorage.getItem("app-user-type");
+    const candidateType = localStorage.getItem("app-candidate-type");
+    if (userType === "candidato" && candidateType === "tdah") {
+      import("./js/hypercube.js").then(({ initHypercube }) => initHypercube());
+    }
   </script>
 </body>
 </html>

@@ -80,21 +80,11 @@ export function initOnboarding(root = document) {
     btnNext.disabled = true;
     btnNext.textContent = 'Guardando...';
     try {
-      if (window.supabase) {
-        const supabaseClient = window.supabase.createClient(
-          'https://oupbptgzfevkzzvscekj.supabase.co',
-          'sb_publishable_Obya200r1UbgWVnMbuhhiw_Xto1ETSE'
-        );
-        const { data: { session } } = await supabaseClient.auth.getSession();
-
-        if (session) {
-          const userId = session.user.id;
-          await supabaseClient.from('profiles').update({
-            gustos: respuestas,
-            onboarding_completed: true
-          }).eq('id', userId);
-        }
-      }
+      localStorage.setItem('onboarding_gustos', JSON.stringify(respuestas));
+      localStorage.setItem('onboarding_completed', 'true');
+      
+      // Simular pequeño retardo de red
+      await new Promise(r => setTimeout(r, 400));
 
       const role = localStorage.getItem('user_role') || 'candidate';
       if (window.__spaNavigate) {

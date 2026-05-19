@@ -59,8 +59,11 @@
 }
 
 .opcion-card {
-  background: var(--color-surface);
+  appearance: none;
   border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  font: inherit;
+  color: var(--color-ink);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   cursor: pointer;
@@ -88,9 +91,21 @@
   box-shadow: var(--shadow-md);
 }
 
+.opcion-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .opcion-card .emoji {
   font-size: 3rem;
   line-height: 1;
+}
+
+html[data-candidate-type="down"] .opcion-card:hover,
+html[data-user-type="visitante"] .opcion-card:hover,
+html[data-user-type="empresa"] .opcion-card:hover {
+  transform: none;
+  box-shadow: var(--shadow-card);
 }
 
 .onboarding-actions {

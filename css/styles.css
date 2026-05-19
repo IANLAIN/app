@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap");
 @import url("./components/layout.css");
 @import url("./components/buttons.css");
 @import url("./components/cards.css");
@@ -116,6 +117,10 @@
   /* Legacy aliases */
   --font-size-base:    var(--text-base);
   --line-height-base:  var(--leading-normal);
+
+  /* ── Focus ring tokens ───────────────────────────────── */
+  --focus-ring: rgba(77, 143, 172, 0.2);
+  --focus-ring-soft: rgba(77, 143, 172, 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -180,6 +185,212 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   USER TYPE THEMES — LINKEDIN-STYLE FOR VISITOR/COMPANY
+   ═══════════════════════════════════════════════════════════════ */
+:root[data-user-type="visitante"],
+:root[data-user-type="empresa"] {
+  color-scheme: light;
+
+  --color-bg: #F3F2EF;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F8F7F5;
+
+  --color-ink: #191919;
+  --color-muted: #5E5E5E;
+  --color-border: rgba(0, 0, 0, 0.18);
+
+  --color-primary: #0A66C2;
+  --color-primary-dark: #004182;
+  --color-accent: #E9F1FB;
+  --color-accent-2: #DBE8F7;
+
+  --btn-primary-bg: #0A66C2;
+  --btn-primary-text: #FFFFFF;
+  --btn-outline-border: #0A66C2;
+  --btn-outline-text: #0A66C2;
+
+  --nav-bg: #FFFFFF;
+  --nav-border: rgba(0, 0, 0, 0.18);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  --font-primary: "Source Sans 3", "Atkinson Hyperlegible", Arial, sans-serif;
+  --font-display: var(--font-primary);
+  --font-body: var(--font-primary);
+
+  --focus-ring: rgba(10, 102, 194, 0.2);
+  --focus-ring-soft: rgba(10, 102, 194, 0.15);
+}
+
+/* ─── Enforced light mode for sober profiles ───────────────── */
+:root[data-user-type="visitante"][data-theme="dark"],
+:root[data-user-type="empresa"][data-theme="dark"] {
+  color-scheme: light;
+  --color-bg: #F3F2EF;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F8F7F5;
+  --color-ink: #191919;
+  --color-muted: #5E5E5E;
+  --color-border: rgba(0, 0, 0, 0.18);
+  --color-primary: #0A66C2;
+  --color-primary-dark: #004182;
+  --color-accent: #E9F1FB;
+  --color-accent-2: #DBE8F7;
+  --btn-primary-bg: #0A66C2;
+  --btn-primary-text: #FFFFFF;
+  --btn-outline-border: #0A66C2;
+  --btn-outline-text: #0A66C2;
+  --nav-bg: #FFFFFF;
+  --nav-border: rgba(0, 0, 0, 0.18);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --focus-ring: rgba(10, 102, 194, 0.2);
+  --focus-ring-soft: rgba(10, 102, 194, 0.15);
+}
+
+:root[data-user-type="candidato"][data-candidate-type="down"][data-theme="dark"] {
+  color-scheme: light;
+  --color-bg: #F8F4F1;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F2E9E7;
+  --color-ink: #3E3A38;
+  --color-muted: #6A5E59;
+  --color-border: rgba(0, 0, 0, 0.12);
+  --color-primary: #B28EA5;
+  --color-primary-dark: #8F6D83;
+  --color-accent: #F2D7D2;
+  --color-accent-2: #EAD9CC;
+  --btn-primary-bg: #B28EA5;
+  --btn-primary-text: #FFFFFF;
+  --btn-outline-border: #B28EA5;
+  --btn-outline-text: #8F6D83;
+  --nav-bg: #FFFFFF;
+  --nav-border: rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --focus-ring: rgba(178, 142, 165, 0.2);
+  --focus-ring-soft: rgba(178, 142, 165, 0.15);
+}
+
+/* ─── Candidate dark palettes (low glare, calm contrast) ───── */
+:root[data-user-type="candidato"][data-candidate-type="autismo"][data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0E1A17;
+  --color-surface: #152522;
+  --color-surface-alt: #1C2E2B;
+  --color-ink: #E4F0EB;
+  --color-muted: #A5B6AE;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-primary: #4FB79A;
+  --color-primary-dark: #61CDB1;
+  --color-accent: #2B6A5B;
+  --color-accent-2: #27423B;
+  --color-soft: rgba(79, 183, 154, 0.14);
+  --btn-primary-bg: #1E6D5C;
+  --btn-primary-text: #E4F0EB;
+  --btn-outline-border: #4FB79A;
+  --btn-outline-text: #4FB79A;
+  --track-bg: #233834;
+  --nav-bg: rgba(14, 26, 23, 0.92);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --focus-ring: rgba(79, 183, 154, 0.24);
+  --focus-ring-soft: rgba(79, 183, 154, 0.18);
+}
+
+:root[data-user-type="candidato"][data-candidate-type="tdah"][data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0E1628;
+  --color-surface: #172238;
+  --color-surface-alt: #1E2B44;
+  --color-ink: #E6EEFA;
+  --color-muted: #B0BDD3;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-primary: #6EA2FF;
+  --color-primary-dark: #7EB1FF;
+  --color-accent: #3457A3;
+  --color-accent-2: #2B3B5A;
+  --color-soft: rgba(110, 162, 255, 0.16);
+  --btn-primary-bg: #3557C8;
+  --btn-primary-text: #E6EEFA;
+  --btn-outline-border: #6EA2FF;
+  --btn-outline-text: #6EA2FF;
+  --track-bg: #253351;
+  --nav-bg: rgba(14, 22, 40, 0.92);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --focus-ring: rgba(110, 162, 255, 0.24);
+  --focus-ring-soft: rgba(110, 162, 255, 0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CANDIDATE TYPE THEMES — CALM + PASTEL VARIANTS
+   ═══════════════════════════════════════════════════════════════ */
+:root[data-user-type="candidato"][data-candidate-type="autismo"] {
+  --color-bg: #F3F7F1;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #EAF3EE;
+  --color-ink: #2E3A36;
+  --color-muted: #55635E;
+  --color-primary: #2F7A5F;
+  --color-primary-dark: #25614C;
+  --color-accent: #CDE7D7;
+  --color-accent-2: #DDEFE6;
+  --focus-ring: rgba(47, 122, 95, 0.2);
+  --focus-ring-soft: rgba(47, 122, 95, 0.15);
+}
+
+:root[data-user-type="candidato"][data-candidate-type="tdah"] {
+  --color-bg: #F2F5FF;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #E9EEFF;
+  --color-ink: #28324A;
+  --color-muted: #4D5A7A;
+  --color-primary: #3B6FD8;
+  --color-primary-dark: #2F58AA;
+  --color-accent: #D6E2FF;
+  --color-accent-2: #E3EBFF;
+  --focus-ring: rgba(59, 111, 216, 0.2);
+  --focus-ring-soft: rgba(59, 111, 216, 0.15);
+}
+
+:root[data-user-type="candidato"][data-candidate-type="down"] {
+  --color-bg: #F8F4F1;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F2E9E7;
+  --color-ink: #3E3A38;
+  --color-muted: #6A5E59;
+  --color-primary: #B28EA5;
+  --color-primary-dark: #8F6D83;
+  --color-accent: #F2D7D2;
+  --color-accent-2: #EAD9CC;
+  --focus-ring: rgba(178, 142, 165, 0.2);
+  --focus-ring-soft: rgba(178, 142, 165, 0.15);
+}
+
+html[data-user-type="candidato"][data-candidate-type="autismo"] body {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(47, 122, 95, 0.08), transparent 45%),
+    radial-gradient(circle at 90% 20%, rgba(205, 231, 215, 0.5), transparent 50%);
+  background-attachment: fixed;
+}
+
+html[data-user-type="candidato"][data-candidate-type="tdah"] body {
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(59, 111, 216, 0.12), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(214, 226, 255, 0.6), transparent 55%);
+  background-attachment: fixed;
+}
+
+html[data-user-type="candidato"][data-candidate-type="down"] body {
+  background-image:
+    linear-gradient(135deg, rgba(242, 215, 210, 0.6), rgba(234, 217, 204, 0.5));
+  background-attachment: fixed;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    BASE RESET & GLOBAL STYLES
    ═══════════════════════════════════════════════════════════════ */
 html {
@@ -211,6 +422,180 @@ body {
   background-color: var(--color-bg);
   min-height: 100vh;
   transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ─── WCAG 2.1 focus visibility ─────────────────────────────── */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* ─── WCAG 2.1 skip link ───────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-primary);
+  z-index: 200;
+}
+
+.skip-link:focus {
+  left: 16px;
+}
+
+.theme-toggle-hidden {
+  display: none !important;
+}
+
+/* ─── Minimal visuals for visitor/company ───────────────────── */
+html[data-user-type="visitante"] .btn:hover,
+html[data-user-type="empresa"] .btn:hover,
+html[data-user-type="visitante"] .card:hover,
+html[data-user-type="empresa"] .card:hover {
+  transform: none;
+  box-shadow: var(--shadow-card);
+}
+
+html[data-user-type="visitante"] .site-header,
+html[data-user-type="empresa"] .site-header,
+html[data-candidate-type="down"] .site-header {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-user-type="visitante"] .card,
+html[data-user-type="empresa"] .card,
+html[data-candidate-type="down"] .card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-user-type="visitante"] .role-card:hover,
+html[data-user-type="empresa"] .role-card:hover,
+html[data-candidate-type="down"] .role-card:hover {
+  transform: none;
+  box-shadow: var(--shadow-card);
+}
+
+html[data-user-type="visitante"] .emoji,
+html[data-user-type="empresa"] .emoji,
+html[data-user-type="visitante"] .donate-card-icon,
+html[data-user-type="empresa"] .donate-card-icon,
+html[data-user-type="visitante"] .btn-google svg,
+html[data-user-type="empresa"] .btn-google svg,
+html[data-user-type="visitante"] .ms-badge,
+html[data-user-type="empresa"] .ms-badge {
+  display: none !important;
+}
+
+html[data-user-type="visitante"] .ms-badge,
+html[data-user-type="empresa"] .ms-badge {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+/* ─── Down syndrome profile: text-first, no icons ───────────── */
+html[data-candidate-type="down"] .emoji,
+html[data-candidate-type="down"] .donate-card-icon,
+html[data-candidate-type="down"] .btn-google svg,
+html[data-candidate-type="down"] .ms-badge {
+  display: none !important;
+}
+
+html[data-user-type="empresa"] .only-candidato {
+  display: none !important;
+}
+
+html[data-user-type="candidato"] .only-empresa {
+  display: none !important;
+}
+
+html:not([data-user-type]) .only-candidato,
+html:not([data-user-type]) .only-empresa {
+  display: none !important;
+}
+
+/* ─── Hypercube: only for TDAH on home ─────────────────────── */
+#hypercube-canvas {
+  display: none;
+}
+
+html[data-user-type="candidato"][data-candidate-type="tdah"] #hypercube-canvas {
+  display: block;
+}
+
+/* ─── Text-first chips for sober profiles ──────────────────── */
+html[data-user-type="visitante"] .chip,
+html[data-user-type="empresa"] .chip,
+html[data-candidate-type="down"] .chip {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+html[data-user-type="visitante"] .impact-row,
+html[data-user-type="empresa"] .impact-row,
+html[data-candidate-type="down"] .impact-row,
+html[data-user-type="visitante"] .tag-row,
+html[data-user-type="empresa"] .tag-row,
+html[data-candidate-type="down"] .tag-row {
+  gap: 6px;
+}
+
+/* ─── Hide decorative feature icons in sober profiles ───────── */
+html[data-user-type="visitante"] .feature-icon,
+html[data-user-type="empresa"] .feature-icon,
+html[data-candidate-type="down"] .feature-icon {
+  display: none !important;
+}
+
+/* ─── Sober auth hero (no gradients) ───────────────────────── */
+html[data-user-type="visitante"] .auth-hero,
+html[data-user-type="empresa"] .auth-hero,
+html[data-candidate-type="down"] .auth-hero {
+  background: var(--color-surface);
+}
+
+/* ─── Solid charts for professional profiles ───────────────── */
+html[data-user-type="empresa"] .chart-bar span,
+html[data-user-type="visitante"] .chart-bar span,
+html[data-candidate-type="down"] .chart-bar span {
+  background: var(--color-primary);
+}
+
+/* ─── Reduced motion preference ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Utility: visually hidden text ────────────────────────── */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
 }
 
 a {
@@ -1018,3 +1403,159 @@ body.is-home-route header .brand { opacity: 0; pointer-events: none; visibility:
 body:not(.is-home-route) #hypercube-canvas {
   display: none !important;
 }
+
+
+/* ─── User Type Theme Overrides ─────────────────────────────── */
+
+/* Empresa: LinkedIn Corporate Theme */
+html[data-user-type='empresa'] {
+  --color-primary: #0a66c2;
+  --color-primary-hover: #004182;
+  --color-secondary: #000000;
+  --bg-color: #f3f2ef;
+  --surface-color: #ffffff;
+  --surface-hover: #f3f2ef;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: #e0dfdc;
+  --radius-md: 4px; /* More square, corporate look */
+  --radius-lg: 8px;
+  --font-primary: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+html[data-user-type='empresa'] .hero {
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+html[data-user-type='empresa'] .card {
+  box-shadow: 0 0 0 1px var(--border-color);
+}
+
+html[data-user-type='empresa'] .btn {
+  font-weight: 600;
+  border-radius: 24px; /* LinkedIn buttons are pill-shaped */
+}
+
+/* Visitante: Simplified Interface */
+html[data-user-type='visitante'] .dashboard-only-element {
+  display: none !important;
+}
+
+html[data-user-type='visitante'] .hero-content h1 {
+  font-size: 3rem;
+}
+
+
+/* Visitante Specific Overrides */
+html[data-user-type='visitante'] .auth-action-buttons {
+  display: none !important;
+}
+html[data-user-type='visitante'] .hero-content h1 {
+  font-size: 4.5rem;
+}
+
+
+/* =========================================================================
+   PROFILE-SPECIFIC STYLES & WCAG 2.1 ADJUSTMENTS
+   ========================================================================= */
+
+/* Hide demo buttons conditionally */
+html[data-user-type='empresa'] .btn-demo-candidato { display: none !important; }
+html[data-user-type='candidato'] .btn-demo-empresa { display: none !important; }
+
+/* Hide hypercube for everyone except TDAH */
+html:not([data-candidate-type='tdah']) #hypercube-canvas { display: none !important; }
+
+/* Separation of content classes */
+html[data-user-type='candidato'] .only-empresa { display: none !important; }
+html[data-user-type='empresa'] .only-candidato { display: none !important; }
+html[data-user-type='visitante'] .only-empresa { display: block !important; } /* Visitors see both usually, but prompt says "visitante o empresa: diseño serio" */
+
+/* ─── EMPRESA / VISITANTE (LinkedIn Corporate style) ─── */
+html[data-user-type='empresa'], html[data-user-type='visitante'] {
+  --color-primary: #0a66c2;
+  --color-primary-hover: #004182;
+  --color-secondary: #000000;
+  --bg-color: #f3f2ef;
+  --surface-color: #ffffff;
+  --surface-hover: #f3f2ef;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: #e0dfdc;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --font-primary: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+html[data-user-type='empresa'] *, html[data-user-type='visitante'] * {
+  border-radius: var(--radius-md);
+}
+
+html[data-user-type='empresa'] .btn, html[data-user-type='visitante'] .btn {
+  border-radius: 24px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+html[data-user-type='empresa'] .card, html[data-user-type='visitante'] .card {
+  box-shadow: 0 0 0 1px var(--border-color);
+  background-color: var(--surface-color);
+}
+
+html[data-user-type='empresa'] .emoji, html[data-user-type='visitante'] .emoji, 
+html[data-user-type='empresa'] svg, html[data-user-type='visitante'] svg:not(.eye-svg) {
+  display: none !important;
+}
+
+/* ─── DOWN SYNDROME (Pastel Pantone, no icons/emojis, simple text) ─── */
+html[data-candidate-type='down'] {
+  --color-primary: #f8b195; /* Pantone pastel peach */
+  --color-primary-hover: #f69470;
+  --color-secondary: #c06c84; 
+  --bg-color: #fdf6e3;
+  --surface-color: #ffffff;
+  --text-primary: #333333;
+  --font-primary: 'Atkinson Hyperlegible', sans-serif;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+html[data-candidate-type='down'] .emoji, html[data-candidate-type='down'] svg:not(.eye-svg), html[data-candidate-type='down'] .icon {
+  display: none !important;
+}
+
+html[data-candidate-type='down'] .card {
+  border: 3px solid #f8b195;
+  box-shadow: none;
+}
+
+/* ─── AUTISM (Thriving environment, calm, predictable, nature tones) ─── */
+html[data-candidate-type='autismo'] {
+  --color-primary: #6b8e23; /* Olive Drab / Nature green */
+  --color-primary-hover: #556b2f;
+  --color-secondary: #8fbc8f;
+  --bg-color: #f0f8ff; /* Alice blue, calming */
+  --surface-color: #ffffff;
+  --text-primary: #2f4f4f; /* Dark slate gray, lower contrast than pure black */
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+html[data-candidate-type='autismo'] .card {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border-left: 6px solid var(--color-primary);
+}
+
+/* ─── TDAH (High contrast, hypercube enabled) ─── */
+html[data-candidate-type='tdah'] {
+  --color-primary: #ff4500; /* Orange red */
+  --color-primary-hover: #cc3700;
+  --color-secondary: #1e90ff; /* Dodger blue */
+  --bg-color: #ffffff;
+  --text-primary: #000000;
+}
+html[data-candidate-type='tdah'] .card {
+  border: 2px solid var(--color-secondary);
+}
+

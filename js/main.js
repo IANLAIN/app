@@ -58,6 +58,15 @@ function resolveRouteFromLocation() {
   return match ? routes.get(match) : defaultRoute;
 }
 
+function getUserType() {
+  const userType = localStorage.getItem("app-user-type");
+  if (userType) return userType;
+  const role = localStorage.getItem("user_role");
+  if (role === "company") return "empresa";
+  if (role === "candidate") return "candidato";
+  return "visitante";
+}
+
 // Track current route to avoid redundant loads
 let currentRoute = null;
 
@@ -135,7 +144,6 @@ async function loadPage(path, { pushState = true, initialLoad = false } = {}) {
   } catch {
     app.innerHTML = `
       <div class="card" style="max-width:600px;margin:80px auto;text-align:center;">
-        <div style="font-size:3rem;margin-bottom:16px;">😔</div>
         <h2>Error al cargar</h2>
         <p style="color:var(--color-muted);">La página no se pudo cargar. Intenta nuevamente o usa el menú.</p>
         <a href="index.html" data-nav class="btn btn-primary" style="margin-top:16px;">Volver al inicio</a>
@@ -159,39 +167,14 @@ function updateAuthUI() {
   const btnLogin = document.getElementById("btn-login");
 
   const isDemo = localStorage.getItem("demo_session") === "true";
+  const userId = localStorage.getItem("user_id");
   
-  if (window.supabase) {
-    const supabaseUrl = "https://oupbptgzfevkzzvscekj.supabase.co";
-    const supabaseKey = "sb_publishable_Obya200r1UbgWVnMbuhhiw_Xto1ETSE";
-    try {
-      const client = window.supabase.createClient(supabaseUrl, supabaseKey);
-      client.auth.getSession().then(({ data: { session } }) => {
-        if (session || isDemo) {
-          btnLogout?.classList.remove("hidden");
-          btnLogin?.classList.add("hidden");
-        } else {
-          btnLogout?.classList.add("hidden");
-          btnLogin?.classList.remove("hidden");
-        }
-      });
-    } catch {
-      // Supabase not available
-      if (isDemo) {
-        btnLogout?.classList.remove("hidden");
-        btnLogin?.classList.add("hidden");
-      } else {
-        btnLogout?.classList.add("hidden");
-        btnLogin?.classList.remove("hidden");
-      }
-    }
+  if (isDemo || userId) {
+    btnLogout?.classList.remove("hidden");
+    btnLogin?.classList.add("hidden");
   } else {
-    if (isDemo) {
-      btnLogout?.classList.remove("hidden");
-      btnLogin?.classList.add("hidden");
-    } else {
-      btnLogout?.classList.add("hidden");
-      btnLogin?.classList.remove("hidden");
-    }
+    btnLogout?.classList.add("hidden");
+    btnLogin?.classList.remove("hidden");
   }
 }
 
@@ -244,40 +227,68 @@ function initScrollAnimations(root) {
 
 // ── Auth-guarded navigation ──────────────────────────────────
 async function checkAuthAndLoad(path, options) {
-  const isDashboard = path.includes("dashboard");
+  const resolvedPath = resolveRoutePath(path);
+  const isDashboard = resolvedPath.includes("dashboard");
 
-  if (window.supabase) {
-    try {
-      const supabaseUrl = "https://oupbptgzfevkzzvscekj.supabase.co";
-      const supabaseKey = "sb_publishable_Obya200r1UbgWVnMbuhhiw_Xto1ETSE";
-      const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      const isDemo = localStorage.getItem("demo_session") === "true";
+  const userType = getUserType();
+  const candidateOnly = new Set([
+    "pages/dashboard-candidate.html",
+    "pages/mentoring.html",
+    "pages/onboarding.html",
+  ]);
+  const companyOnly = new Set([
+    "pages/dashboard-company.html",
+    "pages/why.html",
+    "pages/donate.html",
+  ]);
 
-      // Dashboard protection — require session
-      if (isDashboard && !session && !isDemo) {
-        loadPage("pages/login.html", options);
-        return;
-      }
-
-      // Redirect to dashboard if logged in and visiting auth pages
-      if (
-        (session || isDemo) &&
-        (path === defaultRoute ||
-          path.includes("login") ||
-          path.includes("register"))
-      ) {
-        const role = localStorage.getItem("user_role") || "candidate";
-        loadPage(`pages/dashboard-${role}.html`, {
-          ...options,
-          initialLoad: false,
-        });
-        return;
-      }
-    } catch {
-      // Supabase unavailable, proceed normally
+  if (candidateOnly.has(resolvedPath)) {
+    if (userType === "empresa") {
+      loadPage("pages/dashboard-company.html", options);
+      return;
+    }
+    if (userType === "visitante") {
+      loadPage("index.html", options);
+      return;
     }
   }
+
+  if (companyOnly.has(resolvedPath)) {
+    if (userType === "candidato") {
+      loadPage("pages/dashboard-candidate.html", options);
+      return;
+    }
+    if (userType === "visitante") {
+      loadPage("index.html", options);
+      return;
+    }
+  }
+
+  const isDemo = localStorage.getItem("demo_session") === "true";
+  const userId = localStorage.getItem("user_id");
+  const isAuthenticated = isDemo || userId;
+
+  // Dashboard protection — require session
+  if (isDashboard && !isAuthenticated) {
+    loadPage("pages/login.html", options);
+    return;
+  }
+
+  // Redirect to dashboard if logged in and visiting auth pages
+  if (
+    isAuthenticated &&
+    (path === defaultRoute ||
+      path.includes("login") ||
+      path.includes("register"))
+  ) {
+    const role = localStorage.getItem("user_role") || "candidate";
+    loadPage(`pages/dashboard-${role}.html`, {
+      ...options,
+      initialLoad: false,
+    });
+    return;
+  }
+
   loadPage(path, options);
 }
 

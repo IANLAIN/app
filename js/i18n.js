@@ -14,13 +14,31 @@ const translations = {
     "landing.how.1.title": "Perfil sensorial", "landing.how.1.desc": "Mapa visual de preferencias, ritmos y apoyos que guían todo el proceso.",
     "landing.how.2.title": "Match de rol", "landing.how.2.desc": "IA responsable que sugiere roles basados en habilidades y contexto real.",
     "landing.how.3.title": "Mentoría activa", "landing.how.3.desc": "Canales de apoyo entre mentor y colaborador con guías simples.",
+    "landing.how.cand.title": "Para candidatos",
+    "landing.how.cand.li1": "Perfil sensorial simple y editable.",
+    "landing.how.cand.li2": "Ruta diaria con pasos cortos y claros.",
+    "landing.how.cand.li3": "Mentoría y acompañamiento continuo.",
+    "landing.how.comp.title": "Para empresas",
+    "landing.how.comp.li1": "Perfiles resumidos con necesidades clave.",
+    "landing.how.comp.li2": "Guía de adaptación del puesto en lenguaje directo.",
+    "landing.how.comp.li3": "Panel ESG con métricas consistentes.",
     "landing.impact.title": "Impacto y confianza", "landing.impact.desc": "Indicadores claros para equipos ESG y comités de inclusión.",
     "landing.impact.1.title": "Diseño accesible por defecto",
     "landing.impact.1.li1": "Contraste alto y tipografía clara.", "landing.impact.1.li2": "Contenido por bloques para reducir carga cognitiva.", "landing.impact.1.li3": "Ritmos visuales calmados y feedback inmediato.",
     "landing.impact.2.title": "Resultados visibles", "landing.impact.2.desc": "Panel ESG con retención, bienestar y progreso de habilidades por cohorte.",
     "landing.impact.chip1": "+28% retención", "landing.impact.chip2": "-42% rotación", "landing.impact.chip3": "+36% clima",
+    "landing.support.title": "Acompañamiento y bienestar",
+    "landing.support.desc": "Información clara y en pasos para reducir carga cognitiva.",
+    "landing.support.1.title": "Rutina clara",
+    "landing.support.1.li1": "Metas diarias simples.",
+    "landing.support.1.li2": "Recordatorios suaves y útiles.",
+    "landing.support.1.li3": "Avance visible sin presión.",
+    "landing.support.2.title": "Apoyo continuo",
+    "landing.support.2.li1": "Mentoría disponible cuando la necesites.",
+    "landing.support.2.li2": "Lenguaje simple y directo.",
+    "landing.support.2.li3": "Opciones de comunicación claras.",
     "landing.btn.back": "Volver al inicio",
-    "footer.title": "incluIA by Design", "footer.text": "Accesible, modular y listo para escalar sobre infraestructura Supabase.", "footer.meta": "© 2026 incluIA", "footer.badge": "Autenticación segura por Supabase",
+    "footer.title": "incluIA by Design", "footer.text": "Accesible, modular y listo para escalar sobre infraestructura robusta.", "footer.meta": "© 2026 incluIA", "footer.badge": "Supported by Microsoft",
     "footer.links.login": "Acceso", "footer.links.esg": "ESG", "footer.links.mentoring": "Mentoría",
     "auth.login.title": "Ingresa a tu espacio", "auth.register.title": "Crea tu espacio",
     "auth.login.eyebrow": "Acceso seguro", "auth.login.desc": "Nos alegra tenerte de vuelta. Por favor, ingresa tus credenciales.",
@@ -30,15 +48,17 @@ const translations = {
     "lang.gate.note": "Puedes cambiarlo en cualquier momento desde la barra superior.",
     "lang.gate.es": "Español / Spanish",
     "lang.gate.en": "English / Inglés",
-    "auth.badge.supabase": "Autenticación segura por Supabase",
+    "auth.badge.microsoft": "Supported by Microsoft",
     "auth.btn.google.login": "Continuar con Google", "auth.btn.google.register": "Registrarse con Google",
     "auth.divider.login": "o continuar con correo", "auth.divider.register": "o registrarte con correo",
     "auth.label.email": "Correo electrónico", "auth.label.password": "Contraseña", "auth.label.confirm": "Confirmar Contraseña",
     "auth.btn.submit.login": "Ingresar", "auth.btn.submit.register": "Crear cuenta",
+    "auth.toggle.show": "Mostrar", "auth.toggle.hide": "Ocultar",
+    "auth.toggle.show.aria": "Mostrar contraseña", "auth.toggle.hide.aria": "Ocultar contraseña",
     "auth.hint.login": "¿No tienes cuenta?", "auth.hint.login.link": "Registrarse aquí",
     "auth.hint.register": "¿Ya tienes cuenta?", "auth.hint.register.link": "Inicia sesión aquí",
     "auth.role.company": "Empresa", "auth.role.company.desc": "Reclutador o Manager",
-    "dash.cand.hero.eyebrow": "Tu progreso hoy", "dash.cand.hero.title": "Hola, Alex. Tu ruta está clara y guiada.", "dash.cand.hero.desc": "Recuerda: puedes activar lenguaje simple en cualquier instrucción.", "dash.cand.hero.hint": "Infraestructura Supabase para rendimiento y seguridad.", "dash.cand.hero.btn.simplify": "Simplificar instrucciones", "dash.cand.hero.btn.mentor": "Hablar con mentor",
+    "dash.cand.hero.eyebrow": "Tu progreso hoy", "dash.cand.hero.title": "Hola, Alex. Tu ruta está clara y guiada.", "dash.cand.hero.desc": "Recuerda: puedes activar lenguaje simple en cualquier instrucción.", "dash.cand.hero.hint": "Infraestructura Microsoft para rendimiento y seguridad.", "dash.cand.hero.btn.simplify": "Simplificar instrucciones", "dash.cand.hero.btn.mentor": "Hablar con mentor",
     "dash.cand.onboard.title": "Onboarding paso a paso", "dash.cand.onboard.desc": "Avance visual para reducir ansiedad y dar claridad.", "dash.cand.onboard.inst.orig": "1. Completa tu perfil sensorial. 2. Elige horarios preferidos. 3. Revisa tu primer reto.", "dash.cand.onboard.inst.simp": "Paso 1: Completa tu perfil. Paso 2: Elige horarios. Paso 3: Revisa tu reto.", "dash.cand.onboard.step1": "Perfil sensorial", "dash.cand.onboard.step2": "Rutina diaria", "dash.cand.onboard.step3": "Primer reto", "dash.cand.onboard.step4": "Feedback inicial",
     "dash.cand.task.title": "Panel de tareas gamificado", "dash.cand.task.desc": "Objetivos cortos con recompensas claras.", "dash.cand.task.1.title": "Check-in de energía", "dash.cand.task.1.desc": "Registro rápido de tu nivel de energía.", "dash.cand.task.btn": "Completar", "dash.cand.task.2.title": "Micro aprendizaje", "dash.cand.task.2.desc": "Video de 3 minutos sobre comunicación efectiva.", "dash.cand.task.3.title": "Reto práctico", "dash.cand.task.3.desc": "Organiza tu espacio digital con una lista simple.",
     "dash.cand.skill.title": "Perfil de habilidades", "dash.cand.skill.desc": "Visual, breve y accionable.", "dash.cand.skill.1.title": "Análisis de datos", "dash.cand.skill.1.desc": "Fuerte en patrones y detalle.", "dash.cand.skill.2.title": "Comunicación escrita", "dash.cand.skill.2.desc": "Mejora con plantillas breves.", "dash.cand.skill.3.title": "Trabajo en foco", "dash.cand.skill.3.desc": "Alta concentración en tareas secuenciales.",
@@ -64,13 +84,31 @@ const translations = {
     "landing.how.1.title": "Sensory profile", "landing.how.1.desc": "Visual map of preferences, rhythms, and supports guiding the process.",
     "landing.how.2.title": "Role match", "landing.how.2.desc": "Responsible AI suggesting roles based on skills and real context.",
     "landing.how.3.title": "Active mentoring", "landing.how.3.desc": "Support channels between mentor and collaborator with simple guides.",
+    "landing.how.cand.title": "For candidates",
+    "landing.how.cand.li1": "Simple, editable sensory profile.",
+    "landing.how.cand.li2": "Daily route with short, clear steps.",
+    "landing.how.cand.li3": "Continuous mentoring and support.",
+    "landing.how.comp.title": "For companies",
+    "landing.how.comp.li1": "Summarized profiles with key needs.",
+    "landing.how.comp.li2": "Role adaptation guide in direct language.",
+    "landing.how.comp.li3": "ESG dashboard with consistent metrics.",
     "landing.impact.title": "Impact and trust", "landing.impact.desc": "Clear indicators for ESG teams and inclusion committees.",
     "landing.impact.1.title": "Accessible design by default",
     "landing.impact.1.li1": "High contrast and clear typography.", "landing.impact.1.li2": "Block content to reduce cognitive load.", "landing.impact.1.li3": "Calm visual rhythms and immediate feedback.",
     "landing.impact.2.title": "Visible results", "landing.impact.2.desc": "ESG dashboard with retention, well-being, and skill progress by cohort.",
     "landing.impact.chip1": "+28% retention", "landing.impact.chip2": "-42% turnover", "landing.impact.chip3": "+36% climate",
+    "landing.support.title": "Support and well-being",
+    "landing.support.desc": "Clear information in steps to reduce cognitive load.",
+    "landing.support.1.title": "Clear routine",
+    "landing.support.1.li1": "Simple daily goals.",
+    "landing.support.1.li2": "Gentle, useful reminders.",
+    "landing.support.1.li3": "Visible progress without pressure.",
+    "landing.support.2.title": "Continuous support",
+    "landing.support.2.li1": "Mentoring available when you need it.",
+    "landing.support.2.li2": "Simple, direct language.",
+    "landing.support.2.li3": "Clear communication options.",
     "landing.btn.back": "Back to top",
-    "footer.title": "incluIA by Design", "footer.text": "Accessible, modular, and ready to scale on Supabase infrastructure.", "footer.meta": "© 2026 incluIA", "footer.badge": "Secure authentication by Supabase",
+    "footer.title": "incluIA by Design", "footer.text": "Accessible, modular, and ready to scale on robust infrastructure.", "footer.meta": "© 2026 incluIA", "footer.badge": "Supported by Microsoft",
     "footer.links.login": "Login", "footer.links.esg": "ESG", "footer.links.mentoring": "Mentoring",
     "auth.login.title": "Log into your space", "auth.register.title": "Create your space",
     "auth.login.eyebrow": "Secure access", "auth.login.desc": "We're glad to have you back. Please enter your credentials.",
@@ -80,15 +118,17 @@ const translations = {
     "lang.gate.note": "You can change it any time from the top bar.",
     "lang.gate.es": "Español / Spanish",
     "lang.gate.en": "English / Inglés",
-    "auth.badge.supabase": "Secure authentication by Supabase",
+    "auth.badge.microsoft": "Supported by Microsoft",
     "auth.btn.google.login": "Continue with Google", "auth.btn.google.register": "Register with Google",
     "auth.divider.login": "or continue with email", "auth.divider.register": "or register with email",
     "auth.label.email": "Email address", "auth.label.password": "Password", "auth.label.confirm": "Confirm Password",
     "auth.btn.submit.login": "Log in", "auth.btn.submit.register": "Create account",
+    "auth.toggle.show": "Show", "auth.toggle.hide": "Hide",
+    "auth.toggle.show.aria": "Show password", "auth.toggle.hide.aria": "Hide password",
     "auth.hint.login": "Don't have an account?", "auth.hint.login.link": "Register here",
     "auth.hint.register": "Already have an account?", "auth.hint.register.link": "Log in here",
     "auth.role.company": "Company", "auth.role.company.desc": "Recruiter or Manager",
-    "dash.cand.hero.eyebrow": "Your progress today", "dash.cand.hero.title": "Hi, Alex. Your path is clear and guided.", "dash.cand.hero.desc": "Remember: you can enable simple language for any instruction.", "dash.cand.hero.hint": "Supabase infrastructure for performance and security.", "dash.cand.hero.btn.simplify": "Simplify instructions", "dash.cand.hero.btn.mentor": "Talk to mentor",
+    "dash.cand.hero.eyebrow": "Your progress today", "dash.cand.hero.title": "Hi, Alex. Your path is clear and guided.", "dash.cand.hero.desc": "Remember: you can enable simple language for any instruction.", "dash.cand.hero.hint": "robust infrastructure for performance and security.", "dash.cand.hero.btn.simplify": "Simplify instructions", "dash.cand.hero.btn.mentor": "Talk to mentor",
     "dash.cand.onboard.title": "Step-by-step onboarding", "dash.cand.onboard.desc": "Visual progress to reduce anxiety and provide clarity.", "dash.cand.onboard.inst.orig": "1. Complete sensory profile. 2. Choose preferred hours. 3. Review first challenge.", "dash.cand.onboard.inst.simp": "Step 1: Complete profile. Step 2: Choose hours. Step 3: Review challenge.", "dash.cand.onboard.step1": "Sensory profile", "dash.cand.onboard.step2": "Daily routine", "dash.cand.onboard.step3": "First challenge", "dash.cand.onboard.step4": "Initial feedback",
     "dash.cand.task.title": "Gamified task board", "dash.cand.task.desc": "Short objectives with clear rewards.", "dash.cand.task.1.title": "Energy check-in", "dash.cand.task.1.desc": "Quick log of your energy level.", "dash.cand.task.btn": "Complete", "dash.cand.task.2.title": "Micro learning", "dash.cand.task.2.desc": "3-minute video on effective communication.", "dash.cand.task.3.title": "Practical challenge", "dash.cand.task.3.desc": "Organize your digital space with a simple list.",
     "dash.cand.skill.title": "Skills profile", "dash.cand.skill.desc": "Visual, brief, and actionable.", "dash.cand.skill.1.title": "Data analysis", "dash.cand.skill.1.desc": "Strong in patterns and detail.", "dash.cand.skill.2.title": "Written communication", "dash.cand.skill.2.desc": "Improves with brief templates.", "dash.cand.skill.3.title": "Focus work", "dash.cand.skill.3.desc": "High concentration on sequential tasks.",
@@ -114,26 +154,46 @@ const translations = {
     "landing.how.1.title": "Profil sensoriel", "landing.how.1.desc": "Carte visuelle des préférences, rythmes et soutiens guidant le processus.",
     "landing.how.2.title": "Correspondance de rôle", "landing.how.2.desc": "IA responsable suggérant des rôles basés sur les compétences.",
     "landing.how.3.title": "Mentorat actif", "landing.how.3.desc": "Canaux de soutien entre mentor et collaborateur avec des guides simples.",
+    "landing.how.cand.title": "Pour les candidats",
+    "landing.how.cand.li1": "Profil sensoriel simple et modifiable.",
+    "landing.how.cand.li2": "Parcours quotidien avec des étapes courtes et claires.",
+    "landing.how.cand.li3": "Mentorat et accompagnement continu.",
+    "landing.how.comp.title": "Pour les entreprises",
+    "landing.how.comp.li1": "Profils résumés avec besoins clés.",
+    "landing.how.comp.li2": "Guide d'adaptation du poste en langage direct.",
+    "landing.how.comp.li3": "Tableau ESG avec métriques cohérentes.",
     "landing.impact.title": "Impact et confiance", "landing.impact.desc": "Indicateurs clairs pour les équipes ESG et comités d'inclusion.",
     "landing.impact.1.title": "Conception accessible par défaut",
     "landing.impact.1.li1": "Contraste élevé et typographie claire.", "landing.impact.1.li2": "Contenu en blocs pour réduire la charge cognitive.", "landing.impact.1.li3": "Rythmes visuels calmes et retours immédiats.",
     "landing.impact.2.title": "Résultats visibles", "landing.impact.2.desc": "Tableau de bord ESG avec rétention, bien-être et progrès.",
     "landing.impact.chip1": "+28% rétention", "landing.impact.chip2": "-42% rotation", "landing.impact.chip3": "+36% climat",
+    "landing.support.title": "Accompagnement et bien-être",
+    "landing.support.desc": "Informations claires en étapes pour réduire la charge cognitive.",
+    "landing.support.1.title": "Routine claire",
+    "landing.support.1.li1": "Objectifs quotidiens simples.",
+    "landing.support.1.li2": "Rappels doux et utiles.",
+    "landing.support.1.li3": "Progression visible sans pression.",
+    "landing.support.2.title": "Soutien continu",
+    "landing.support.2.li1": "Mentorat disponible quand vous en avez besoin.",
+    "landing.support.2.li2": "Langage simple et direct.",
+    "landing.support.2.li3": "Options de communication claires.",
     "landing.btn.back": "Retour en haut",
-    "footer.title": "incluIA by Design", "footer.text": "Accessible, modulaire et prêt à évoluer sur Supabase.", "footer.meta": "(c) 2026 incluIA", "footer.badge": "Authentification sécurisée par Supabase",
+    "footer.title": "incluIA by Design", "footer.text": "Accessible, modulaire et prêt à évoluer sur Microsoft.", "footer.meta": "(c) 2026 incluIA", "footer.badge": "Supported by Microsoft",
     "footer.links.login": "Connexion", "footer.links.esg": "ESG", "footer.links.mentoring": "Mentorat",
     "auth.login.title": "Connectez-vous à votre espace", "auth.register.title": "Créez votre espace",
     "auth.login.eyebrow": "Accès sécurisé", "auth.login.desc": "Ravis de vous revoir. Veuillez entrer vos identifiants.",
     "auth.register.eyebrow": "Rejoignez incluIA", "auth.register.desc": "Choisissez votre rôle pour personnaliser le flux.",
-    "auth.badge.supabase": "Authentification sécurisée par Supabase",
+    "auth.badge.microsoft": "Supported by Microsoft",
     "auth.btn.google.login": "Continuer avec Google", "auth.btn.google.register": "S'inscrire avec Google",
     "auth.divider.login": "ou continuer avec l'e-mail", "auth.divider.register": "ou s'inscrire avec l'e-mail",
     "auth.label.email": "Adresse e-mail", "auth.label.password": "Mot de passe", "auth.label.confirm": "Confirmer le mot de passe",
     "auth.btn.submit.login": "Se connecter", "auth.btn.submit.register": "Créer un compte",
+    "auth.toggle.show": "Afficher", "auth.toggle.hide": "Masquer",
+    "auth.toggle.show.aria": "Afficher le mot de passe", "auth.toggle.hide.aria": "Masquer le mot de passe",
     "auth.hint.login": "Vous n'avez pas de compte ?", "auth.hint.login.link": "Inscrivez-vous ici",
     "auth.hint.register": "Vous avez déjà un compte ?", "auth.hint.register.link": "Connectez-vous ici",
     "auth.role.company": "Entreprise", "auth.role.company.desc": "Recruteur ou Manager",
-    "dash.cand.hero.eyebrow": "Votre progression aujourd'hui", "dash.cand.hero.title": "Bonjour, Alex. Votre parcours est clair.", "dash.cand.hero.desc": "N'oubliez pas : vous pouvez activer le langage simple.", "dash.cand.hero.hint": "Infrastructure Supabase pour la performance.", "dash.cand.hero.btn.simplify": "Simplifier les instructions", "dash.cand.hero.btn.mentor": "Parler au mentor",
+    "dash.cand.hero.eyebrow": "Votre progression aujourd'hui", "dash.cand.hero.title": "Bonjour, Alex. Votre parcours est clair.", "dash.cand.hero.desc": "N'oubliez pas : vous pouvez activer le langage simple.", "dash.cand.hero.hint": "Infrastructure Microsoft pour la performance.", "dash.cand.hero.btn.simplify": "Simplifier les instructions", "dash.cand.hero.btn.mentor": "Parler au mentor",
     "dash.cand.onboard.title": "Intégration étape par étape", "dash.cand.onboard.desc": "Progression visuelle pour réduire l'anxiété.", "dash.cand.onboard.inst.orig": "1. Complétez le profil sensoriel. 2. Choisissez les heures. 3. Premier défi.", "dash.cand.onboard.inst.simp": "Étape 1 : Profil. Étape 2 : Heures. Étape 3 : Défi.", "dash.cand.onboard.step1": "Profil sensoriel", "dash.cand.onboard.step2": "Routine quotidienne", "dash.cand.onboard.step3": "Premier défi", "dash.cand.onboard.step4": "Retour initial",
     "dash.cand.task.title": "Tableau de tâches gamifié", "dash.cand.task.desc": "Objectifs courts avec récompenses claires.", "dash.cand.task.1.title": "Vérification d'énergie", "dash.cand.task.1.desc": "Journal rapide de votre niveau d'énergie.", "dash.cand.task.btn": "Terminer", "dash.cand.task.2.title": "Micro-apprentissage", "dash.cand.task.2.desc": "Vidéo de 3 min sur la communication.", "dash.cand.task.3.title": "Défi pratique", "dash.cand.task.3.desc": "Organisez votre espace numérique.",
     "dash.cand.skill.title": "Profil de compétences", "dash.cand.skill.desc": "Visuel, bref et exploitable.", "dash.cand.skill.1.title": "Analyse de données", "dash.cand.skill.1.desc": "Fort en modèles et détails.", "dash.cand.skill.2.title": "Communication écrite", "dash.cand.skill.2.desc": "S'améliore avec des modèles.", "dash.cand.skill.3.title": "Travail de concentration", "dash.cand.skill.3.desc": "Forte concentration sur les tâches.",
@@ -159,26 +219,46 @@ const translations = {
     "landing.how.1.title": "Perfil sensorial", "landing.how.1.desc": "Mapa visual de preferências, ritmos e apoios que orientam o processo.",
     "landing.how.2.title": "Correspondência de função", "landing.how.2.desc": "IA responsável que sugere funções com base nas habilidades.",
     "landing.how.3.title": "Mentoria ativa", "landing.how.3.desc": "Canais de apoio entre mentor e colaborador com guias simples.",
+    "landing.how.cand.title": "Para candidatos",
+    "landing.how.cand.li1": "Perfil sensorial simples e editável.",
+    "landing.how.cand.li2": "Rota diária com passos curtos e claros.",
+    "landing.how.cand.li3": "Mentoria e acompanhamento contínuo.",
+    "landing.how.comp.title": "Para empresas",
+    "landing.how.comp.li1": "Perfis resumidos com necessidades-chave.",
+    "landing.how.comp.li2": "Guia de adaptação do cargo em linguagem direta.",
+    "landing.how.comp.li3": "Painel ESG com métricas consistentes.",
     "landing.impact.title": "Impacto e confiança", "landing.impact.desc": "Indicadores claros para equipes ESG e comitês de inclusão.",
     "landing.impact.1.title": "Design acessível por padrão",
     "landing.impact.1.li1": "Alto contraste e tipografia clara.", "landing.impact.1.li2": "Conteúdo em blocos para reduzir a carga cognitiva.", "landing.impact.1.li3": "Ritmos visuais calmos e feedback imediato.",
     "landing.impact.2.title": "Resultados visíveis", "landing.impact.2.desc": "Painel ESG com retenção, bem-estar e progresso de habilidades.",
     "landing.impact.chip1": "+28% retenção", "landing.impact.chip2": "-42% rotatividade", "landing.impact.chip3": "+36% clima",
+    "landing.support.title": "Acompanhamento e bem-estar",
+    "landing.support.desc": "Informações claras em etapas para reduzir a carga cognitiva.",
+    "landing.support.1.title": "Rotina clara",
+    "landing.support.1.li1": "Metas diárias simples.",
+    "landing.support.1.li2": "Lembretes suaves e úteis.",
+    "landing.support.1.li3": "Progresso visível sem pressão.",
+    "landing.support.2.title": "Apoio contínuo",
+    "landing.support.2.li1": "Mentoria disponível quando precisar.",
+    "landing.support.2.li2": "Linguagem simples e direta.",
+    "landing.support.2.li3": "Opções de comunicação claras.",
     "landing.btn.back": "Voltar ao topo",
-    "footer.title": "incluIA by Design", "footer.text": "Acessível, modular e pronto para escalar na infraestrutura Supabase.", "footer.meta": "(c) 2026 incluIA", "footer.badge": "Autenticação segura via Supabase",
+    "footer.title": "incluIA by Design", "footer.text": "Acessível, modular e pronto para escalar na infraestrutura robusta.", "footer.meta": "(c) 2026 incluIA", "footer.badge": "Supported by Microsoft",
     "footer.links.login": "Acesso", "footer.links.esg": "ESG", "footer.links.mentoring": "Mentoria",
     "auth.login.title": "Entre no seu espaço", "auth.register.title": "Crie o seu espaço",
     "auth.login.eyebrow": "Acesso seguro", "auth.login.desc": "É bom ter você de volta. Por favor, insira suas credenciais.",
     "auth.register.eyebrow": "Junte-se à incluIA", "auth.register.desc": "Escolha sua função para personalizar o fluxo.",
-    "auth.badge.supabase": "Autenticação segura via Supabase",
+    "auth.badge.microsoft": "Supported by Microsoft",
     "auth.btn.google.login": "Continuar com o Google", "auth.btn.google.register": "Cadastrar com o Google",
     "auth.divider.login": "ou continuar com e-mail", "auth.divider.register": "ou cadastrar com e-mail",
     "auth.label.email": "Endereço de e-mail", "auth.label.password": "Senha", "auth.label.confirm": "Confirmar Senha",
     "auth.btn.submit.login": "Entrar", "auth.btn.submit.register": "Criar conta",
+    "auth.toggle.show": "Mostrar", "auth.toggle.hide": "Ocultar",
+    "auth.toggle.show.aria": "Mostrar senha", "auth.toggle.hide.aria": "Ocultar senha",
     "auth.hint.login": "Não tem uma conta?", "auth.hint.login.link": "Cadastre-se aqui",
     "auth.hint.register": "Já tem uma conta?", "auth.hint.register.link": "Entre aqui",
     "auth.role.company": "Empresa", "auth.role.company.desc": "Recrutador ou Gerente",
-    "dash.cand.hero.eyebrow": "Seu progresso hoje", "dash.cand.hero.title": "Olá, Alex. Seu caminho está claro.", "dash.cand.hero.desc": "Lembre-se: você pode ativar a linguagem simples.", "dash.cand.hero.hint": "Infraestrutura Supabase para segurança.", "dash.cand.hero.btn.simplify": "Simplificar instruções", "dash.cand.hero.btn.mentor": "Falar com mentor",
+    "dash.cand.hero.eyebrow": "Seu progresso hoje", "dash.cand.hero.title": "Olá, Alex. Seu caminho está claro.", "dash.cand.hero.desc": "Lembre-se: você pode ativar a linguagem simples.", "dash.cand.hero.hint": "Infraestrutura Microsoft para segurança.", "dash.cand.hero.btn.simplify": "Simplificar instruções", "dash.cand.hero.btn.mentor": "Falar com mentor",
     "dash.cand.onboard.title": "Integração passo a passo", "dash.cand.onboard.desc": "Progresso visual para reduzir a ansiedade.", "dash.cand.onboard.inst.orig": "1. Complete o perfil sensorial. 2. Escolha os horários. 3. Primeiro desafio.", "dash.cand.onboard.inst.simp": "Passo 1: Perfil. Passo 2: Horários. Passo 3: Desafio.", "dash.cand.onboard.step1": "Perfil sensorial", "dash.cand.onboard.step2": "Rotina diária", "dash.cand.onboard.step3": "Primeiro desafio", "dash.cand.onboard.step4": "Feedback inicial",
     "dash.cand.task.title": "Painel de tarefas gamificado", "dash.cand.task.desc": "Objetivos curtos com recompensas claras.", "dash.cand.task.1.title": "Check-in de energia", "dash.cand.task.1.desc": "Registro rápido do seu nível de energia.", "dash.cand.task.btn": "Completar", "dash.cand.task.2.title": "Micro aprendizagem", "dash.cand.task.2.desc": "Vídeo de 3 minutos sobre comunicação.", "dash.cand.task.3.title": "Desafio prático", "dash.cand.task.3.desc": "Organize seu espaço digital com uma lista.",
     "dash.cand.skill.title": "Perfil de habilidades", "dash.cand.skill.desc": "Visual, breve e acionável.", "dash.cand.skill.1.title": "Análise de dados", "dash.cand.skill.1.desc": "Forte em padrões e detalhes.", "dash.cand.skill.2.title": "Comunicação escrita", "dash.cand.skill.2.desc": "Melhora com modelos breves.", "dash.cand.skill.3.title": "Trabalho em foco", "dash.cand.skill.3.desc": "Alta concentração em tarefas sequenciais.",
@@ -254,47 +334,183 @@ function setLanguage(lang) {
   applyTranslations();
 }
 
+
 export function initLanguageGate() {
-  if (document.getElementById("language-gate")) return;
-  if (localStorage.getItem("app-lang")) return;
+  checkNextGate();
+}
 
-  const gate = document.createElement("div");
-  gate.id = "language-gate";
-  gate.className = "language-gate";
-  gate.setAttribute("role", "dialog");
-  gate.setAttribute("aria-modal", "true");
-  gate.setAttribute("aria-labelledby", "language-gate-title");
-  gate.tabIndex = -1;
-  gate.innerHTML = `
-    <div class="language-gate-card card">
-      <p class="eyebrow">Idioma / Language</p>
-      <h2 id="language-gate-title">Elige tu idioma / Choose your language</h2>
-      <p>Elige tu idioma: Español, English (US), Português o Français.</p>
-      <div class="language-gate-actions">
-        <button type="button" class="btn btn-primary" data-gate-lang="es">Español / Spanish</button>
-        <button type="button" class="btn btn-ghost" data-gate-lang="en">English (US) / Inglés</button>
-        <button type="button" class="btn btn-ghost" data-gate-lang="pt">Português / Portuguese</button>
-        <button type="button" class="btn btn-ghost" data-gate-lang="fr">Français / French</button>
-      </div>
-      <p class="language-gate-note">Puedes cambiarlo en cualquier momento desde la barra superior.</p>
-    </div>
-  `;
-  document.body.insertBefore(gate, document.body.firstChild);
+function checkNextGate() {
+  if (!localStorage.getItem("app-lang")) {
+    showLanguageGate();
+  } else if (!localStorage.getItem("app-user-type")) {
+    showUserTypeGate();
+  } else if (localStorage.getItem("app-user-type") === "candidato" && !localStorage.getItem("app-candidate-type")) {
+    showCandidateTypeGate();
+  } else {
+    applyUserTypeTheme();
+  }
+}
 
-  gate.querySelectorAll("[data-gate-lang]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      setLanguage(btn.getAttribute("data-gate-lang"));
-      gate.remove();
-      document.querySelector(".skip-link")?.focus?.() || document.getElementById("app")?.focus?.();
-    });
-  });
+export function applyUserTypeTheme() {
+  const userType = localStorage.getItem("app-user-type");
+  if (userType) {
+    document.documentElement.setAttribute("data-user-type", userType);
+  }
+  if (userType === "candidato") {
+    const candidateType = localStorage.getItem("app-candidate-type");
+    if (candidateType) {
+      document.documentElement.setAttribute("data-candidate-type", candidateType);
+      return;
+    }
+  }
+  document.documentElement.removeAttribute("data-candidate-type");
+}
 
+function createGateDialog(id, innerHTML) {
+  let gate = document.getElementById(id);
+  if (!gate) {
+    gate = document.createElement("div");
+    gate.id = id;
+    gate.className = "language-gate"; // reuse the same CSS for modal overlay
+    gate.setAttribute("role", "dialog");
+    gate.setAttribute("aria-modal", "true");
+    gate.tabIndex = -1;
+    document.body.insertBefore(gate, document.body.firstChild);
+  }
+  gate.innerHTML = innerHTML;
   requestAnimationFrame(() => {
     gate.classList.add("is-visible");
     gate.focus();
   });
+  return gate;
 }
 
+function closeGateDialog(gate) {
+  gate.classList.remove("is-visible");
+  setTimeout(() => {
+    gate.remove();
+    checkNextGate();
+  }, 300);
+}
+
+function showLanguageGate() {
+  let selectedLang = null;
+  const gate = createGateDialog("language-gate", `
+    <div class="language-gate-card card">
+      <p class="eyebrow">Idioma / Language</p>
+      <h2 id="language-gate-title">Elige tu idioma / Choose your language</h2>
+      <div class="language-gate-actions">
+        <button type="button" class="btn btn-ghost" data-gate-lang="es">Español / Spanish</button>
+        <button type="button" class="btn btn-ghost" data-gate-lang="en">English (US) / Inglés</button>
+        <button type="button" class="btn btn-ghost" data-gate-lang="pt">Português / Portuguese</button>
+        <button type="button" class="btn btn-ghost" data-gate-lang="fr">Français / French</button>
+      </div>
+      <button type="button" class="btn btn-primary btn-full" data-gate-confirm disabled>Confirmar</button>
+      <p class="language-gate-note">Puedes cambiarlo en cualquier momento desde la barra superior.</p>
+    </div>
+  `);
+
+  const confirmBtn = gate.querySelector("[data-gate-confirm]");
+
+  gate.querySelectorAll("[data-gate-lang]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedLang = btn.getAttribute("data-gate-lang");
+      gate.querySelectorAll("[data-gate-lang]").forEach(b => b.classList.remove("is-selected"));
+      btn.classList.add("is-selected");
+      if (confirmBtn) confirmBtn.disabled = false;
+    });
+  });
+
+  if (confirmBtn) {
+    confirmBtn.addEventListener("click", () => {
+      if (!selectedLang) return;
+      setLanguage(selectedLang);
+      closeGateDialog(gate);
+    });
+  }
+}
+
+function showUserTypeGate() {
+  const isEs = currentLang === "es";
+  let selectedUserType = null;
+  const gate = createGateDialog("usertype-gate", `
+    <div class="language-gate-card card">
+      <p class="eyebrow">${isEs ? 'Bienvenido' : 'Welcome'}</p>
+      <h2 id="usertype-gate-title">${isEs ? '¿Cómo usarás incluIA?' : 'How will you use incluIA?'}</h2>
+      <p>${isEs ? 'Selecciona tu tipo de usuario para personalizar tu experiencia.' : 'Select your user type to customize your experience.'}</p>
+      <div class="language-gate-actions" style="flex-direction: column;">
+        <button type="button" class="btn btn-ghost" data-user-type="visitante">${isEs ? 'Visitante (Quiero explorar)' : 'Visitor (Just exploring)'}</button>
+        <button type="button" class="btn btn-ghost" data-user-type="empresa">${isEs ? 'Empresa (Busco talento corporativo)' : 'Company (Looking for corporate talent)'}</button>
+        <button type="button" class="btn btn-ghost" data-user-type="candidato">${isEs ? 'Candidato (Busco empleo inclusivo)' : 'Candidate (Looking for inclusive jobs)'}</button>
+      </div>
+      <button type="button" class="btn btn-primary btn-full" data-gate-confirm disabled>${isEs ? 'Confirmar' : 'Confirm'}</button>
+    </div>
+  `);
+
+  const confirmBtn = gate.querySelector("[data-gate-confirm]");
+
+  gate.querySelectorAll("[data-user-type]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedUserType = btn.getAttribute("data-user-type");
+      gate.querySelectorAll("[data-user-type]").forEach(b => b.classList.remove("is-selected"));
+      btn.classList.add("is-selected");
+      if (confirmBtn) confirmBtn.disabled = false;
+    });
+  });
+
+  if (confirmBtn) {
+    confirmBtn.addEventListener("click", () => {
+      if (!selectedUserType) return;
+      localStorage.setItem("app-user-type", selectedUserType);
+      if (window.__applyThemePolicy) {
+        window.__applyThemePolicy();
+      }
+      closeGateDialog(gate);
+    });
+  }
+}
+
+function showCandidateTypeGate() {
+  const isEs = currentLang === "es";
+  let selectedCandidateType = null;
+  const gate = createGateDialog("candidatetype-gate", `
+    <div class="language-gate-card card">
+      <p class="eyebrow">${isEs ? 'Perfil de Candidato' : 'Candidate Profile'}</p>
+      <h2 id="candidatetype-gate-title">${isEs ? '¿Con qué condición te identificas?' : 'What condition do you identify with?'}</h2>
+      <p>${isEs ? 'Esto nos ayuda a adaptar el entorno y las ofertas a tus necesidades.' : 'This helps us adapt the environment and offers to your needs.'}</p>
+      <div class="language-gate-actions" style="flex-direction: column;">
+        <button type="button" class="btn btn-ghost" data-candidate-type="down">${isEs ? 'Síndrome de Down' : 'Down Syndrome'}</button>
+        <button type="button" class="btn btn-ghost" data-candidate-type="autismo">${isEs ? 'Autismo' : 'Autism'}</button>
+        <button type="button" class="btn btn-ghost" data-candidate-type="tdah">${isEs ? 'TDAH' : 'ADHD'}</button>
+        <button type="button" class="btn btn-ghost" data-candidate-type="discapacidad_intelectual">${isEs ? 'Discapacidad intelectual' : 'Intellectual disability'}</button>
+        <button type="button" class="btn btn-outline" data-candidate-type="otro" style="margin-top: 8px;">${isEs ? 'Prefiero no decirlo / Otra' : 'Prefer not to say / Other'}</button>
+      </div>
+      <button type="button" class="btn btn-primary btn-full" data-gate-confirm disabled>${isEs ? 'Confirmar' : 'Confirm'}</button>
+    </div>
+  `);
+
+  const confirmBtn = gate.querySelector("[data-gate-confirm]");
+
+  gate.querySelectorAll("[data-candidate-type]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedCandidateType = btn.getAttribute("data-candidate-type");
+      gate.querySelectorAll("[data-candidate-type]").forEach(b => b.classList.remove("is-selected"));
+      btn.classList.add("is-selected");
+      if (confirmBtn) confirmBtn.disabled = false;
+    });
+  });
+
+  if (confirmBtn) {
+    confirmBtn.addEventListener("click", () => {
+      if (!selectedCandidateType) return;
+      localStorage.setItem("app-candidate-type", selectedCandidateType);
+      if (window.__applyThemePolicy) {
+        window.__applyThemePolicy();
+      }
+      closeGateDialog(gate);
+    });
+  }
+}
 export function initI18nSelect() {
   syncLanguageSelects();
 
