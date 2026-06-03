@@ -7,6 +7,7 @@
 @import url("./components/onboarding.css");
 @import url("./components/tasks.css");
 @import url("./components/chat.css");
+@import url("./components/simulator.css");
 
 /* ═══════════════════════════════════════════════════════════════
    DESIGN TOKENS — LIGHT MODE
@@ -438,22 +439,7 @@ textarea:focus-visible {
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
-/* ─── WCAG 2.1 skip link ───────────────────────────────────── */
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: 8px;
-  background: var(--color-surface);
-  color: var(--color-ink);
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--color-primary);
-  z-index: 200;
-}
-
-.skip-link:focus {
-  left: 16px;
-}
+/* .skip-link is managed by layout.css */
 
 .theme-toggle-hidden {
   display: none !important;
@@ -667,13 +653,7 @@ section {
 }
 
 /* ─── Layout helpers ──────────────────────────────────────── */
-.page {
-  padding: 40px clamp(24px, 4vw, 72px) 60px;
-}
-
-.app-shell {
-  padding: 40px clamp(24px, 4vw, 72px) 60px;
-}
+/* .page and .app-shell padding is managed by layout.css with responsive values */
 
 .section-header {
   margin-bottom: 24px;
@@ -709,8 +689,9 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
+/* .grid-3 responsive columns managed by layout.css */
 .grid-3 {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .clean-list {
@@ -732,20 +713,7 @@ section {
 }
 
 /* ─── Accessibility ───────────────────────────────────────── */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 16px;
-  background: var(--color-primary);
-  color: var(--btn-primary-text);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  z-index: 999;
-}
-
-.skip-link:focus {
-  top: 16px;
-}
+/* .skip-link is managed by layout.css */
 
 .visually-hidden {
   border: 0;

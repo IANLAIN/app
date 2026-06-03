@@ -4,10 +4,57 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>incluIA</title>
+  <meta name="description" content="¿Por qué incluIA? Conoce nuestra plataforma de inclusión laboral para talento neurodivergente con enfoque accesible." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
   <link rel="stylesheet" href="../css/styles.css" />
+  <script>
+    const t = localStorage.getItem("app-theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+    const f = localStorage.getItem("app-font");
+    if (f === "dyslexic") document.documentElement.setAttribute("data-font", "dyslexic");
+    const u = localStorage.getItem("app-user-type");
+    if (u) document.documentElement.setAttribute("data-user-type", u);
+    const c = localStorage.getItem("app-candidate-type");
+    if (c) document.documentElement.setAttribute("data-candidate-type", c);
+  </script>
 </head>
 <body>
-  <div id="page-content">
+
+  <header class="site-header">
+    <a href="../index.html" class="brand brand-link" data-nav>
+      <span class="brand-mark">incluIA</span>
+      <span class="brand-tag">¿Por qué incluIA?</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      ☰ Menú
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+      <ul class="nav-list">
+        <li><a href="../index.html" data-nav data-i18n="nav.home">Inicio</a></li>
+        <li><a href="why.html" data-nav data-i18n="nav.why" class="only-empresa">¿Por qué incluIA?</a></li>
+        <li><a href="mentoring.html" data-nav data-i18n="nav.mentoring" class="only-candidato">Mentoría</a></li>
+        <li><a href="donate.html" data-nav data-i18n="nav.donate" class="only-empresa">Cómo apoyarnos</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">☾</button>
+      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-label="Activar fuente para dislexia" aria-pressed="false" title="Fuente para dislexia">Aa</button>
+      <div class="lang-selector">
+        <select id="lang-select" class="lang-select" aria-label="Seleccionar idioma">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="pt">Português</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div id="page-content">
 
     <section class="section" aria-labelledby="hero-title-why" style="padding-top: 4rem;">
       <div class="section-header">
@@ -114,5 +161,25 @@
       </div>
     </section>
   </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <p class="footer-title" data-i18n="footer.title">incluIA by Design</p>
+      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura robusta.</p>
+      <div class="footer-meta">
+        <span data-i18n="footer.meta">&copy; 2026 incluIA</span>
+        <span>|</span>
+        <span class="ms-badge" data-i18n="footer.badge">Supported by Microsoft</span>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html" data-nav data-i18n="footer.links.login">Producto</a>
+      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato">Mentoría</a>
+      <a href="donate.html" data-nav data-i18n="footer.links.esg" class="only-empresa">Apoyo</a>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
 </body>
 </html>

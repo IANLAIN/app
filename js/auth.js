@@ -5,6 +5,20 @@
 
 import { t } from "./i18n.js";
 
+// Helper for directory relative path calculation
+function getRelativePath(dest) {
+  const isSubdir = window.location.pathname.includes("/pages/");
+  if (isSubdir) {
+    if (dest.startsWith("pages/")) {
+      return dest.slice(6); // remove "pages/"
+    }
+    if (dest === "index.html") {
+      return "../index.html";
+    }
+  }
+  return dest;
+}
+
 // ── Global Logout Helper ───────────────────────────────────────
 window.cerrarSesion = async () => {
   localStorage.removeItem("user_role");
@@ -14,7 +28,7 @@ window.cerrarSesion = async () => {
   if (window.__spaNavigate) {
     window.__spaNavigate("index.html");
   } else {
-    window.location.href = "index.html";
+    window.location.href = getRelativePath("index.html");
   }
 };
 
@@ -82,7 +96,7 @@ export function initAuth(root = document) {
     if (window.__spaNavigate) {
       window.__spaNavigate(dest);
     } else {
-      window.location.href = "/" + dest;
+      window.location.href = getRelativePath(dest);
     }
   }
 
@@ -98,6 +112,7 @@ export function initAuth(root = document) {
 
       setTimeout(() => {
         setStatus(statusEl, "success", "✅", "¡Sesión iniciada correctamente!");
+        if (window.showToast) window.showToast("Sesión iniciada correctamente", "success");
         localStorage.setItem("user_role", "candidate"); // Default mock
         localStorage.setItem("user_id", "mock-google-user-id");
         localStorage.setItem("demo_session", "true");
@@ -149,6 +164,7 @@ export function initAuth(root = document) {
         emailEl?.classList.add("success");
         passEl?.classList.add("success");
         setStatus(statusEl, "success", "✅", "¡Sesión iniciada correctamente!");
+        if (window.showToast) window.showToast("Sesión iniciada correctamente", "success");
         localStorage.setItem("user_role", role);
         localStorage.setItem("user_id", "mock-local-user-id");
         localStorage.setItem("demo_session", "true");
@@ -163,6 +179,8 @@ export function initAuth(root = document) {
     if (!input || !btn) return;
     let visible = false;
     const label = btn.querySelector(".eye-text");
+    const iconOpen = btn.querySelector("#iconOpen");
+    const iconClosed = btn.querySelector("#iconClosed");
     const showText = t("auth.toggle.show", "Mostrar");
     const hideText = t("auth.toggle.hide", "Ocultar");
     const showAria = t("auth.toggle.show.aria", "Mostrar contraseña");
@@ -174,6 +192,8 @@ export function initAuth(root = document) {
       input.type = visible ? "text" : "password";
       btn.setAttribute("aria-label", visible ? hideAria : showAria);
       if (label) label.textContent = visible ? hideText : showText;
+      if (iconOpen) iconOpen.style.display = visible ? "none" : "block";
+      if (iconClosed) iconClosed.style.display = visible ? "block" : "none";
       btn.style.transform = "scale(1.25)";
       setTimeout(() => (btn.style.transform = "scale(1)"), 200);
     });
@@ -362,7 +382,7 @@ function initRegisterWizard(root) {
         localStorage.setItem("demo_session", "true");
         const dest = roleForMock === "company" ? "pages/dashboard-company.html" : "pages/dashboard-candidate.html";
         if (window.__spaNavigate) window.__spaNavigate(dest);
-        else window.location.href = dest;
+        else window.location.href = getRelativePath(dest);
       }, 1500);
     });
   }

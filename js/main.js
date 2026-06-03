@@ -9,6 +9,7 @@ import { initI18nSelect, initLanguageGate, applyTranslations } from "./i18n.js";
 import { initTheme } from "./theme.js";
 import { initOnboarding } from "./onboarding.js";
 import { initDonate } from "./donate.js";
+import { initSimulator } from "./simulator.js";
 
 const app = document.getElementById("app");
 const defaultRoute = "index.html";
@@ -22,6 +23,7 @@ const routes = new Map([
   ["donate.html", "pages/donate.html"],
   ["mentoring.html", "pages/mentoring.html"],
   ["onboarding.html", "pages/onboarding.html"],
+  ["why.html", "pages/why.html"],
   ["pages/login.html", "pages/login.html"],
   ["pages/register.html", "pages/register.html"],
   ["pages/dashboard-candidate.html", "pages/dashboard-candidate.html"],
@@ -29,6 +31,7 @@ const routes = new Map([
   ["pages/donate.html", "pages/donate.html"],
   ["pages/mentoring.html", "pages/mentoring.html"],
   ["pages/onboarding.html", "pages/onboarding.html"],
+  ["pages/why.html", "pages/why.html"],
   ["pages/candidate-dashboard.html", "pages/dashboard-candidate.html"],
   ["pages/company-dashboard.html", "pages/dashboard-company.html"],
 ]);
@@ -184,7 +187,7 @@ function upgradeInternalLinks(root) {
   const pageFiles = new Set([
     "login.html", "register.html", "dashboard-candidate.html",
     "dashboard-company.html", "mentoring.html", "onboarding.html",
-    "donate.html", "index.html",
+    "donate.html", "why.html", "index.html",
   ]);
 
   root.querySelectorAll("a[href]").forEach((link) => {
@@ -301,6 +304,7 @@ if (app) {
   initI18nSelect();
   initLanguageGate();
   setupNavigation({ onNavigate: loadPage, useSpa: true });
+  initSimulator();
 
   window.addEventListener("popstate", () => {
     const path = resolveRouteFromLocation();
@@ -314,6 +318,7 @@ if (app) {
   initI18nSelect();
   initLanguageGate();
   setupNavigation({ useSpa: false });
+  initSimulator();
   initPageInteractions(document);
   applyTranslations();
   initScrollAnimations(document);

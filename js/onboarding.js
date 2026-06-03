@@ -82,6 +82,7 @@ export function initOnboarding(root = document) {
     try {
       localStorage.setItem('onboarding_gustos', JSON.stringify(respuestas));
       localStorage.setItem('onboarding_completed', 'true');
+      if (window.showToast) window.showToast("¡Perfil guardado con éxito!", "success");
       
       // Simular pequeño retardo de red
       await new Promise(r => setTimeout(r, 400));
@@ -89,6 +90,10 @@ export function initOnboarding(root = document) {
       const role = localStorage.getItem('user_role') || 'candidate';
       if (window.__spaNavigate) {
         window.__spaNavigate(`pages/dashboard-${role}.html`);
+      } else {
+        // Safe static redirection using path relation check
+        const isSubdir = window.location.pathname.includes("/pages/");
+        window.location.href = isSubdir ? `dashboard-${role}.html` : `pages/dashboard-${role}.html`;
       }
     } catch (err) {
       console.error("Error finalizing onboarding", err);
