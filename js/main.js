@@ -87,11 +87,11 @@ async function loadPage(path, { pushState = true, initialLoad = false } = {}) {
       upgradeInternalLinks(app);
       initPageInteractions(app);
       setActiveNav(resolvedPath);
-    if (resolvedPath === 'index.html') {
-      document.body.classList.add('is-home-route');
-    } else {
-      document.body.classList.remove('is-home-route');
-    }
+      if (resolvedPath === 'index.html') {
+        document.body.classList.add('is-home-route');
+      } else {
+        document.body.classList.remove('is-home-route');
+      }
 
       applyTranslations();
       updateAuthUI();
@@ -171,7 +171,7 @@ function updateAuthUI() {
 
   const isDemo = localStorage.getItem("demo_session") === "true";
   const userId = localStorage.getItem("user_id");
-  
+
   if (isDemo || userId) {
     btnLogout?.classList.remove("hidden");
     btnLogin?.classList.add("hidden");

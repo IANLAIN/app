@@ -21,7 +21,7 @@
    WCAG 2.1 AA compliant (4.5:1 minimum for body text).
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
   /* ── Backgrounds — never pure white, never pure black ────────── */
   --color-bg:          #FCF9F4;   /* warm cream — replaces #FFF */
@@ -190,7 +190,7 @@
    ═══════════════════════════════════════════════════════════════ */
 :root[data-user-type="visitante"],
 :root[data-user-type="empresa"] {
-  color-scheme: light;
+  color-scheme: dark;
 
   --color-bg: #F3F2EF;
   --color-surface: #FFFFFF;
@@ -228,7 +228,7 @@
 /* ─── Enforced light mode for sober profiles ───────────────── */
 :root[data-user-type="visitante"][data-theme="dark"],
 :root[data-user-type="empresa"][data-theme="dark"] {
-  color-scheme: light;
+  color-scheme: dark;
   --color-bg: #F3F2EF;
   --color-surface: #FFFFFF;
   --color-surface-alt: #F8F7F5;
@@ -253,7 +253,7 @@
 }
 
 :root[data-user-type="candidato"][data-candidate-type="down"][data-theme="dark"] {
-  color-scheme: light;
+  color-scheme: dark;
   --color-bg: #F8F4F1;
   --color-surface: #FFFFFF;
   --color-surface-alt: #F2E9E7;

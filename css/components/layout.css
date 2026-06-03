@@ -18,6 +18,7 @@
   z-index: 9999;
   font-weight: 600;
 }
+
 .skip-link:focus {
   left: 16px;
 }
@@ -138,11 +139,21 @@
 }
 
 /* Icon changes: ☰ → ✕ */
-.nav-toggle .icon-menu  { display: inline; }
-.nav-toggle .icon-close { display: none; }
+.nav-toggle .icon-menu {
+  display: inline;
+}
 
-body.nav-open .nav-toggle .icon-menu  { display: none; }
-body.nav-open .nav-toggle .icon-close { display: inline; }
+.nav-toggle .icon-close {
+  display: none;
+}
+
+body.nav-open .nav-toggle .icon-menu {
+  display: none;
+}
+
+body.nav-open .nav-toggle .icon-close {
+  display: inline;
+}
 
 /* ── Header Actions — Desktop ─────────────────────────────────── */
 .header-actions {
@@ -440,7 +451,7 @@ body.nav-open .nav-overlay {
   box-shadow: var(--shadow-md);
 }
 
-.auth-card + .auth-card {
+.auth-card+.auth-card {
   margin-top: 4px;
 }
 
@@ -699,13 +710,15 @@ body.nav-open .nav-overlay {
    RESPONSIVE — TABLET (max 980px)
    ════════════════════════════════════════════════════════════ */
 @media (max-width: 980px) {
+
   /* ── Header becomes 2-row on tablet/mobile ─────────────── */
   .site-header {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto;
     gap: 0;
     padding: 12px 20px;
-    position: relative; /* allow nav dropdown below */
+    position: relative;
+    /* allow nav dropdown below */
   }
 
   /* Brand stays top-left */
@@ -817,7 +830,8 @@ body.nav-open .nav-overlay {
   }
 
   .split-left {
-    display: none; /* info panel hidden on small screens */
+    display: none;
+    /* info panel hidden on small screens */
     position: static;
   }
 
@@ -859,6 +873,7 @@ body.nav-open .nav-overlay {
    RESPONSIVE — MOBILE (max 640px)
    ════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
+
   /* ── Header ───────────────────────────────────────────── */
   .site-header {
     padding: 10px 14px;
@@ -951,44 +966,64 @@ body.nav-open .nav-overlay {
     grid-template-columns: 1fr;
   }
 
-  .stat-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* ── Mentor layout: stacked ───────────────────────────── */
-  .mentor-layout {
+  /* Hero adjustments for mobile */
+  .hero {
     grid-template-columns: 1fr;
-  }
-
-  /* ── Auth action buttons ──────────────────────────────── */
-  .button-row,
-  .auth-action-buttons {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .button-row .btn,
-  .auth-action-buttons .btn {
-    width: 100%;
+    gap: 20px;
     text-align: center;
-    justify-content: center;
   }
 
-  /* ── Demo login buttons ───────────────────────────────── */
-  .demo-logins {
-    flex-direction: column !important;
-    gap: 8px !important;
+  .hero-text {
+    text-align: center;
   }
 
-  /* ── Hero actions ─────────────────────────────────────── */
+  .hero-visual {
+    justify-self: center;
+  }
+
   .hero-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hero-actions .btn {
     width: 100%;
     justify-content: center;
   }
+}
+
+.stat-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ── Mentor layout: stacked ───────────────────────────── */
+.mentor-layout {
+  grid-template-columns: 1fr;
+}
+
+/* ── Auth action buttons ──────────────────────────────── */
+.button-row,
+.auth-action-buttons {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.button-row .btn,
+.auth-action-buttons .btn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+/* ── Demo login buttons ───────────────────────────────── */
+.demo-logins {
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+/* ── Hero actions ─────────────────────────────────────── */
+.hero-actions {
+  flex-direction: column;
+  width: 100%;
+}
+
+.hero-actions .btn {
+  width: 100%;
+  justify-content: center;
 }

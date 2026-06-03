@@ -12,7 +12,7 @@ export function initTheme() {
     const candidateType = localStorage.getItem("app-candidate-type");
 
     if (userType === "visitante" || userType === "empresa") {
-      return { allowDark: false, allowToggle: false, enforced: "light" };
+      return { allowDark: true, allowToggle: true, enforced: null };
     }
 
     if (userType === "candidato" && candidateType === "down") {
@@ -88,18 +88,13 @@ export function initTheme() {
     html.setAttribute("data-user-type", userType);
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const current = html.getAttribute("data-theme") || "light";
-      const next = current === "dark" ? "light" : "dark";
-      const nextPolicy = getThemePolicy();
-      if (next === "dark" && !nextPolicy.allowDark) {
-        applyTheme("light");
-        return;
-      }
-      applyTheme(next);
-    });
-  }
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const current = html.getAttribute("data-theme") || "light";
+        const next = current === "dark" ? "light" : "dark";
+        applyTheme(next);
+      });
+    }
 
   // ── Dyslexic Font Toggle ───────────────────────────────────
   const dyslexicToggle = document.getElementById("dyslexic-toggle");
