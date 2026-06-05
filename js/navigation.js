@@ -23,7 +23,7 @@ export function setupNavigation({ onNavigate, useSpa }) {
     "dashboard-company.html",
     "candidate-dashboard.html",
     "company-dashboard.html",
-    "donate.html",
+
     "mentoring.html",
     "onboarding.html",
   ]);

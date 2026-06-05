@@ -3,29 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>incluIA</title>
+  <title>app</title>
   <meta name="description" content="Panel de candidato con onboarding, tareas y habilidades." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
   <link rel="stylesheet" href="../css/styles.css" />
-  <script>
-    const t = localStorage.getItem(app-theme) || light;
-    document.documentElement.setAttribute(data-theme, t);
-    const f = localStorage.getItem(app-font);
-    if (f === dyslexic) document.documentElement.setAttribute(data-font, dyslexic);
-    const u = localStorage.getItem(app-user-type);
-    if (u) document.documentElement.setAttribute(data-user-type, u);
-    const c = localStorage.getItem(app-candidate-type);
-    if (c) document.documentElement.setAttribute(data-candidate-type, c);
-  </script>
+  <script src="../js/bootstrap.js"></script>
 </head>
 <body>
 
   <header class="site-header">
     <a href="../index.html" class="brand brand-link" data-nav>
-      <span class="brand-mark">incluIA</span>
+      <span class="brand-mark">app</span>
       <span class="brand-tag">Panel del candidato</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
@@ -34,9 +25,9 @@
     <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
       <ul class="nav-list">
         <li><a href="../index.html" data-nav data-i18n="nav.home">Inicio</a></li>
-        <li><a href="why.html" data-nav data-i18n="nav.why" class="only-empresa">¿Por qué incluIA?</a></li>
+
         <li><a href="mentoring.html" data-nav data-i18n="nav.mentoring" class="only-candidato">Mentoría</a></li>
-        <li><a href="donate.html" data-nav data-i18n="nav.donate" class="only-empresa">Cómo apoyarnos</a></li>
+
       </ul>
     </nav>
     <div class="header-actions">
@@ -148,20 +139,24 @@
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div>
-      <p class="footer-title" data-i18n="footer.title">incluIA by Design</p>
-      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura robusta.</p>
-      <div class="footer-meta">
-        <span data-i18n="footer.meta">&copy; 2026 incluIA</span>
-        <span>|</span>
-        <span class="ms-badge" data-i18n="footer.badge">Supported by Microsoft</span>
-      </div>
+    <footer class="site-footer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding: 24px 0; border-top: 1px solid var(--color-border); margin-top: 40px;">
+    <div class="footer-meta" style="display:flex; align-items:center; gap:8px;">
+      <span data-i18n="footer.meta">&copy; 2026 app</span>
+      <span style="color:var(--color-muted);">|</span>
+      <span class="ms-badge" style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+        <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 0H11V11H0V0Z" fill="#F25022"/>
+          <path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
+          <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/>
+          <path d="M12 12H23V23H12V12Z" fill="#FFB900"/>
+        </svg>
+        <span data-i18n="footer.badge">Supported by Microsoft</span>
+      </span>
     </div>
-    <div class="footer-links">
-      <a href="../index.html" data-nav data-i18n="footer.links.login">Producto</a>
-      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato">Mentoría</a>
-      <a href="donate.html" data-nav data-i18n="footer.links.esg" class="only-empresa">Apoyo</a>
+    <div class="footer-links" style="display:flex; gap:16px;">
+      <a href="../index.html" data-nav data-i18n="footer.links.login" style="color:var(--color-ink); text-decoration:none;">Producto</a>
+
+      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato" style="color:var(--color-ink); text-decoration:none;">Mentoría</a>
     </div>
   </footer>
 

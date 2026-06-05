@@ -1,141 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>incluIA</title>
-  <meta name="description" content="Acceso seguro para candidatos y empresas aliadas." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/styles.css" />
-  <script>
-    const t = localStorage.getItem(app-theme) || light;
-    document.documentElement.setAttribute(data-theme, t);
-    const f = localStorage.getItem(app-font);
-    if (f === dyslexic) document.documentElement.setAttribute(data-font, dyslexic);
-    const u = localStorage.getItem(app-user-type);
-    if (u) document.documentElement.setAttribute(data-user-type, u);
-    const c = localStorage.getItem(app-candidate-type);
-    if (c) document.documentElement.setAttribute(data-candidate-type, c);
-  </script>
+    <meta charset="UTF-8">
+    <title>Iniciando Sesión - app</title>
+    <script>
+        // Redirige al index.html
+        window.location.replace("../index.html");
+    </script>
 </head>
 <body>
-
-  <header class="site-header">
-    <a href="../index.html" class="brand brand-link" data-nav>
-      <span class="brand-mark">incluIA</span>
-      <span class="brand-tag" data-i18n="brand.tag">Acceso accesible y seguro</span>
-    </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-      ☰ Menú
-    </button>
-    <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
-      <ul class="nav-list">
-        <li><a href="../index.html" data-nav data-i18n="nav.home">Inicio</a></li>
-        <li><a href="why.html" data-nav data-i18n="nav.why" class="only-empresa">¿Por qué incluIA?</a></li>
-        <li><a href="mentoring.html" data-nav data-i18n="nav.mentoring" class="only-candidato">Mentoría</a></li>
-        <li><a href="donate.html" data-nav data-i18n="nav.donate" class="only-empresa">Cómo apoyarnos</a></li>
-      </ul>
-    </nav>
-    <div class="header-actions">
-      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">☾</button>
-      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-label="Activar fuente para dislexia" aria-pressed="false" title="Fuente para dislexia">Aa</button>
-      <div class="lang-selector">
-        <select id="lang-select" class="lang-select" aria-label="Seleccionar idioma">
-          <option value="es">Español</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="pt">Português</option>
-        </select>
-      </div>
-    </div>
-  </header>
-
-  <main class="page auth-page">
-    <div id="page-content">
-      <section class="auth-layout" data-auth-root style="display: block; max-width: 500px; margin: 0 auto;">
-        
-
-        <div class="auth-card-stack">
-          <section class="auth-card">
-            <div class="auth-header">
-              <h2 data-i18n="auth.login.title">Ingresa a tu espacio</h2>
-              <p data-i18n="auth.login.desc">Nos alegra tenerte de vuelta. Por favor, ingresa tus credenciales.</p>
-            </div>
-
-            <div class="auth-provider">
-              <button class="btn btn-google btn-full" type="button" data-google-login>
-                <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/></svg>
-                <span data-i18n="auth.btn.google.login">Continuar con Google</span>
-              </button>
-              <div class="auth-separator" data-i18n="auth.divider.login">o continuar con correo</div>
-              <p class="ms-status" data-ms-status role="status" aria-live="polite"></p>
-            </div>
-
-            
-              <div class="demo-logins" style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <button class="btn btn-ghost btn-sm btn-demo-candidato" type="button" onclick="document.getElementById('login-email').value='demo.candidato@incluia.org'; document.getElementById('login-password').value='Demo1234!'; document.getElementById('login-form').dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));">
-                  Demo candidato
-                </button>
-                <button class="btn btn-ghost btn-sm btn-demo-empresa" type="button" onclick="document.getElementById('login-email').value='demo.empresa@incluia.org'; document.getElementById('login-password').value='Demo1234!'; document.getElementById('login-form').dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));">
-                  Demo empresa
-                </button>
-              </div>
-
-            <form id="login-form" class="auth-form">
-              <div class="field">
-                <label for="login-email" data-i18n="auth.label.email">Correo electrónico</label>
-                <input id="login-email" name="email" type="email" data-i18n-placeholder="auth.label.email" placeholder="nombre@correo.com" autocomplete="email" required />
-              </div>
-              <div class="field">
-                <label class="field-label" for="login-password" data-i18n="auth.label.password">Contraseña</label>
-                <div class="input-wrap">
-                  <input class="pass-input" type="password" id="login-password" name="password" data-i18n-placeholder="auth.label.password" placeholder="Mínimo 8 caracteres" required />
-                  <button class="eye-btn" id="loginEyeBtn" type="button" aria-label="Mostrar contraseña">
-                    <svg class="eye-svg" id="iconOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-                      <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    <svg class="eye-svg" id="iconClosed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
-                      <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
-                      <line x1="1" y1="1" x2="23" y2="23"/>
-                    </svg>
-                    <span class="eye-text" data-i18n="auth.toggle.show">Mostrar</span>
-                  </button>
-                </div>
-              </div>
-              <button class="btn btn-primary btn-full" type="submit" data-i18n="auth.btn.submit.login">Entrar</button>
-              <p class="auth-hint">
-                <span data-i18n="auth.hint.login">¿No tienes una cuenta?</span>
-                <a href="register.html" data-nav data-i18n="auth.hint.login.link">Regístrate aquí</a>
-              </p>
-            </form>
-          </section>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <div>
-      <p class="footer-title" data-i18n="footer.title">incluIA by Design</p>
-      <p class="footer-text" data-i18n="footer.text">Accesible, modular y listo para escalar sobre infraestructura robusta.</p>
-      <div class="footer-meta">
-        <span data-i18n="footer.meta">&copy; 2026 incluIA</span>
-        <span>|</span>
-        <span class="ms-badge" data-i18n="footer.badge">Supported by Microsoft</span>
-      </div>
-    </div>
-    <div class="footer-links">
-      <a href="../index.html" data-nav data-i18n="footer.links.login">Producto</a>
-      <a href="donate.html" data-nav data-i18n="footer.links.esg">Apoyo</a>
-      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato">Mentoría</a>
-    </div>
-  </footer>
-
-  <script type="module" src="../js/main.js"></script>
+    <p>Redirigiendo a la página principal...</p>
 </body>
 </html>

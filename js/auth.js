@@ -1,15 +1,51 @@
-/**
- * auth.js — Local Mock Authentication + UX feedback
- * Handles Google OAuth (Mock), email/password login, registration wizard, and role selection.
- */
+
 
 import { t } from "./i18n.js";
 
-// ── Global Logout Helper ───────────────────────────────────────
+const ROLE_TO_USER_TYPE = {
+  candidate: "candidato",
+  company: "empresa",
+};
+
+function normalizeRole(role) {
+  return role === "company" ? "company" : "candidate";
+}
+
+function syncStoredIdentity(role) {
+  const normalizedRole = normalizeRole(role);
+  const userType = ROLE_TO_USER_TYPE[normalizedRole];
+
+  localStorage.setItem("user_role", normalizedRole);
+  localStorage.setItem("app-user-type", userType);
+
+  if (normalizedRole === "company") {
+    localStorage.removeItem("app-candidate-type");
+  }
+
+  if (window.__applyThemePolicy) {
+    window.__applyThemePolicy();
+  }
+
+  return normalizedRole;
+}
+
+function clearStoredIdentity() {
+  [
+    "user_role",
+    "user_id",
+    "demo_session",
+    "pending_role",
+    "app-user-type",
+    "app-candidate-type",
+  ].forEach((key) => localStorage.removeItem(key));
+
+  if (window.__applyThemePolicy) {
+    window.__applyThemePolicy();
+  }
+}
+
 window.cerrarSesion = async () => {
-  localStorage.removeItem("user_role");
-  localStorage.removeItem("user_id");
-  localStorage.removeItem("demo_session");
+  clearStoredIdentity();
   
   if (window.__spaNavigate) {
     window.__spaNavigate("index.html");
@@ -19,7 +55,6 @@ window.cerrarSesion = async () => {
 };
 
 export function initAuth(root = document) {
-  // ── Sign Out buttons ───────────────────────────────────────────
   root.querySelectorAll("[data-logout]").forEach(btn => {
     if (!btn._logoutListener) {
       btn.addEventListener("click", async (e) => {
@@ -59,7 +94,6 @@ export function initAuth(root = document) {
 
   updateDemoButtons();
 
-  // ── Shared status helpers ──────────────────────────────────────
   function setStatus(el, type, icon, text) {
     if (!el) return;
     el.className = `ms-status msg-${type}`;
@@ -75,7 +109,6 @@ export function initAuth(root = document) {
     else btn.classList.remove("is-loading");
   }
 
-  // ── Redirect helper — SPA Router ───────────────────────────────
   function redirectToDashboard(role) {
     const dest = role === "company" ? "pages/dashboard-company.html" : "pages/dashboard-candidate.html";
 
@@ -86,10 +119,10 @@ export function initAuth(root = document) {
     }
   }
 
-  // ── Mock Google OAuth (Login) ───────────────────────────────────────
   root.querySelectorAll("[data-google-login]").forEach((btn) => {
     const originalText = btn.querySelector("span[data-i18n]")?.textContent || "Continuar con Google";
     const statusEl = authRoot.querySelector("[data-ms-status]");
+    const preferredUserType = localStorage.getItem("app-user-type");
 
     btn.addEventListener("click", async (e) => {
       e.preventDefault();
@@ -98,15 +131,15 @@ export function initAuth(root = document) {
 
       setTimeout(() => {
         setStatus(statusEl, "success", "✅", "¡Sesión iniciada correctamente!");
-        localStorage.setItem("user_role", "candidate"); // Default mock
+        const role = preferredUserType === "empresa" ? "company" : "candidate";
+        syncStoredIdentity(role);
         localStorage.setItem("user_id", "mock-google-user-id");
         localStorage.setItem("demo_session", "true");
-        setTimeout(() => redirectToDashboard("candidate"), 800);
+        setTimeout(() => redirectToDashboard(role), 800);
       }, 1500);
     });
   });
 
-  // ── Email/password forms (Login) ───────────────────────────────
   authRoot.querySelectorAll("form").forEach((form) => {
     if (form.hasAttribute("data-register-form")) return;
 
@@ -121,7 +154,6 @@ export function initAuth(root = document) {
       const tempEmail = emailEl?.value?.trim();
       const tempPass = passEl?.value;
       
-      // Clear previous validation states
       [emailEl, passEl].forEach((el) => {
         if (el) el.classList.remove("error", "success");
       });
@@ -141,15 +173,17 @@ export function initAuth(root = document) {
       setStatus(statusEl, "info", "⏳", "Verificando credenciales...");
 
       setTimeout(() => {
-        let role = "candidate";
-        if (tempEmail.includes("empresa") || tempEmail === "demo.empresa@incluia.org") {
+        let role = localStorage.getItem("app-user-type") === "empresa" ? "company" : "candidate";
+        if (tempEmail.includes("empresa") || tempEmail === "demo.empresa@app.com") {
           role = "company";
+        } else if (tempEmail.includes("candidato") || tempEmail === "demo.candidato@app.com") {
+          role = "candidate";
         }
         
         emailEl?.classList.add("success");
         passEl?.classList.add("success");
         setStatus(statusEl, "success", "✅", "¡Sesión iniciada correctamente!");
-        localStorage.setItem("user_role", role);
+        syncStoredIdentity(role);
         localStorage.setItem("user_id", "mock-local-user-id");
         localStorage.setItem("demo_session", "true");
         
@@ -158,7 +192,6 @@ export function initAuth(root = document) {
     });
   });
 
-  // ── Password Toggle ──────────────────────────────────────────
   function initPasswordToggle(input, btn) {
     if (!input || !btn) return;
     let visible = false;
@@ -185,7 +218,6 @@ export function initAuth(root = document) {
     initPasswordToggle(input, btn);
   });
 
-  // ── Strength Bar ──────────────────────────────────────────────
   function initStrengthBar(input, bar, label) {
     if (!input || !bar) return;
 
@@ -218,11 +250,9 @@ export function initAuth(root = document) {
   const regPasswordInput = root.querySelector("#reg-password");
   initStrengthBar(regPasswordInput, strengthBar, strengthLabel);
 
-  // ── Register Wizard ─────────────────────────────────────────
   initRegisterWizard(authRoot);
 }
 
-// ═══ REGISTER WIZARD ═══════════════════════════════════════════════
 function initRegisterWizard(root) {
   const wizard = root.querySelector("[data-register-wizard]");
   if (!wizard) return;
@@ -293,7 +323,6 @@ function initRegisterWizard(root) {
     }, 260);
   }
 
-  // Select Role
   roleCards.forEach((card) => {
     card.addEventListener("click", () => {
       roleCards.forEach((c) => c.classList.remove("selected"));
@@ -306,45 +335,83 @@ function initRegisterWizard(root) {
     });
   });
 
-  // Navigate Step 1 -> Step 2
+  function setupRoleUI(role) {
+    selectedRole = (role === "empresa" || role === "company") ? "company" : "candidate";
+
+    if (selectedRole === "company") {
+      if (companyFields) {
+        companyFields.style.display = "block";
+        companyFields.classList.remove("hidden");
+      }
+      if (googleBtnText) googleBtnText.textContent = "Continuar con Google corporativo";
+      if (nameLabel) nameLabel.textContent = "Nombre y Apellido";
+      if (formDividerText) formDividerText.textContent = "o completa el formulario";
+      if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-success">Empresa / Reclutador</span>';
+      const cn = root.querySelector("#reg-company-name");
+      const cr = root.querySelector("#reg-company-role");
+      if (cn) cn.required = true;
+      if (cr) cr.required = true;
+    } else {
+      if (companyFields) {
+        companyFields.style.display = "none";
+        companyFields.classList.add("hidden");
+      }
+      if (googleBtnText) googleBtnText.textContent = "Continuar con Google";
+      if (nameLabel) nameLabel.textContent = "Nombre completo";
+      if (formDividerText) formDividerText.textContent = "o regístrate con correo";
+      if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-soft">Candidato / Aliado</span>';
+      const cn = root.querySelector("#reg-company-name");
+      const cr = root.querySelector("#reg-company-role");
+      if (cn) { cn.required = false; cn.value = ""; }
+      if (cr) { cr.required = false; cr.value = ""; }
+    }
+  }
+
+  function constrainRoleCards(role) {
+    const normalizedRole = role === "empresa" || role === "company" ? "company" : role === "candidato" || role === "candidate" ? "candidate" : "";
+
+    roleCards.forEach((card) => {
+      const cardRole = card.getAttribute("data-role");
+      const shouldShow = !normalizedRole || cardRole === normalizedRole;
+      card.hidden = !shouldShow;
+      card.setAttribute("aria-hidden", shouldShow ? "false" : "true");
+      card.classList.toggle("selected", shouldShow && normalizedRole === cardRole);
+    });
+
+    if (btnToStep2 && normalizedRole) {
+      btnToStep2.disabled = false;
+      btnToStep2.style.opacity = "1";
+    }
+  }
+
+  const storedUserType = localStorage.getItem("app-user-type");
+
+  if (storedUserType === "candidato" || storedUserType === "empresa") {
+    setupRoleUI(storedUserType);
+    constrainRoleCards(storedUserType);
+    if (btnBack1) btnBack1.style.display = "none";
+    requestAnimationFrame(() => {
+      showStep(2);
+    });
+  } else {
+    constrainRoleCards("");
+  }
+
   if (btnToStep2) {
     btnToStep2.addEventListener("click", () => {
       if (!selectedRole) return;
-
-      if (selectedRole === "company") {
-        if (companyFields) companyFields.style.display = "block";
-        if (googleBtnText) googleBtnText.textContent = "Continuar con Google corporativo";
-        if (nameLabel) nameLabel.textContent = "Nombre y Apellido";
-        if (formDividerText) formDividerText.textContent = "o completa el formulario";
-        if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-success">Empresa / Reclutador</span>';
-        const cn = root.querySelector("#reg-company-name");
-        const cr = root.querySelector("#reg-company-role");
-        if (cn) cn.required = true;
-        if (cr) cr.required = true;
-      } else {
-        if (companyFields) companyFields.style.display = "none";
-        if (googleBtnText) googleBtnText.textContent = "Continuar con Google";
-        if (nameLabel) nameLabel.textContent = "Nombre completo";
-        if (formDividerText) formDividerText.textContent = "o regístrate con correo";
-        if (roleBadge) roleBadge.innerHTML = '<span class="chip chip-soft">Candidato / Aliado</span>';
-        const cn = root.querySelector("#reg-company-name");
-        const cr = root.querySelector("#reg-company-role");
-        if (cn) cn.required = false;
-        if (cr) cr.required = false;
-      }
-
+      setupRoleUI(selectedRole);
+      constrainRoleCards(selectedRole);
       animateTransition(1, 2);
     });
   }
 
-  // Navigate Step 2 -> Step 1
   if (btnBack1) {
     btnBack1.addEventListener("click", () => {
       animateTransition(2, 1);
     });
   }
 
-  // Google Auth for Registration
   const btnGoogleRegister = root.querySelector("[data-google-register]");
   if (btnGoogleRegister) {
     btnGoogleRegister.addEventListener("click", async (e) => {
@@ -354,7 +421,7 @@ function initRegisterWizard(root) {
       if (textEl) textEl.textContent = "Conectando...";
 
       const roleForMock = selectedRole === "company" ? "company" : "candidate";
-      localStorage.setItem("user_role", roleForMock);
+      syncStoredIdentity(roleForMock);
       localStorage.setItem("pending_role", roleForMock);
 
       setTimeout(() => {
@@ -367,7 +434,6 @@ function initRegisterWizard(root) {
     });
   }
 
-  // Form Submit
   if (registerForm) {
     const submitBtn = registerForm.querySelector("[data-btn-submit]");
     const statusEl = root.querySelector("#reg-status-message");
@@ -437,7 +503,7 @@ function initRegisterWizard(root) {
           };
         }
         
-        localStorage.setItem("user_role", roleForMock);
+        syncStoredIdentity(roleForMock);
         localStorage.setItem("user_id", "mock-local-user-id");
         localStorage.setItem("demo_session", "true");
 
