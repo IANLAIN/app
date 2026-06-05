@@ -21,7 +21,7 @@
    WCAG 2.1 AA compliant (4.5:1 minimum for body text).
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
 
   /* ── Backgrounds — never pure white, never pure black ────────── */
   --color-bg:          #FCF9F4;   /* warm cream — replaces #FFF */
@@ -190,7 +190,7 @@
    ═══════════════════════════════════════════════════════════════ */
 :root[data-user-type="visitante"],
 :root[data-user-type="empresa"] {
-  color-scheme: dark;
+  color-scheme: light dark;
 
   --color-bg: #F3F2EF;
   --color-surface: #FFFFFF;
@@ -225,31 +225,50 @@
   --focus-ring-soft: rgba(10, 102, 194, 0.15);
 }
 
-/* ─── Enforced light mode for sober profiles ───────────────── */
+/* ─── Dark mode for sober profiles (empresa / visitante) ───── */
 :root[data-user-type="visitante"][data-theme="dark"],
 :root[data-user-type="empresa"][data-theme="dark"] {
   color-scheme: dark;
-  --color-bg: #F3F2EF;
-  --color-surface: #FFFFFF;
-  --color-surface-alt: #F8F7F5;
-  --color-ink: #191919;
-  --color-muted: #5E5E5E;
-  --color-border: rgba(0, 0, 0, 0.18);
-  --color-primary: #0A66C2;
-  --color-primary-dark: #004182;
-  --color-accent: #E9F1FB;
-  --color-accent-2: #DBE8F7;
-  --btn-primary-bg: #0A66C2;
-  --btn-primary-text: #FFFFFF;
-  --btn-outline-border: #0A66C2;
-  --btn-outline-text: #0A66C2;
-  --nav-bg: #FFFFFF;
-  --nav-border: rgba(0, 0, 0, 0.18);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.10);
-  --focus-ring: rgba(10, 102, 194, 0.2);
-  --focus-ring-soft: rgba(10, 102, 194, 0.15);
+
+  --color-bg:          #1B1F23;
+  --color-surface:     #252A2E;
+  --color-surface-alt: #2F353A;
+
+  --color-ink:   #E0E0E0;
+  --color-muted: #9E9E9E;
+  --color-border: rgba(255, 255, 255, 0.10);
+
+  --color-primary:      #70B5F9;
+  --color-primary-dark: #9CCBFC;
+  --color-accent:       rgba(112, 181, 249, 0.12);
+  --color-accent-2:     rgba(112, 181, 249, 0.08);
+
+  --btn-primary-bg:     #0A66C2;
+  --btn-primary-text:   #FFFFFF;
+  --btn-outline-border: #70B5F9;
+  --btn-outline-text:   #70B5F9;
+  --badge-bg:           rgba(112, 181, 249, 0.14);
+  --badge-text:         #70B5F9;
+  --btn-google-bg:      #2F353A;
+  --btn-google-text:    #E0E0E0;
+  --track-bg:           #3A4046;
+
+  --nav-bg:     rgba(27, 31, 35, 0.92);
+  --nav-border: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm:   0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-soft: var(--shadow-lg);
+  --shadow-card: var(--shadow-md);
+
+  --focus-ring: rgba(112, 181, 249, 0.24);
+  --focus-ring-soft: rgba(112, 181, 249, 0.18);
+
+  --color-success: #509C75;
+  --color-warning: #C79A3A;
+  --color-error:   #B85C5C;
+  --color-soft: rgba(112, 181, 249, 0.12);
 }
 
 :root[data-user-type="candidato"][data-candidate-type="down"][data-theme="dark"] {
@@ -1203,7 +1222,9 @@ button.is-loading {
   border: 1px solid var(--color-border);
 }
 
-[data-theme="dark"] .hero-illustration-placeholder {
+[data-theme="dark"] .hero-illustration-placeholder,
+html[data-user-type='empresa'][data-theme='dark'] .hero-illustration-placeholder,
+html[data-user-type='visitante'][data-theme='dark'] .hero-illustration-placeholder {
   background: linear-gradient(135deg, rgba(72,169,166,0.08), rgba(72,169,166,0.04));
 }
 
@@ -1456,6 +1477,17 @@ html[data-user-type='empresa'], html[data-user-type='visitante'] {
   --font-primary: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
+/* Dark mode overrides for legacy non-token variables used in empresa/visitante */
+html[data-user-type='empresa'][data-theme='dark'],
+html[data-user-type='visitante'][data-theme='dark'] {
+  --surface-color: #252A2E;
+  --surface-hover: #2F353A;
+  --text-primary: #E0E0E0;
+  --text-secondary: #9E9E9E;
+  --border-color: rgba(255, 255, 255, 0.10);
+  --bg-color: #1B1F23;
+}
+
 html[data-user-type='empresa'] *, html[data-user-type='visitante'] * {
   border-radius: var(--radius-md);
 }
@@ -1467,8 +1499,8 @@ html[data-user-type='empresa'] .btn, html[data-user-type='visitante'] .btn {
 }
 
 html[data-user-type='empresa'] .card, html[data-user-type='visitante'] .card {
-  box-shadow: 0 0 0 1px var(--border-color);
-  background-color: var(--surface-color);
+  box-shadow: 0 0 0 1px var(--color-border);
+  background-color: var(--color-surface);
 }
 
 html[data-user-type='empresa'] .emoji, html[data-user-type='visitante'] .emoji, 

@@ -140,3 +140,29 @@
 .sim-btn-danger:hover {
   background: rgba(155, 59, 59, 0.08);
 }
+
+[data-theme="dark"] .sim-btn-danger:hover {
+  background: rgba(184, 92, 92, 0.15);
+}
+
+/* ═══ RESPONSIVE — SIMULATOR MOBILE ════════════════════════════ */
+@media (max-width: 640px) {
+  .sim-trigger {
+    bottom: 14px;
+    left: 14px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .sim-trigger strong {
+    display: none;
+  }
+
+  .sim-panel {
+    bottom: 64px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-height: 70vh;
+  }
+}

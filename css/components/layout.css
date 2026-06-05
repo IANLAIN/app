@@ -987,43 +987,43 @@ body.nav-open .nav-overlay {
   }
 }
 
-.stat-grid {
-  grid-template-columns: repeat(2, 1fr);
-}
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (max 640px) — orphaned rules fix
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-/* ── Mentor layout: stacked ───────────────────────────── */
-.mentor-layout {
-  grid-template-columns: 1fr;
-}
+  /* ── Auth action buttons ──────────────────────────────── */
+  .button-row,
+  .auth-action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
 
-/* ── Auth action buttons ──────────────────────────────── */
-.button-row,
-.auth-action-buttons {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 10px;
-}
+  .button-row .btn,
+  .auth-action-buttons .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
 
-.button-row .btn,
-.auth-action-buttons .btn {
-  width: 100%;
-  text-align: center;
-  justify-content: center;
-}
+  /* ── Demo login buttons ───────────────────────────────── */
+  .demo-logins {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
 
-/* ── Demo login buttons ───────────────────────────────── */
-.demo-logins {
-  flex-direction: column !important;
-  gap: 8px !important;
-}
+  /* ── Hero actions ─────────────────────────────────────── */
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
 
-/* ── Hero actions ─────────────────────────────────────── */
-.hero-actions {
-  flex-direction: column;
-  width: 100%;
-}
-
-.hero-actions .btn {
-  width: 100%;
-  justify-content: center;
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
