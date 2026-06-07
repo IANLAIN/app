@@ -6,11 +6,45 @@
 export function setupNavigation({ onNavigate, useSpa }) {
   const navToggle = document.querySelector("[data-nav-toggle]");
 
+  // ── Inject the nav-overlay element if not present ────────────
+  let overlay = document.querySelector(".nav-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.className = "nav-overlay";
+    document.body.appendChild(overlay);
+  }
+
+  // ── Upgrade toggle button icons ──────────────────────────────
+  // Replace the plain text content with labeled spans so CSS can
+  // swap ☰ ↔ ✕ via body.nav-open selectors.
   if (navToggle) {
+    navToggle.innerHTML =
+      '<span class="icon-menu" aria-hidden="true">☰</span>' +
+      '<span class="icon-close" aria-hidden="true">✕</span>' +
+      '<span class="visually-hidden">Menú</span>';
+
     navToggle.addEventListener("click", () => {
       const isOpen = document.body.classList.toggle("nav-open");
       navToggle.setAttribute("aria-expanded", String(isOpen));
+      // Show / hide the overlay
+      overlay.style.display = isOpen ? "block" : "";
     });
+  }
+
+  // ── Close menu when clicking the overlay ─────────────────────
+  overlay.addEventListener("click", closeMenu);
+
+  // ── Close menu on Escape key ─────────────────────────────────
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && document.body.classList.contains("nav-open")) {
+      closeMenu();
+    }
+  });
+
+  function closeMenu() {
+    document.body.classList.remove("nav-open");
+    overlay.style.display = "";
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
   }
 
   if (!useSpa || !onNavigate) return;
@@ -26,6 +60,7 @@ export function setupNavigation({ onNavigate, useSpa }) {
 
     "mentoring.html",
     "onboarding.html",
+    "why.html",
   ]);
 
   /**
@@ -113,9 +148,8 @@ export function setupNavigation({ onNavigate, useSpa }) {
     const route = normalizeRoute(link.getAttribute("href"));
     onNavigate(route);
 
-    // Close mobile menu
-    document.body.classList.remove("nav-open");
-    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    // Close mobile menu on navigation
+    closeMenu();
   });
 }
 

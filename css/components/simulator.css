@@ -1,0 +1,168 @@
+/* ═══ PROFILE SIMULATION PANEL ═════════════════════════════════ */
+
+.sim-trigger {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+.sim-trigger:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.sim-panel {
+  position: fixed;
+  bottom: 84px;
+  left: 24px;
+  width: min(calc(100vw - 48px), 340px);
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 9998;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--color-ink);
+}
+
+.sim-panel.open {
+  display: flex;
+}
+
+.sim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+
+.sim-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.sim-close {
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px;
+}
+
+.sim-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim-section label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.sim-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.sim-btn {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.sim-btn:hover {
+  background: var(--color-surface-alt);
+  border-color: var(--color-primary);
+}
+
+.sim-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.sim-btn-danger {
+  background: transparent;
+  border: 1px dashed var(--color-error);
+  color: var(--color-error);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.sim-btn-danger:hover {
+  background: rgba(155, 59, 59, 0.08);
+}
+
+[data-theme="dark"] .sim-btn-danger:hover {
+  background: rgba(184, 92, 92, 0.15);
+}
+
+/* ═══ RESPONSIVE — SIMULATOR MOBILE ════════════════════════════ */
+@media (max-width: 640px) {
+  .sim-trigger {
+    bottom: 14px;
+    left: 14px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .sim-trigger strong {
+    display: none;
+  }
+
+  .sim-panel {
+    bottom: 64px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-height: 70vh;
+  }
+}

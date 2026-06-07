@@ -84,6 +84,7 @@ function initGuideGenerator(root) {
     const role = roleInput.value.trim() || "rol";
     const context = contextInput.value.trim() || "contexto";
     output.textContent = `Guia sugerida para ${role}: espacio con baja distraccion, checklist de tareas, reuniones de 15 minutos y ajustes segun ${context}.`;
+    if (window.showToast) window.showToast("Guía de adaptación generada por IA", "success");
   });
 }
 
@@ -103,6 +104,10 @@ function initTaskBoard(root) {
       const isComplete = card.classList.toggle("is-complete");
       progress.value = isComplete ? progress.max : Number(progress.dataset.start);
       button.textContent = isComplete ? "Completada" : "Completar";
+      if (window.showToast) {
+        if (isComplete) window.showToast("¡Tarea completada! +50 XP", "success");
+        else window.showToast("Tarea restablecida", "info");
+      }
     });
   });
 }
