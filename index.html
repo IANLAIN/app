@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>app</title>
-  <meta name="description" content="Una plataforma que facilita la transición laboral adaptativa, enfocada en capacidades y entornos, no en etiquetas.">
+  <meta name="description" content="Plataforma que facilita la transición laboral adaptativa, enfocada en capacidades y entornos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/bootstrap.js"></script>
@@ -15,126 +15,97 @@
 </head>
 <body>
 
-  <!-- ════════════════════════════════════════
-       AUTH MODAL
-  ════════════════════════════════════════ -->
+  <!-- MODAL DE AUTENTICACIÓN (LOGIN + REGISTRO WIZARD) -->
   <div id="auth-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading" hidden>
     <div class="modal-glass" id="modal-container">
       <button class="modal-close-btn" id="modal-close" aria-label="Cerrar modal">✕</button>
 
       <!-- Tabs -->
-      <div class="modal-tabs" role="tablist" aria-label="Tipo de acceso">
-        <button class="modal-tab active" id="tab-login" role="tab" data-tab="login"
-          aria-selected="true" aria-controls="panel-login">Iniciar Sesión</button>
-        <button class="modal-tab" id="tab-register" role="tab" data-tab="register"
-          aria-selected="false" aria-controls="panel-register">Registrarse</button>
+      <div class="modal-tabs" role="tablist">
+        <button class="modal-tab active" id="tab-login" data-tab="login">Iniciar Sesión</button>
+        <button class="modal-tab" id="tab-register" data-tab="register">Registrarse</button>
       </div>
 
-      <!-- ── LOGIN PANEL ── -->
-      <div class="modal-panel active" id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+      <!-- PANEL LOGIN -->
+      <div class="modal-panel active" id="panel-login">
         <div class="modal-header">
           <h2 id="modal-heading">Bienvenido de vuelta</h2>
           <p>Ingresa tus credenciales para continuar.</p>
         </div>
 
         <button class="btn btn-google btn-full" id="google-login-btn" type="button">
-          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/></svg>
           <span>Continuar con Google</span>
         </button>
 
         <div class="auth-divider">o continúa con tu correo</div>
 
         <div class="demo-row">
-          <button class="btn btn-ghost btn-sm" id="demo-candidate-btn" type="button">🧠 Demo candidato</button>
-          <button class="btn btn-ghost btn-sm" id="demo-company-btn" type="button">🏢 Demo empresa</button>
+          <button class="btn btn-ghost btn-sm" id="demo-candidate-btn">Demo candidato</button>
+          <button class="btn btn-ghost btn-sm" id="demo-company-btn">Demo empresa</button>
         </div>
 
-        <form id="login-form" class="auth-form" novalidate>
+        <form id="login-form" novalidate>
           <div class="field">
             <label for="login-email">Correo electrónico</label>
-            <input type="email" id="login-email" placeholder="nombre@correo.com" autocomplete="email" required>
+            <input type="email" id="login-email" placeholder="nombre@correo.com" required>
           </div>
           <div class="field">
             <label for="login-password">Contraseña</label>
             <div class="input-wrap">
-              <input class="pass-input" type="password" id="login-password" placeholder="Tu contraseña" autocomplete="current-password" required>
+              <input class="pass-input" type="password" id="login-password" placeholder="Tu contraseña" required>
               <button class="eye-btn" type="button" id="login-eye-btn" aria-label="Mostrar contraseña">
-                <svg class="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>
-                </svg>
+                <svg class="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
           </div>
-          <p class="ms-status" id="login-status" role="status" aria-live="polite" hidden></p>
-          <button class="btn btn-primary btn-full" type="submit" id="login-submit">Entrar</button>
+          <p class="ms-status" id="login-status" hidden></p>
+          <button class="btn btn-primary btn-full" type="submit">Entrar</button>
           <p class="auth-hint">¿No tienes cuenta? <a href="#" data-switch-tab="register">Regístrate aquí</a></p>
         </form>
       </div>
 
-      <!-- ── REGISTER PANEL (WIZARD) ── -->
-      <div class="modal-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register">
-
-        <!-- Progress dots -->
-        <div class="wizard-progress" id="wizard-progress" role="progressbar" aria-label="Paso del registro">
-          <div class="prog-dot active" data-step="1">1</div>
-          <div class="prog-line"></div>
-          <div class="prog-dot" data-step="2">2</div>
-          <div class="prog-line"></div>
-          <div class="prog-dot" data-step="3">3</div>
-          <div class="prog-line"></div>
+      <!-- PANEL REGISTRO (WIZARD 4 PASOS) -->
+      <div class="modal-panel" id="panel-register">
+        <div class="wizard-progress">
+          <div class="prog-dot active" data-step="1">1</div><div class="prog-line"></div>
+          <div class="prog-dot" data-step="2">2</div><div class="prog-line"></div>
+          <div class="prog-dot" data-step="3">3</div><div class="prog-line"></div>
           <div class="prog-dot" data-step="4">4</div>
         </div>
 
-        <!-- STEP 1: Role -->
+        <!-- Paso 1: Rol -->
         <div class="wizard-step active" id="wstep-1">
           <div class="modal-header">
             <h2>¿Cómo llegas a app?</h2>
-            <p>Selecciona tu rol para personalizar la experiencia.</p>
+            <p>Selecciona tu rol.</p>
           </div>
-          <div class="role-cards" id="role-cards">
-            <button class="role-card" type="button" data-role="candidate" id="role-candidate">
-              <span class="role-icon" aria-hidden="true">🧠</span>
-              <div>
-                <strong>Candidato / Aliado</strong>
-                <span>Busco oportunidades laborales adaptadas a mis capacidades.</span>
-              </div>
+          <div class="role-cards">
+            <button class="role-card" type="button" data-role="candidate">
+              <div><strong>Candidato / Aliado</strong></div>
             </button>
-            <button class="role-card" type="button" data-role="company" id="role-company">
-              <span class="role-icon" aria-hidden="true">🏢</span>
-              <div>
-                <strong>Empresa / Reclutador</strong>
-                <span>Quiero incorporar talento diverso a mi organización.</span>
-              </div>
+            <button class="role-card" type="button" data-role="company">
+              <div><strong>Empresa / Reclutador</strong></div>
             </button>
           </div>
-          <button class="btn btn-primary btn-full" id="btn-to-step2" disabled aria-disabled="true">Continuar →</button>
+          <button class="btn btn-primary btn-full" id="btn-to-step2" disabled>Continuar</button>
           <p class="auth-hint">¿Ya tienes cuenta? <a href="#" data-switch-tab="login">Inicia sesión</a></p>
         </div>
 
-        <!-- STEP 2: Data -->
+        <!-- Paso 2: Datos personales / empresa -->
         <div class="wizard-step" id="wstep-2">
           <div class="modal-header">
             <h2>Crea tu cuenta</h2>
             <p id="step2-subtitle">Completa tus datos para empezar.</p>
           </div>
-          <button class="btn btn-google btn-full" id="google-register-btn" type="button">
-            <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
+          <button class="btn btn-google btn-full" id="google-register-btn">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/></svg>
             <span id="google-reg-text">Continuar con Google</span>
           </button>
           <div class="auth-divider">o completa el formulario</div>
-          <form id="register-form" class="auth-form" novalidate>
+          <form id="register-form">
             <div class="field">
-              <label for="reg-name" id="name-label">Nombre completo</label>
+              <label for="reg-name">Nombre completo</label>
               <input type="text" id="reg-name" placeholder="Tu nombre y apellido" required>
             </div>
             <div id="company-fields" style="display:none;">
@@ -145,252 +116,119 @@
             </div>
             <div class="field">
               <label for="reg-email">Correo electrónico</label>
-              <input type="email" id="reg-email" placeholder="nombre@correo.com" autocomplete="email" required>
+              <input type="email" id="reg-email" placeholder="nombre@correo.com" required>
             </div>
             <div class="field">
               <label for="reg-password">Contraseña</label>
               <div class="input-wrap">
-                <input class="pass-input" type="password" id="reg-password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" required>
-                <button class="eye-btn" type="button" id="reg-eye-btn" aria-label="Mostrar contraseña">
-                  <svg class="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>
-                  </svg>
+                <input class="pass-input" type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required>
+                <button class="eye-btn" type="button" id="reg-eye-btn">
+                  <svg class="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
               </div>
               <div class="strength-bar-wrap"><div class="strength-bar" id="reg-strength-bar"></div></div>
               <p class="strength-label" id="reg-strength-label"></p>
             </div>
-            <p class="ms-status" id="register-status" role="status" aria-live="polite" hidden></p>
+            <p class="ms-status" id="register-status" hidden></p>
             <div class="btn-row">
-              <button class="btn btn-outline" type="button" id="back-to-step1">← Volver</button>
-              <button class="btn btn-primary" type="submit" id="register-submit">Continuar →</button>
+              <button class="btn btn-outline" type="button" id="back-to-step1">Volver</button>
+              <button class="btn btn-primary" type="submit" id="register-submit">Continuar</button>
             </div>
           </form>
         </div>
 
-        <!-- STEP 3: 4 Axes + Radar Chart (only for candidates) -->
+        <!-- Paso 3: Ejes de entorno (solo candidatos) -->
         <div class="wizard-step" id="wstep-3">
           <div class="modal-header">
             <h2>Tu perfil de entorno</h2>
-            <p>Mueve los controles para reflejar tus necesidades. El gráfico se actualiza en tiempo real.</p>
+            <p>Ajusta los controles según tus necesidades.</p>
           </div>
           <div class="axes-split">
             <div class="axes-controls">
-              <div class="axis-group">
-                <label>🗣️ Procesamiento y Comunicación</label>
-                <small>Interacción social, formato de entrada preferido</small>
-                <div class="slider-row">
-                  <input type="range" id="axis1" class="axis-slider" min="1" max="10" value="5" aria-label="Eje 1: Procesamiento">
-                  <span class="axis-value" id="val1">5</span>
-                </div>
-              </div>
-              <div class="axis-group">
-                <label>🌿 Tolerancia Ambiental</label>
-                <small>Carga visual, nivel de ruido, estructura del espacio</small>
-                <div class="slider-row">
-                  <input type="range" id="axis2" class="axis-slider" min="1" max="10" value="5" aria-label="Eje 2: Tolerancia ambiental">
-                  <span class="axis-value" id="val2">5</span>
-                </div>
-              </div>
-              <div class="axis-group">
-                <label>⚡ Ejecución y Tareas</label>
-                <small>Foco, atención, manejo del tiempo</small>
-                <div class="slider-row">
-                  <input type="range" id="axis3" class="axis-slider" min="1" max="10" value="5" aria-label="Eje 3: Ejecución">
-                  <span class="axis-value" id="val3">5</span>
-                </div>
-              </div>
-              <div class="axis-group">
-                <label>🔧 Ajustes Razonables</label>
-                <small>Software, hardware, adaptaciones requeridas</small>
-                <div class="slider-row">
-                  <input type="range" id="axis4" class="axis-slider" min="1" max="10" value="5" aria-label="Eje 4: Ajustes">
-                  <span class="axis-value" id="val4">5</span>
-                </div>
-              </div>
+              <div class="axis-group"><label>Procesamiento y Comunicación</label><div class="slider-row"><input type="range" id="axis1" min="1" max="10" value="5"><span class="axis-value" id="val1">5</span></div></div>
+              <div class="axis-group"><label>Tolerancia Ambiental</label><div class="slider-row"><input type="range" id="axis2" min="1" max="10" value="5"><span class="axis-value" id="val2">5</span></div></div>
+              <div class="axis-group"><label>Ejecución y Tareas</label><div class="slider-row"><input type="range" id="axis3" min="1" max="10" value="5"><span class="axis-value" id="val3">5</span></div></div>
+              <div class="axis-group"><label>Ajustes Razonables</label><div class="slider-row"><input type="range" id="axis4" min="1" max="10" value="5"><span class="axis-value" id="val4">5</span></div></div>
             </div>
-            <div class="axes-chart">
-              <canvas id="radarChart" width="220" height="220" aria-label="Diagrama de telaraña del perfil de entorno"></canvas>
-            </div>
+            <div class="axes-chart"><canvas id="radarChart" width="400" height="400" style="max-width:400px; width:100%; aspect-ratio:1/1;"></canvas></div>
           </div>
           <div class="btn-row" style="margin-top:1.25rem;">
-            <button class="btn btn-outline" type="button" id="back-to-step2">← Volver</button>
-            <button class="btn btn-primary" type="button" id="btn-to-step4">Finalizar →</button>
+            <button class="btn btn-outline" type="button" id="back-to-step2">Volver</button>
+            <button class="btn btn-primary" type="button" id="btn-to-step4">Finalizar</button>
           </div>
         </div>
 
-        <!-- STEP 4: Confirmation -->
+        <!-- Paso 4: Confirmación -->
         <div class="wizard-step" id="wstep-4">
           <div class="verification-screen">
-            <div class="verify-icon" aria-hidden="true">📬</div>
             <h2>¡Cuenta creada!</h2>
-            <p>Hemos enviado un enlace de confirmación a:<br>
-              <strong id="verify-email-display"></strong>
-            </p>
-            <div class="verify-tips">
-              <p>💡 Revisa tu carpeta de spam si no ves el correo en unos minutos.</p>
-            </div>
-            <button class="btn btn-primary btn-full" id="go-to-dashboard" type="button">Ir a mi panel →</button>
-            <p class="auth-hint" style="margin-top:1rem;">
-              <a href="#" id="resend-email">Reenviar correo de confirmación</a>
-            </p>
+            <p>Hemos enviado un enlace de confirmación a:<br><strong id="verify-email-display"></strong></p>
+            <div class="verify-tips"><p>Revisa tu carpeta de spam si no ves el correo en unos minutos.</p></div>
+            <button class="btn btn-primary btn-full" id="go-to-dashboard">Ir a mi panel</button>
+            <p class="auth-hint" style="margin-top:1rem;"><a href="#" id="resend-email">Reenviar correo</a></p>
           </div>
         </div>
-
-      </div><!-- end panel-register -->
-    </div><!-- end modal-glass -->
-  </div><!-- end auth-modal -->
-
-
-  <!-- ════════════════════════════════════════
-       HEADER
-  ════════════════════════════════════════ -->
-  <header class="site-header" role="banner">
-    <a href="index.html" class="brand" aria-label="app — Inicio">
-      <span class="brand-mark">app</span>
-    </a>
-
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">☰</button>
-
-    <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
-      <ul class="nav-list">
-        <li><a href="#info" data-i18n="nav_about">Nosotros</a></li>
-      </ul>
-    </nav>
-
-    <div class="header-actions">
-      <div class="lang-selector">
-        <select id="lang-select" class="lang-select" aria-label="Seleccionar idioma">
-          <option value="es">🌐 ES</option>
-          <option value="en">🌐 EN</option>
-          <option value="fr">🌐 FR</option>
-          <option value="pt">🌐 PT</option>
-        </select>
       </div>
-      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-label="Activar fuente para dislexia" aria-pressed="false" title="Fuente legible">Aa</button>
-      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema" aria-pressed="false">☾</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a href="index.html" class="brand"><span class="brand-mark">app</span></a>
+    <div class="header-actions">
+      <div class="lang-selector"><select id="lang-select" class="lang-select"><option value="es">ES</option><option value="en">EN</option><option value="fr">FR</option><option value="pt">PT</option></select></div>
+      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-pressed="false">Aa</button>
+      <button id="theme-toggle" class="theme-toggle-btn" aria-pressed="false">☾</button>
       <button class="btn btn-outline btn-sm" id="btn-login" data-open-modal="login">Iniciar Sesión</button>
       <button class="btn btn-primary btn-sm" id="btn-register" data-open-modal="register">Registrarse</button>
     </div>
   </header>
 
-
-  <!-- ════════════════════════════════════════
-       HERO
-  ════════════════════════════════════════ -->
-  <section class="hero-landing" aria-labelledby="hero-title">
+  <!-- HERO -->
+  <section class="hero-landing">
     <div class="hero-inner">
-      <h1 id="hero-title" data-i18n="hero_title">Una plataforma que facilita la inserción laboral adaptativa</h1>
-      <p class="hero-sub" data-i18n="hero_subtitle">Enfocados en la capacitación y el acompañamiento para TDAH, Autismo y Síndrome de Down, conectamos talento con su entorno ideal.</p>
+      <h1>Una plataforma que facilita la inserción laboral adaptativa</h1>
+      <p class="hero-sub">Para TDAH, Autismo y Síndrome de Down, conectamos talento con su entorno ideal.</p>
       <div class="hero-cta">
         <button class="btn btn-primary btn-lg" data-open-modal="register">Empezar ahora</button>
         <button class="btn btn-outline btn-lg" data-open-modal="login">Ya tengo cuenta</button>
       </div>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="hero-blob"></div>
-    </div>
+    <div class="hero-visual"><div class="hero-blob"></div></div>
   </section>
 
-
-  <!-- ════════════════════════════════════════
-       INFO SECTION
-  ════════════════════════════════════════ -->
-  <section class="info-section" id="info" aria-labelledby="info-heading">
-    <h2 class="section-heading sr-only" id="info-heading">Información sobre la app</h2>
+  <!-- INFO -->
+  <section class="info-section">
     <div class="info-grid">
-
-      <article class="info-card" id="quienes-somos">
-        <h2 data-i18n="about_title">Quiénes Somos</h2>
-        <p data-i18n="about_text">Somos una plataforma enfocada en la inserción en la vida laboral. Nuestro objetivo principal es ofrecer capacitación y acompañamiento especializado para personas con TDAH, Autismo y Síndrome de Down, conectando perfiles únicos con las empresas indicadas.</p>
-      </article>
-
-      <article class="info-card" id="donde-estamos">
-        <h2 data-i18n="location_title">Dónde Estamos</h2>
-        <p data-i18n="location_text">Operamos a nivel digital, reuniendo un repertorio de mentores y profesionales. Proyectamos un entorno con herramientas tecnológicas, incluyendo un chatbot de soporte a futuro, para asegurar que nuestro acompañamiento no tenga fronteras.</p>
-      </article>
-
-      <article class="info-card" id="filosofia">
-        <h2 data-i18n="philosophy_title">Filosofía del sitio</h2>
-        <p data-i18n="philosophy_text">Creemos en la adaptación activa. El mentor actúa como mediador clave entre la empresa y el candidato, con el deber de identificar y comunicar las necesidades y limitaciones del aspirante para una integración genuina y sostenida.</p>
-      </article>
-
-      <article class="info-card" id="servicios">
-        <h2 data-i18n="services_title">Qué servicios ofrecemos</h2>
-        <p data-i18n="services_text">Ofrecemos caracterización integral de candidatos (intereses, habilidades) y empresas (entorno, limitaciones, funciones). Brindamos personalización visual, sugerencias de vacantes, matching inteligente, y seguimiento continuo de contratación evaluando fortalezas y adaptabilidad.</p>
-      </article>
-
+      <article class="info-card"><h2>Quiénes Somos</h2><p>Plataforma enfocada en la inserción laboral, ofreciendo capacitación y acompañamiento especializado para personas con TDAH, Autismo y Síndrome de Down, conectando perfiles únicos con las empresas indicadas.</p></article>
+      <article class="info-card"><h2>Dónde Estamos</h2><p>Operamos a nivel digital, reuniendo mentores y profesionales. Proyectamos un entorno con herramientas tecnológicas, incluyendo un chatbot de soporte a futuro.</p></article>
+      <article class="info-card"><h2>Filosofía del sitio</h2><p>Creemos en la adaptación activa. El mentor actúa como mediador clave entre la empresa y el candidato, identificando necesidades y limitaciones para una integración genuina.</p></article>
+      <article class="info-card"><h2>Qué servicios ofrecemos</h2><p>Caracterización de perfiles, personalización visual, vacantes sugeridas, matching inteligente, seguimiento continuo de contratación, mentoría y acompañamiento psicológico laboral.</p></article>
     </div>
   </section>
 
-
-  <!-- ════════════════════════════════════════
-       HOW IT WORKS
-  ════════════════════════════════════════ -->
-  <section class="how-section" aria-labelledby="how-heading">
+  <!-- CÓMO FUNCIONA -->
+  <section class="how-section">
     <div class="how-inner">
-      <h2 class="section-heading" id="how-heading">¿Cómo funciona?</h2>
+      <h2 class="section-heading">¿Cómo funciona?</h2>
       <p class="section-sub">Un proceso simple, transparente y sin fricciones.</p>
       <div class="steps-row">
-        <div class="step-item">
-          <div class="step-number" aria-hidden="true">1</div>
-          <h3>Crea tu perfil</h3>
-          <p>Completa el registro y caracteriza tu perfil de entorno con los 4 ejes de adaptación.</p>
-        </div>
-        <div class="step-arrow" aria-hidden="true">→</div>
-        <div class="step-item">
-          <div class="step-number" aria-hidden="true">2</div>
-          <h3>Recibe tu match</h3>
-          <p>El sistema empareja tu perfil con vacantes o candidatos ajustados al entorno requerido.</p>
-        </div>
-        <div class="step-arrow" aria-hidden="true">→</div>
-        <div class="step-item">
-          <div class="step-number" aria-hidden="true">3</div>
-          <h3>Inicia tu transición</h3>
-          <p>Accede a mentores, seguimiento personalizado y ajustes razonables desde el primer día.</p>
-        </div>
+        <div class="step-item"><div class="step-number">1</div><h3>Crea tu perfil</h3><p>Completa el registro y caracteriza tu perfil de entorno con los 4 ejes de adaptación.</p></div>
+        <div class="step-item"><div class="step-number">2</div><h3>Recibe tu match</h3><p>El sistema empareja tu perfil con vacantes o candidatos ajustados al entorno requerido.</p></div>
+        <div class="step-item"><div class="step-number">3</div><h3>Inicia tu transición</h3><p>Accede a mentores, seguimiento personalizado y ajustes razonables desde el primer día.</p></div>
       </div>
     </div>
   </section>
 
-
-
-
-
-
-
-
-  <!-- ════════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════════ -->
-  <footer class="site-footer-main" role="contentinfo">
+  <footer class="site-footer-main">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="brand-mark">app</span>
-        <p>Transición laboral adaptativa, centrada en capacidades y entornos.</p>
-      </div>
-      <div class="footer-links-col">
-        <h4>Plataforma</h4>
-        <a href="#info" data-i18n="nav_about">Nosotros</a>
-      </div>
-      <div class="footer-links-col">
-        <h4>Acceso</h4>
-        <a href="#" data-open-modal="login">Iniciar sesión</a>
-        <a href="#" data-open-modal="register">Registrarse</a>
-        <a href="pages/dashboard-candidate.html">Demo candidato</a>
-        <a href="pages/dashboard-company.html">Demo empresa</a>
-      </div>
-      <div class="footer-badge">
-        <svg width="20" height="20" viewBox="0 0 23 23" fill="none" aria-hidden="true">
-          <path d="M0 0H11V11H0V0Z" fill="#F25022"/><path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
-          <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/><path d="M12 12H23V23H12V12Z" fill="#FFB900"/>
-        </svg>
-        <span>Supported by Microsoft</span>
-      </div>
+      <div class="footer-brand"><span class="brand-mark">app</span><p>Transición laboral adaptativa, centrada en capacidades y entornos.</p></div>
+      <div class="footer-links-col"><h4>Plataforma</h4><a href="#info">Nosotros</a></div>
+      <div class="footer-links-col"><h4>Acceso</h4><a href="#" data-open-modal="login">Iniciar sesión</a><a href="#" data-open-modal="register">Registrarse</a><a href="pages/dashboard-candidate.html">Demo candidato</a><a href="pages/dashboard-company.html">Demo empresa</a></div>
+      <div class="footer-badge"><svg width="20" height="20" viewBox="0 0 23 23"><path d="M0 0H11V11H0V0Z" fill="#F25022"/><path d="M12 0H23V11H12V0Z" fill="#7FBA00"/><path d="M0 12H11V23H0V12Z" fill="#00A4EF"/><path d="M12 12H23V23H12V12Z" fill="#FFB900"/></svg><span>Supported by Microsoft</span></div>
     </div>
     <div class="footer-copy">© 2026 app · Todos los derechos reservados</div>
   </footer>
-
 
   <script type="module" src="js/index-app.js"></script>
 </body>

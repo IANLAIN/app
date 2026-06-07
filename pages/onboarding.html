@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>app</title>
-  <meta name="description" content="Cuestionario de onboarding para personalizar tu experiencia en la app." />
+  <title>app · Cuestionario de onboarding</title>
+  <meta name="description" content="Cuestionario para personalizar tu experiencia en la app según tus preferencias y necesidades." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
@@ -13,157 +13,90 @@
   <script src="../js/bootstrap.js"></script>
 </head>
 <body>
-  <div id="page-content">
-    <section class="onboarding-layout" id="onboarding-flow">
-
-      <div class="onboarding-header">
-        <h1 data-i18n="onboarding.title">Conozcámonos mejor</h1>
-        <p data-i18n="onboarding.desc">Queremos personalizar tu experiencia. No hay respuestas incorrectas.</p>
-      </div>
-
-      <div class="onboarding-step-indicator">
-        <div class="progress-bar-wrap">
-          <div class="progress-bar" id="barra-progreso" style="width: 20%;"></div>
+  <main>
+    <div id="page-content">
+      <section class="onboarding-layout" id="onboarding-flow">
+        <div class="onboarding-header">
+          <h1 data-i18n="onboarding.title">Conozcámonos mejor</h1>
+          <p data-i18n="onboarding.desc">Queremos personalizar tu experiencia. No hay respuestas incorrectas.</p>
         </div>
-        <div class="step-text" id="texto-paso">Paso 1 de 5</div>
-      </div>
 
-            <div class="step-container active" id="step-1" data-multi="false">
-        <h2 class="step-title">¿Cómo te describes?</h2>
-        <div class="options-grid">
-          <button type="button" class="opcion-card" data-value="autismo">
-            <span class="emoji" aria-hidden="true">🧩</span>
-            <span>Tengo autismo</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="otras_condiciones">
-            <span class="emoji" aria-hidden="true">⚡</span>
-            <span>Tengo otras condiciones intelectuales o psicosociales</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="down">
-            <span class="emoji" aria-hidden="true">💙</span>
-            <span>Tengo síndrome de Down</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="otra">
-            <span class="emoji" aria-hidden="true">🌈</span>
-            <span>Otra neurodivergencia</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="prefiero_no_decirlo">
-            <span class="emoji" aria-hidden="true">🤔</span>
-            <span>Prefiero no decirlo</span>
-          </button>
+        <div class="onboarding-step-indicator">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="barra-progreso" style="width: 20%;"></div>
+          </div>
+          <div class="step-text" id="texto-paso">Paso 1 de 5</div>
         </div>
-      </div>
 
-            <div class="step-container" id="step-2" data-multi="false">
-        <h2 class="step-title">¿Qué tipo de trabajo te interesa?</h2>
-        <div class="options-grid">
-          <button type="button" class="opcion-card" data-value="tecnologia">
-            <span class="emoji" aria-hidden="true">💻</span>
-            <span>Tecnología</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="arte">
-            <span class="emoji" aria-hidden="true">🎨</span>
-            <span>Arte y diseño</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="logistica">
-            <span class="emoji" aria-hidden="true">📦</span>
-            <span>Logística</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="ambiente">
-            <span class="emoji" aria-hidden="true">🌱</span>
-            <span>Medio ambiente</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="atencion">
-            <span class="emoji" aria-hidden="true">📞</span>
-            <span>Atención</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="manufactura">
-            <span class="emoji" aria-hidden="true">🔧</span>
-            <span>Manufactura</span>
-          </button>
+        <!-- Paso 1 -->
+        <div class="step-container active" id="step-1" data-multi="false">
+          <h2 class="step-title">¿Cómo te describes?</h2>
+          <div class="options-grid" id="step1-opciones">
+            <button type="button" class="opcion-card" data-value="autismo">Tengo autismo</button>
+            <button type="button" class="opcion-card" data-value="otras_condiciones">Tengo otras condiciones intelectuales o psicosociales</button>
+            <button type="button" class="opcion-card" data-value="down">Tengo síndrome de Down</button>
+            <button type="button" class="opcion-card" data-value="otra">Otra neurodivergencia</button>
+            <button type="button" class="opcion-card" data-value="prefiero_no_decirlo">Prefiero no decirlo</button>
+          </div>
         </div>
-      </div>
 
-            <div class="step-container" id="step-3" data-multi="false">
-        <h2 class="step-title">¿Cómo prefieres trabajar?</h2>
-        <div class="options-grid">
-          <button type="button" class="opcion-card" data-value="casa">
-            <span class="emoji" aria-hidden="true">🏠</span>
-            <span>Desde casa</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="oficina">
-            <span class="emoji" aria-hidden="true">🏢</span>
-            <span>En oficina</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="mixto">
-            <span class="emoji" aria-hidden="true">🔀</span>
-            <span>Mixto</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="nose">
-            <span class="emoji" aria-hidden="true">🤷</span>
-            <span>No sé aún</span>
-          </button>
+        <!-- Paso 2 -->
+        <div class="step-container" id="step-2" data-multi="false">
+          <h2 class="step-title">¿Qué tipo de trabajo te interesa?</h2>
+          <div class="options-grid" id="step2-opciones">
+            <button type="button" class="opcion-card" data-value="tecnologia">Tecnología</button>
+            <button type="button" class="opcion-card" data-value="arte">Arte y diseño</button>
+            <button type="button" class="opcion-card" data-value="logistica">Logística</button>
+            <button type="button" class="opcion-card" data-value="ambiente">Medio ambiente</button>
+            <button type="button" class="opcion-card" data-value="atencion">Atención</button>
+            <button type="button" class="opcion-card" data-value="manufactura">Manufactura</button>
+          </div>
         </div>
-      </div>
 
-            <div class="step-container" id="step-4" data-multi="false">
-        <h2 class="step-title">¿Qué ambiente de trabajo te hace sentir mejor?</h2>
-        <div class="options-grid">
-          <button type="button" class="opcion-card" data-value="silencioso">
-            <span class="emoji" aria-hidden="true">🤫</span>
-            <span>Silencioso</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="musica">
-            <span class="emoji" aria-hidden="true">🎵</span>
-            <span>Con música</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="equipo">
-            <span class="emoji" aria-hidden="true">👥</span>
-            <span>En equipo</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="solo">
-            <span class="emoji" aria-hidden="true">👤</span>
-            <span>Solo</span>
-          </button>
+        <!-- Paso 3 -->
+        <div class="step-container" id="step-3" data-multi="false">
+          <h2 class="step-title">¿Cómo prefieres trabajar?</h2>
+          <div class="options-grid" id="step3-opciones">
+            <button type="button" class="opcion-card" data-value="casa">Desde casa</button>
+            <button type="button" class="opcion-card" data-value="oficina">En oficina</button>
+            <button type="button" class="opcion-card" data-value="mixto">Mixto</button>
+            <button type="button" class="opcion-card" data-value="nose">No sé aún</button>
+          </div>
         </div>
-      </div>
 
-            <div class="step-container" id="step-5" data-multi="true">
-        <h2 class="step-title">¿Qué habilidades tienes o quieres desarrollar? <br><small style="font-size:14px; font-weight:normal;">(selecciona hasta 3)</small></h2>
-        <div class="options-grid">
-          <button type="button" class="opcion-card" data-value="computadores">
-            <span class="emoji" aria-hidden="true">🖥️</span>
-            <span>Computadores</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="datos">
-            <span class="emoji" aria-hidden="true">📊</span>
-            <span>Datos</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="dibujo">
-            <span class="emoji" aria-hidden="true">✏️</span>
-            <span>Dibujo</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="comunicacion">
-            <span class="emoji" aria-hidden="true">🗣️</span>
-            <span>Comunicación</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="orden">
-            <span class="emoji" aria-hidden="true">📦</span>
-            <span>Orden</span>
-          </button>
-          <button type="button" class="opcion-card" data-value="detalle">
-            <span class="emoji" aria-hidden="true">🔍</span>
-            <span>Detalle</span>
-          </button>
+        <!-- Paso 4 -->
+        <div class="step-container" id="step-4" data-multi="false">
+          <h2 class="step-title">¿Qué ambiente de trabajo te hace sentir mejor?</h2>
+          <div class="options-grid" id="step4-opciones">
+            <button type="button" class="opcion-card" data-value="silencioso">Silencioso</button>
+            <button type="button" class="opcion-card" data-value="musica">Con música</button>
+            <button type="button" class="opcion-card" data-value="equipo">En equipo</button>
+            <button type="button" class="opcion-card" data-value="solo">Solo</button>
+          </div>
         </div>
-      </div>
 
-      <div class="onboarding-actions">
-        <button id="btn-prev" class="btn btn-outline" style="display:none;">Atrás</button>
-        <button id="btn-next" class="btn btn-primary" style="margin-left:auto;">Siguiente</button>
-      </div>
+        <!-- Paso 5 -->
+        <div class="step-container" id="step-5" data-multi="true">
+          <h2 class="step-title">¿Qué habilidades tienes o quieres desarrollar? (selecciona hasta 3)</h2>
+          <div class="options-grid" id="step5-opciones">
+            <button type="button" class="opcion-card" data-value="computadores">Computadores</button>
+            <button type="button" class="opcion-card" data-value="datos">Datos</button>
+            <button type="button" class="opcion-card" data-value="dibujo">Dibujo</button>
+            <button type="button" class="opcion-card" data-value="comunicacion">Comunicación</button>
+            <button type="button" class="opcion-card" data-value="orden">Orden</button>
+            <button type="button" class="opcion-card" data-value="detalle">Detalle</button>
+          </div>
+          <div class="selection-counter" id="skills-counter"></div>
+        </div>
 
-    </section>
-  </div>
+        <div class="onboarding-actions">
+          <button id="btn-prev" class="btn btn-outline" style="display:none;">Atrás</button>
+          <button id="btn-next" class="btn btn-primary">Siguiente</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="../js/onboarding.js"></script>
 </body>
 </html>

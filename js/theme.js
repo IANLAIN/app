@@ -1,135 +1,131 @@
 /**
- * theme.js — Dark mode toggle + dyslexic font toggle
- * Persists choices to localStorage for cross-page continuity.
+ * theme.js — Gestión centralizada de tema (claro/oscuro) y fuente dislexia
+ * Exporta:
+ *   - initTheme()       → configura toggles y aplica preferencias guardadas
+ *   - applyThemePolicy()→ aplica restricciones por rol/neurotipo
  */
-export function initTheme() {
-  // ── Dark Mode Toggle ─────────────────────────────────────
-  const themeToggle = document.getElementById("theme-toggle");
-  const html = document.documentElement;
 
-  function getThemePolicy() {
-    const userType = localStorage.getItem("app-user-type");
-    const candidateType = localStorage.getItem("app-candidate-type");
+const STORAGE_THEME = "app-theme";
+const STORAGE_FONT = "app-font";
 
-    if (userType === "visitante" || userType === "empresa") {
-      return { allowDark: true, allowToggle: true, enforced: null };
-    }
+// Obtener política de tema según rol y tipo de candidato
+function getThemePolicy() {
+  const userType = localStorage.getItem("app-user-type");
+  const candidateType = localStorage.getItem("app-candidate-type");
 
-    if (userType === "candidato" && candidateType === "down") {
-      return { allowDark: false, allowToggle: false, enforced: "light" };
-    }
-
-    if (userType === "candidato" && (candidateType === "autismo" || candidateType === "tdah")) {
-      return { allowDark: true, allowToggle: true, enforced: null };
-    }
-
+  if (userType === "visitante" || userType === "empresa") {
     return { allowDark: true, allowToggle: true, enforced: null };
   }
-
-  function applyTheme(theme) {
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("app-theme", theme);
-    if (themeToggle) {
-      themeToggle.textContent = theme === "dark" ? "☀" : "☾";
-      themeToggle.setAttribute(
-        "aria-pressed",
-        theme === "dark" ? "true" : "false"
-      );
-    }
+  if (userType === "candidato" && candidateType === "down") {
+    return { allowDark: false, allowToggle: false, enforced: "light" };
   }
-
-  function applyThemePolicy() {
-    const policy = getThemePolicy();
-    if (themeToggle) {
-      const hideToggle = !policy.allowToggle;
-      themeToggle.classList.toggle("theme-toggle-hidden", hideToggle);
-      themeToggle.setAttribute("aria-hidden", hideToggle ? "true" : "false");
-      themeToggle.disabled = hideToggle;
-    }
-
-    if (policy.enforced) {
-      applyTheme(policy.enforced);
-      return;
-    }
-
-    const saved = localStorage.getItem("app-theme");
-    if (saved === "dark" && !policy.allowDark) {
-      applyTheme("light");
-    }
+  if (userType === "candidato" && (candidateType === "autismo" || candidateType === "tdah")) {
+    return { allowDark: true, allowToggle: true, enforced: null };
   }
+  return { allowDark: true, allowToggle: true, enforced: null };
+}
 
-  // Init from localStorage or system preference
+// Aplicar tema visual al HTML y guardar en localStorage
+function applyTheme(theme) {
+  const html = document.documentElement;
+  html.setAttribute("data-theme", theme);
+  localStorage.setItem(STORAGE_THEME, theme);
+
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    themeToggle.textContent = theme === "dark" ? "☀" : "☾";
+    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+}
+
+// Aplicar política de tema (habilitar/deshabilitar toggle, forzar modo claro)
+export function applyThemePolicy() {
   const policy = getThemePolicy();
-  const saved = localStorage.getItem("app-theme");
-  
-  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  
-  if (saved && (saved === "light" || policy.allowDark)) {
-    applyTheme(saved);
+  const themeToggle = document.getElementById("theme-toggle");
+
+  if (themeToggle) {
+    const hideToggle = !policy.allowToggle;
+    themeToggle.classList.toggle("theme-toggle-hidden", hideToggle);
+    themeToggle.setAttribute("aria-hidden", hideToggle ? "true" : "false");
+    themeToggle.disabled = hideToggle;
+  }
+
+  if (policy.enforced) {
+    applyTheme(policy.enforced);
+    return;
+  }
+
+  const saved = localStorage.getItem(STORAGE_THEME);
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initialTheme = saved ? saved : (prefersDark ? "dark" : "light");
+
+  if (initialTheme === "dark" && !policy.allowDark) {
+    applyTheme("light");
   } else {
-    applyTheme(policy.allowDark && mediaQuery.matches ? "dark" : "light");
+    applyTheme(initialTheme);
   }
+}
 
-  // Automatically update if browser preference changes
-  mediaQuery.addEventListener("change", (e) => {
-    const currentPolicy = getThemePolicy();
-    // Only auto-switch if the user hasn't explicitly set a preference that overrides it,
-    // or if we just want to follow the system. We'll follow the system if allowDark is true.
-    if (currentPolicy.allowDark) {
-      applyTheme(e.matches ? "dark" : "light");
-    } else {
-      applyTheme("light");
-    }
+// Configurar el toggle manual del usuario (solo si está permitido)
+function setupThemeToggle() {
+  const themeToggle = document.getElementById("theme-toggle");
+  if (!themeToggle) return;
+
+  themeToggle.addEventListener("click", () => {
+    const policy = getThemePolicy();
+    if (!policy.allowToggle) return;
+
+    const current = document.documentElement.getAttribute("data-theme") || "light";
+    const next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
   });
+}
 
-  // Init User Type Theme (Empresa, etc.)
-  const userType = localStorage.getItem("app-user-type");
-  if (userType) {
-    html.setAttribute("data-user-type", userType);
-  }
-
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        const current = html.getAttribute("data-theme") || "light";
-        const next = current === "dark" ? "light" : "dark";
-        applyTheme(next);
-      });
-    }
-
-  // ── Dyslexic Font Toggle ───────────────────────────────────
+// Configurar el toggle de fuente dislexia
+function setupDyslexicToggle() {
   const dyslexicToggle = document.getElementById("dyslexic-toggle");
+  if (!dyslexicToggle) return;
 
-  function applyFont(font) {
-    if (font === "dyslexic") {
+  const applyFont = (isDyslexic) => {
+    const html = document.documentElement;
+    if (isDyslexic) {
       html.setAttribute("data-font", "dyslexic");
-      localStorage.setItem("app-font", "dyslexic");
+      localStorage.setItem(STORAGE_FONT, "dyslexic");
     } else {
       html.removeAttribute("data-font");
-      localStorage.removeItem("app-font");
+      localStorage.removeItem(STORAGE_FONT);
     }
-    if (dyslexicToggle) {
-      dyslexicToggle.setAttribute(
-        "aria-pressed",
-        font === "dyslexic" ? "true" : "false"
-      );
-      dyslexicToggle.style.background =
-        font === "dyslexic" ? "var(--color-primary)" : "";
-      dyslexicToggle.style.color =
-        font === "dyslexic" ? "var(--btn-primary-text)" : "";
-    }
-  }
+    dyslexicToggle.setAttribute("aria-pressed", isDyslexic ? "true" : "false");
+  };
 
-  // Init font from localStorage
-  const savedFont = localStorage.getItem("app-font");
-  applyFont(savedFont || "default");
+  // Estado inicial
+  const savedFont = localStorage.getItem(STORAGE_FONT);
+  applyFont(savedFont === "dyslexic");
 
-  if (dyslexicToggle) {
-    dyslexicToggle.addEventListener("click", () => {
-      const current = html.getAttribute("data-font");
-      applyFont(current === "dyslexic" ? "default" : "dyslexic");
-    });
-  }
-
-  applyThemePolicy();
-  window.__applyThemePolicy = applyThemePolicy;
+  dyslexicToggle.addEventListener("click", () => {
+    const isCurrently = document.documentElement.getAttribute("data-font") === "dyslexic";
+    applyFont(!isCurrently);
+  });
 }
+
+// Inicialización completa (se llama una vez al cargar la página)
+export function initTheme() {
+  applyThemePolicy();
+  setupThemeToggle();
+  setupDyslexicToggle();
+
+  // Reaccionar a cambios en el esquema de color del sistema
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    const policy = getThemePolicy();
+    if (!policy.allowDark) return;
+    const saved = localStorage.getItem(STORAGE_THEME);
+    if (!saved) {
+      // Solo si el usuario no ha guardado una preferencia explícita
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      applyTheme(prefersDark ? "dark" : "light");
+    }
+  });
+}
+
+// Exponer applyThemePolicy globalmente para que pueda ser usado por el simulador
+window.__applyThemePolicy = applyThemePolicy;

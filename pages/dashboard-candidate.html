@@ -1,165 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>app</title>
-  <meta name="description" content="Panel de candidato con onboarding, tareas y habilidades." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>app - Panel del Candidato</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
   <script src="../js/bootstrap.js"></script>
 </head>
 <body>
-
   <header class="site-header">
-    <a href="../index.html" class="brand brand-link" data-nav>
-      <span class="brand-mark">app</span>
-      <span class="brand-tag">Panel del candidato</span>
-    </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-      ☰ Menú
-    </button>
-    <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
-      <ul class="nav-list">
-        <li><a href="../index.html" data-nav data-i18n="nav.home">Inicio</a></li>
-
-        <li><a href="mentoring.html" data-nav data-i18n="nav.mentoring" class="only-candidato">Mentoría</a></li>
-
-      </ul>
-    </nav>
+    <a href="../index.html" class="brand"><span class="brand-mark">app</span><span class="brand-tag">Panel del candidato</span></a>
     <div class="header-actions">
-      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">☾</button>
-      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-label="Activar fuente para dislexia" aria-pressed="false" title="Fuente para dislexia">Aa</button>
-      <div class="lang-selector">
-        <select id="lang-select" class="lang-select" aria-label="Seleccionar idioma">
-          <option value="es">Español</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="pt">Português</option>
-        </select>
-      </div>
-      <button class="btn btn-ghost btn-sm" data-logout>Cerrar sesión</button>
+      <button id="theme-toggle" class="theme-toggle-btn">☾</button>
+      <button id="dyslexic-toggle" class="theme-toggle-btn">Aa</button>
+      <button id="logout-btn" class="btn btn-ghost btn-sm">Cerrar sesión</button>
     </div>
   </header>
 
-  <main class="page" data-auth-root>
-    <div id="page-content">
-      <section class="dashboard-hero card">
-        <div>
-          <p class="eyebrow" data-i18n="dash.cand.hero.eyebrow">Tu progreso hoy</p>
-          <h1 data-i18n="dash.cand.hero.title">Hola, Alex. Tu ruta está clara y guiada.</h1>
-          <p data-i18n="dash.cand.hero.desc">Recuerda: puedes activar lenguaje simple en cualquier instrucción.</p>
-          <p class="hint" data-i18n="dash.cand.hero.hint">Infraestructura robusta para rendimiento y seguridad.</p>
-        </div>
-        <div class="hero-actions">
-          <button class="btn btn-primary" type="button" data-simplify data-target="instruction-text" data-i18n="dash.cand.hero.btn.simplify">
-            Simplificar instrucciones
-          </button>
-          <a class="btn btn-ghost" href="mentoring.html" data-nav data-i18n="dash.cand.hero.btn.mentor">Hablar con mentor</a>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="onboarding-title">
-        <div class="section-header">
-          <h2 id="onboarding-title" data-i18n="dash.cand.onboard.title">Onboarding paso a paso</h2>
-          <p data-i18n="dash.cand.onboard.desc">Avance visual para reducir ansiedad y dar claridad.</p>
-        </div>
-        <div class="card onboarding-card">
-          <p id="instruction-text" data-original="1. Completa tu perfil sensorial. 2. Elige horarios preferidos. 3. Revisa tu primer reto." data-simplified="Paso 1: Completa tu perfil. Paso 2: Elige horarios. Paso 3: Revisa tu reto." class="instruction-text" data-i18n="dash.cand.onboard.inst.orig">
-            1. Completa tu perfil sensorial. 2. Elige horarios preferidos. 3. Revisa tu primer reto.
-          </p>
-          <ol class="stepper">
-            <li class="stepper-step is-complete" data-i18n="dash.cand.onboard.step1">Perfil sensorial</li>
-            <li class="stepper-step is-active" data-i18n="dash.cand.onboard.step2">Rutina diaria</li>
-            <li class="stepper-step" data-i18n="dash.cand.onboard.step3">Primer reto</li>
-            <li class="stepper-step" data-i18n="dash.cand.onboard.step4">Feedback inicial</li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="tasks-title">
-        <div class="section-header">
-          <h2 id="tasks-title" data-i18n="dash.cand.task.title">Panel de tareas gamificado</h2>
-          <p data-i18n="dash.cand.task.desc">Objetivos cortos con recompensas claras.</p>
-        </div>
-        <div class="task-board">
-          <article class="task-card card">
-            <div>
-              <h3 data-i18n="dash.cand.task.1.title">Check-in de energía</h3>
-              <p data-i18n="dash.cand.task.1.desc">Registro rápido de tu nivel de energía.</p>
-              <progress value="60" max="100"></progress>
-            </div>
-            <button class="btn btn-soft" type="button" data-task-toggle data-i18n="dash.cand.task.btn">Completar</button>
-          </article>
-          <article class="task-card card">
-            <div>
-              <h3 data-i18n="dash.cand.task.2.title">Micro aprendizaje</h3>
-              <p data-i18n="dash.cand.task.2.desc">Video de 3 minutos sobre comunicación efectiva.</p>
-              <progress value="30" max="100"></progress>
-            </div>
-            <button class="btn btn-soft" type="button" data-task-toggle data-i18n="dash.cand.task.btn">Completar</button>
-          </article>
-          <article class="task-card card">
-            <div>
-              <h3 data-i18n="dash.cand.task.3.title">Reto práctico</h3>
-              <p data-i18n="dash.cand.task.3.desc">Organiza tu espacio digital con una lista simple.</p>
-              <progress value="10" max="100"></progress>
-            </div>
-            <button class="btn btn-soft" type="button" data-task-toggle data-i18n="dash.cand.task.btn">Completar</button>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="skills-title">
-        <div class="section-header">
-          <h2 id="skills-title" data-i18n="dash.cand.skill.title">Perfil de habilidades</h2>
-          <p data-i18n="dash.cand.skill.desc">Visual, breve y accionable.</p>
-        </div>
-        <div class="grid grid-3">
-          <article class="skill-card card">
-            <h3 data-i18n="dash.cand.skill.1.title">Análisis de datos</h3>
-            <div class="skill-meter" style="--level: 0.82"></div>
-            <p class="skill-note" data-i18n="dash.cand.skill.1.desc">Fuerte en patrones y detalle.</p>
-          </article>
-          <article class="skill-card card">
-            <h3 data-i18n="dash.cand.skill.2.title">Comunicación escrita</h3>
-            <div class="skill-meter" style="--level: 0.68"></div>
-            <p class="skill-note" data-i18n="dash.cand.skill.2.desc">Mejora con plantillas breves.</p>
-          </article>
-          <article class="skill-card card">
-            <h3 data-i18n="dash.cand.skill.3.title">Trabajo en foco</h3>
-            <div class="skill-meter" style="--level: 0.9"></div>
-            <p class="skill-note" data-i18n="dash.cand.skill.3.desc">Alta concentración en tareas secuenciales.</p>
-          </article>
-        </div>
-      </section>
+  <main class="page" id="candidate-dashboard">
+    <div id="dashboard-content">
+      <!-- Se cargará dinámicamente con JS -->
     </div>
   </main>
 
-    <footer class="site-footer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding: 24px 0; border-top: 1px solid var(--color-border); margin-top: 40px;">
-    <div class="footer-meta" style="display:flex; align-items:center; gap:8px;">
-      <span data-i18n="footer.meta">&copy; 2026 app</span>
-      <span style="color:var(--color-muted);">|</span>
-      <span class="ms-badge" style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
-        <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0 0H11V11H0V0Z" fill="#F25022"/>
-          <path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
-          <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/>
-          <path d="M12 12H23V23H12V12Z" fill="#FFB900"/>
-        </svg>
-        <span data-i18n="footer.badge">Supported by Microsoft</span>
-      </span>
-    </div>
-    <div class="footer-links" style="display:flex; gap:16px;">
-      <a href="../index.html" data-nav data-i18n="footer.links.login" style="color:var(--color-ink); text-decoration:none;">Producto</a>
-
-      <a href="mentoring.html" data-nav data-i18n="footer.links.mentoring" class="only-candidato" style="color:var(--color-ink); text-decoration:none;">Mentoría</a>
-    </div>
+  <footer class="site-footer">
+    <div class="footer-meta">© 2026 app · Todos los derechos reservados</div>
   </footer>
 
-  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/dashboard-candidate.js"></script>
 </body>
 </html>
