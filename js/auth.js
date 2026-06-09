@@ -3,6 +3,8 @@
 
 const STORAGE_USERS = 'app_users';
 const STORAGE_SESSION = 'app_session';
+const STORAGE_CURRENT_USER = 'app_current_user';
+const STORAGE_CURRENT_USER_NAME = 'app_user_name';
 
 // Usuarios de demostración iniciales
 const defaultUsers = [
@@ -43,14 +45,42 @@ function initStorage() {
   }
 }
 
+function syncCurrentUser(user) {
+  if (!user) {
+    localStorage.removeItem(STORAGE_CURRENT_USER);
+    localStorage.removeItem(STORAGE_CURRENT_USER_NAME);
+    return;
+  }
+
+  const snapshot = {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    profile: user.profile || {}
+  };
+
+  localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(snapshot));
+  localStorage.setItem(STORAGE_CURRENT_USER_NAME, snapshot.name || '');
+}
+
 // Obtener usuario actual
 export function getCurrentUser() {
   const session = localStorage.getItem(STORAGE_SESSION);
-  if (!session) return null;
   try {
+    if (!session) {
+      const snapshot = localStorage.getItem(STORAGE_CURRENT_USER);
+      return snapshot ? JSON.parse(snapshot) : null;
+    }
     const { userId } = JSON.parse(session);
     const users = JSON.parse(localStorage.getItem(STORAGE_USERS));
-    return users.find(u => u.id === userId) || null;
+    const current = users.find(u => u.id === userId) || null;
+    if (current) return current;
+
+    const snapshot = localStorage.getItem(STORAGE_CURRENT_USER);
+    if (!snapshot) return null;
+    const parsed = JSON.parse(snapshot);
+    return parsed?.id === userId ? parsed : null;
   } catch (e) {
     return null;
   }
@@ -64,6 +94,8 @@ export function setSession(userId) {
 // Cerrar sesión
 export function logout() {
   localStorage.removeItem(STORAGE_SESSION);
+  localStorage.removeItem(STORAGE_CURRENT_USER);
+  localStorage.removeItem(STORAGE_CURRENT_USER_NAME);
   window.location.href = '../index.html';
 }
 
@@ -74,11 +106,12 @@ export function registerUser(email, password, name, role, additionalData = {}) {
   if (users.find(u => u.email === email)) {
     throw new Error('El correo ya está registrado');
   }
+  const safeName = (name || '').trim() || email.split('@')[0] || 'Usuario';
   const newUser = {
     id: `${role}_${Date.now()}`,
     email,
     password,
-    name,
+    name: safeName,
     role,
     profile: {
       ...additionalData,
@@ -88,6 +121,7 @@ export function registerUser(email, password, name, role, additionalData = {}) {
   users.push(newUser);
   localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
   setSession(newUser.id);
+  syncCurrentUser(newUser);
   return newUser;
 }
 
@@ -98,6 +132,7 @@ export function loginUser(email, password) {
   const user = users.find(u => u.email === email && u.password === password);
   if (!user) throw new Error('Credenciales inválidas');
   setSession(user.id);
+  syncCurrentUser(user);
   return user;
 }
 
@@ -111,6 +146,7 @@ export function updateUserProfile(updates) {
     users[index] = { ...users[index], ...updates };
     localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
     setSession(users[index].id);
+    syncCurrentUser(users[index]);
     return users[index];
   }
   return null;
