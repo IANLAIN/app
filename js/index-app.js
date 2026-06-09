@@ -1,5 +1,5 @@
 // index-app.js - Landing page con autenticación real y wizard de registro
-import { registerUser, loginUser } from './auth.js';
+import { registerUser, loginUser, signInWithGoogle } from './auth.js';
 import { initTheme } from './theme.js';
 import { changeLanguage } from './i18n.js';
 
@@ -209,8 +209,12 @@ function initModalAndWizard() {
 
       try {
         let additional = {};
-        if (role === 'company') additional = { industry: companyName };
-        const newUser = registerUser(email, password, name, role, additional);
+        let finalName = name;
+        if (role === 'company') {
+          additional = { contactName: name, industry: '' };
+          finalName = companyName || name;
+        }
+        const newUser = registerUser(email, password, finalName, role, additional);
         // Limpiar temporales
         ['reg_temp_name', 'reg_temp_email', 'reg_temp_password', 'reg_temp_role', 'reg_temp_company'].forEach(k => localStorage.removeItem(k));
         // Redirigir al dashboard correspondiente
@@ -241,6 +245,14 @@ function initModalAndWizard() {
         input.type = type;
       });
     }
+  });
+
+  // Botones de Google
+  document.getElementById('google-login-btn')?.addEventListener('click', async () => {
+    try { await signInWithGoogle(); } catch(e) { alert(e.message); }
+  });
+  document.getElementById('google-register-btn')?.addEventListener('click', async () => {
+    try { await signInWithGoogle(); } catch(e) { alert(e.message); }
   });
 
   // Login real con auth.js
@@ -274,11 +286,11 @@ function initModalAndWizard() {
 
   // Botones demo dentro del modal
   document.getElementById('demo-candidate-btn')?.addEventListener('click', () => {
-    localStorage.setItem('demo_session', 'true');
+    try { loginUser('carlos@example.com', 'candidate123'); } catch(e) {}
     window.location.href = 'pages/dashboard-candidate.html';
   });
   document.getElementById('demo-company-btn')?.addEventListener('click', () => {
-    localStorage.setItem('demo_session', 'true');
+    try { loginUser('empresa@example.com', 'company123'); } catch(e) {}
     window.location.href = 'pages/dashboard-company.html';
   });
 }
@@ -332,15 +344,14 @@ function initRadarChart() {
 // ─────────────────────────────────────────────────────────────
 // Botones de demostración rápida (fuera del modal)
 function initDemoButtons() {
-  // Ya se manejan dentro del modal, pero por si hay extras
   const extraCandidate = document.querySelector('.btn-demo-candidato');
   const extraCompany = document.querySelector('.btn-demo-empresa');
   extraCandidate?.addEventListener('click', () => {
-    localStorage.setItem('demo_session', 'true');
+    try { loginUser('carlos@example.com', 'candidate123'); } catch(e) {}
     window.location.href = 'pages/dashboard-candidate.html';
   });
   extraCompany?.addEventListener('click', () => {
-    localStorage.setItem('demo_session', 'true');
+    try { loginUser('empresa@example.com', 'company123'); } catch(e) {}
     window.location.href = 'pages/dashboard-company.html';
   });
 }

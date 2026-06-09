@@ -6,6 +6,50 @@ const STORAGE_SESSION = 'app_session';
 const STORAGE_CURRENT_USER = 'app_current_user';
 const STORAGE_CURRENT_USER_NAME = 'app_user_name';
 
+// Configuración de Supabase
+export const supabase = window.supabase ? window.supabase.createClient('https://oupbptgzfevkzzvscekj.supabase.co', 'sb_publishable_Obya200r1UbgWVnMbuhhiw_Xto1ETSE') : null;
+
+if (supabase) {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session?.user) {
+      const supaUser = session.user;
+      initStorage();
+      const users = JSON.parse(localStorage.getItem(STORAGE_USERS));
+      let existing = users.find(u => u.email === supaUser.email);
+      
+      if (!existing) {
+        existing = {
+          id: `google_${supaUser.id}`,
+          email: supaUser.email,
+          name: supaUser.user_metadata?.full_name || supaUser.email.split('@')[0],
+          role: 'candidate', // Rol por defecto
+          profile: { completedOnboarding: false }
+        };
+        users.push(existing);
+        localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+      }
+      
+      setSession(existing.id);
+      syncCurrentUser(existing);
+      
+      // Si estamos en la página de inicio, redirigir al panel
+      if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+        window.location.href = existing.role === 'company' ? 'pages/dashboard-company.html' : 'pages/dashboard-candidate.html';
+      }
+    } else if (event === 'SIGNED_OUT') {
+      logoutLocalOnly();
+    }
+  });
+}
+
+export async function signInWithGoogle() {
+  if (!supabase) return;
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+  });
+  if (error) throw error;
+}
+
 // Usuarios de demostración iniciales
 const defaultUsers = [
   {
@@ -92,11 +136,18 @@ export function setSession(userId) {
 }
 
 // Cerrar sesión
-export function logout() {
+export async function logout() {
+  if (supabase) {
+    await supabase.auth.signOut();
+  }
+  logoutLocalOnly();
+}
+
+function logoutLocalOnly() {
   localStorage.removeItem(STORAGE_SESSION);
   localStorage.removeItem(STORAGE_CURRENT_USER);
   localStorage.removeItem(STORAGE_CURRENT_USER_NAME);
-  window.location.href = '../index.html';
+  window.location.href = window.location.pathname.includes('pages/') ? '../index.html' : 'index.html';
 }
 
 // Registrar nuevo usuario
