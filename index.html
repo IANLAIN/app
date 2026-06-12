@@ -140,22 +140,124 @@
 
         <!-- Paso 3: Ejes de entorno (solo candidatos) -->
         <div class="wizard-step" id="wstep-3">
-          <div class="modal-header">
-            <h2>Tu perfil de entorno</h2>
-            <p>Ajusta los controles según tus necesidades.</p>
+          <div class="wizard-progress" id="sub-progress-3" style="display:none; justify-content:center; margin-bottom:1.5rem;">
+             <div class="prog-dot sub active" data-sub="preview">P</div><div class="prog-line"></div>
+             <div class="prog-dot sub" data-sub="0">C</div><div class="prog-line"></div>
+             <div class="prog-dot sub" data-sub="1">1</div><div class="prog-line"></div>
+             <div class="prog-dot sub" data-sub="2">2</div><div class="prog-line"></div>
+             <div class="prog-dot sub" data-sub="3">3</div><div class="prog-line"></div>
+             <div class="prog-dot sub" data-sub="4">4</div>
           </div>
-          <div class="axes-split">
-            <div class="axes-controls">
-              <div class="axis-group"><label>Procesamiento y Comunicación</label><div class="slider-row"><input type="range" id="axis1" min="1" max="10" value="5"><span class="axis-value" id="val1">5</span></div></div>
-              <div class="axis-group"><label>Tolerancia Ambiental</label><div class="slider-row"><input type="range" id="axis2" min="1" max="10" value="5"><span class="axis-value" id="val2">5</span></div></div>
-              <div class="axis-group"><label>Ejecución y Tareas</label><div class="slider-row"><input type="range" id="axis3" min="1" max="10" value="5"><span class="axis-value" id="val3">5</span></div></div>
-              <div class="axis-group"><label>Ajustes Razonables</label><div class="slider-row"><input type="range" id="axis4" min="1" max="10" value="5"><span class="axis-value" id="val4">5</span></div></div>
+
+          <!-- Sub-step 3.preview -->
+          <div class="sub-step active" id="sub-preview">
+            <div class="modal-header">
+              <h2 data-i18n="reg.step3.preview.title">Personaliza tu experiencia</h2>
+              <p data-i18n="reg.step3.preview.desc">Elige un entorno visual.</p>
             </div>
-            <div class="axes-chart"><canvas id="radarChart" width="400" height="400" style="max-width:400px; width:100%; aspect-ratio:1/1;"></canvas></div>
+            <div class="axes-split">
+              <div class="palette-options" style="display:flex; flex-direction:column; gap:0.5rem;">
+                 <button class="role-card selected" type="button" data-scheme="coffee"><div><strong data-i18n="palette.coffee">Café Neutro</strong></div></button>
+                 <button class="role-card" type="button" data-scheme="purple"><div><strong data-i18n="palette.purple">Púrpura Pastel</strong></div></button>
+                 <button class="role-card" type="button" data-scheme="mint"><div><strong data-i18n="palette.mint">Menta Pastel</strong></div></button>
+              </div>
+              <div class="live-preview-box card" id="live-preview" style="text-align:center;">
+                  <h3 data-i18n="preview.heading" style="font-size:1rem; margin-bottom:0.5rem;">Vista Previa</h3>
+                  <button class="btn btn-primary" style="margin-top:0.5rem;" type="button" data-i18n="preview.btn">Botón de prueba</button>
+              </div>
+            </div>
+            <div class="btn-row" style="margin-top:1.5rem;">
+              <button class="btn btn-outline" type="button" id="back-to-step2" data-i18n="btn.back">Volver</button>
+              <button class="btn btn-primary" type="button" id="btn-next-sub0" data-i18n="btn.next">Siguiente</button>
+            </div>
           </div>
-          <div class="btn-row" style="margin-top:1.25rem;">
-            <button class="btn btn-outline" type="button" id="back-to-step2">Volver</button>
-            <button class="btn btn-primary" type="button" id="btn-to-step4">Finalizar</button>
+
+          <!-- Sub-step 3.0 (Condition) -->
+          <div class="sub-step" id="sub-0" style="display:none;">
+            <div class="modal-header">
+              <h2 data-i18n="reg.step3.cond.title">¿Cómo te identificas?</h2>
+              <p data-i18n="reg.step3.cond.desc">Esta información no se mostrará públicamente.</p>
+            </div>
+            <div class="role-cards" id="condition-options">
+               <button class="role-card" type="button" data-cond="autism"><div><strong data-i18n="cond.autism">Tengo autismo</strong></div></button>
+               <button class="role-card" type="button" data-cond="intellectual"><div><strong data-i18n="cond.intellectual">Otras condiciones intelectuales/psicosociales</strong></div></button>
+               <button class="role-card" type="button" data-cond="down"><div><strong data-i18n="cond.down">Tengo síndrome de Down</strong></div></button>
+               <button class="role-card" type="button" data-cond="other"><div><strong data-i18n="cond.other">Otra neurodivergencia</strong></div></button>
+               <button class="role-card" type="button" data-cond="prefer-not"><div><strong data-i18n="cond.preferNot">Prefiero no decirlo</strong></div></button>
+            </div>
+            <div class="btn-row" style="margin-top:1.5rem;">
+              <button class="btn btn-outline" type="button" id="back-to-sub-preview" data-i18n="btn.back">Atrás</button>
+              <button class="btn btn-primary" type="button" id="btn-next-sub1" disabled data-i18n="btn.next">Siguiente</button>
+            </div>
+          </div>
+
+          <!-- Sub-steps 3.1 to 3.4 will share the radar chart side. We can structure them within a container -->
+          <div class="sub-step-axes" id="sub-axes" style="display:none;">
+             <div class="axes-split">
+               <div class="axes-controls-container">
+                  <!-- 3.1 -->
+                  <div class="axis-sub-step active" id="sub-1">
+                     <h3 style="font-size:1.1rem; margin-bottom:0.5rem;" data-i18n="axis_1">1. Procesamiento y Comunicación</h3>
+                     <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:1rem;" data-i18n="q.axis1">¿Cómo prefieres recibir información e instrucciones en el trabajo?</p>
+                     <div class="role-cards axis-options" id="options-axis1">
+                        <button class="role-card" type="button" data-val="1"><div><strong data-i18n="opt1.1">Escrito paso a paso</strong></div></button>
+                        <button class="role-card" type="button" data-val="4"><div><strong data-i18n="opt1.2">Escrito y verbal</strong></div></button>
+                        <button class="role-card" type="button" data-val="7"><div><strong data-i18n="opt1.3">Visual/Demostrativo</strong></div></button>
+                        <button class="role-card" type="button" data-val="10"><div><strong data-i18n="opt1.4">Flexible</strong></div></button>
+                     </div>
+                     <div class="btn-row" style="margin-top:1rem;">
+                        <button class="btn btn-outline" type="button" id="back-to-sub-0" data-i18n="btn.back">Atrás</button>
+                        <button class="btn btn-primary" type="button" id="btn-next-sub2" disabled data-i18n="btn.next">Siguiente</button>
+                     </div>
+                  </div>
+                  <!-- 3.2 -->
+                  <div class="axis-sub-step" id="sub-2" style="display:none;">
+                     <h3 style="font-size:1.1rem; margin-bottom:0.5rem;" data-i18n="axis_2">2. Tolerancia Ambiental</h3>
+                     <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:1rem;" data-i18n="q.axis2">¿Qué entorno físico de trabajo te resulta más cómodo?</p>
+                     <div class="role-cards axis-options" id="options-axis2">
+                        <button class="role-card" type="button" data-val="1"><div><strong data-i18n="opt2.1">Silencio absoluto</strong></div></button>
+                        <button class="role-card" type="button" data-val="4"><div><strong data-i18n="opt2.2">Tolerancia moderada</strong></div></button>
+                        <button class="role-card" type="button" data-val="7"><div><strong data-i18n="opt2.3">Oficina estándar</strong></div></button>
+                        <button class="role-card" type="button" data-val="10"><div><strong data-i18n="opt2.4">Entornos dinámicos</strong></div></button>
+                     </div>
+                     <div class="btn-row" style="margin-top:1rem;">
+                        <button class="btn btn-outline" type="button" id="back-to-sub1" data-i18n="btn.back">Atrás</button>
+                        <button class="btn btn-primary" type="button" id="btn-next-sub3" disabled data-i18n="btn.next">Siguiente</button>
+                     </div>
+                  </div>
+                  <!-- 3.3 -->
+                  <div class="axis-sub-step" id="sub-3" style="display:none;">
+                     <h3 style="font-size:1.1rem; margin-bottom:0.5rem;" data-i18n="axis_3">3. Ejecución y Tareas</h3>
+                     <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:1rem;" data-i18n="q.axis3">¿Cómo trabajas mejor al completar tareas?</p>
+                     <div class="role-cards axis-options" id="options-axis3">
+                        <button class="role-card" type="button" data-val="1"><div><strong data-i18n="opt3.1">Una tarea a la vez</strong></div></button>
+                        <button class="role-card" type="button" data-val="4"><div><strong data-i18n="opt3.2">Bloques de tiempo</strong></div></button>
+                        <button class="role-card" type="button" data-val="7"><div><strong data-i18n="opt3.3">Múltiples tareas con plan</strong></div></button>
+                        <button class="role-card" type="button" data-val="10"><div><strong data-i18n="opt3.4">Autonomía total</strong></div></button>
+                     </div>
+                     <div class="btn-row" style="margin-top:1rem;">
+                        <button class="btn btn-outline" type="button" id="back-to-sub2" data-i18n="btn.back">Atrás</button>
+                        <button class="btn btn-primary" type="button" id="btn-next-sub4" disabled data-i18n="btn.next">Siguiente</button>
+                     </div>
+                  </div>
+                  <!-- 3.4 -->
+                  <div class="axis-sub-step" id="sub-4" style="display:none;">
+                     <h3 style="font-size:1.1rem; margin-bottom:0.5rem;" data-i18n="axis_4">4. Ajustes Razonables</h3>
+                     <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:1rem;" data-i18n="q.axis4">¿Qué tipo de apoyo te ayudaría más en un trabajo?</p>
+                     <div class="role-cards axis-options" id="options-axis4">
+                        <button class="role-card" type="button" data-val="1"><div><strong data-i18n="opt4.1">Pausas y horarios flexibles</strong></div></button>
+                        <button class="role-card" type="button" data-val="4"><div><strong data-i18n="opt4.2">Mentoría y feedback</strong></div></button>
+                        <button class="role-card" type="button" data-val="7"><div><strong data-i18n="opt4.3">Herramientas tecnológicas</strong></div></button>
+                        <button class="role-card" type="button" data-val="10"><div><strong data-i18n="opt4.4">Baja supervisión</strong></div></button>
+                     </div>
+                     <div class="btn-row" style="margin-top:1rem;">
+                        <button class="btn btn-outline" type="button" id="back-to-sub3" data-i18n="btn.back">Atrás</button>
+                        <button class="btn btn-primary" type="button" id="btn-to-step4" disabled data-i18n="btn.finish">Finalizar</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="axes-chart"><canvas id="radarChart" width="400" height="400" style="max-width:400px; width:100%; aspect-ratio:1/1;"></canvas></div>
+             </div>
           </div>
         </div>
 
@@ -178,10 +280,10 @@
     <a href="index.html" class="brand"><span class="brand-mark">app</span></a>
     <div class="header-actions">
       <div class="lang-selector"><select id="lang-select" class="lang-select"><option value="es">ES</option><option value="en">EN</option><option value="fr">FR</option><option value="pt">PT</option></select></div>
-      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-pressed="false">Aa</button>
-      <button id="theme-toggle" class="theme-toggle-btn" aria-pressed="false">☾</button>
-      <button class="btn btn-outline btn-sm" id="btn-login" data-open-modal="login">Iniciar Sesión</button>
-      <button class="btn btn-primary btn-sm" id="btn-register" data-open-modal="register">Registrarse</button>
+      <button id="dyslexic-toggle" class="theme-toggle-btn" aria-pressed="false" aria-label="Toggle Dyslexic Font">Aa</button>
+      <button id="theme-toggle" class="theme-switch-btn" aria-pressed="false" aria-label="Cambiar tema"></button>
+      <button class="btn btn-outline btn-sm" id="btn-login" data-open-modal="login" data-i18n="login">Iniciar Sesión</button>
+      <button class="btn btn-primary btn-sm" id="btn-register" data-open-modal="register" data-i18n="register">Registrarse</button>
     </div>
   </header>
 

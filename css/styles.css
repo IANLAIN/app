@@ -6,33 +6,21 @@
 /* ─────────────────────────────────
    TOKENS / CSS VARIABLES
 ────────────────────────────────── */
-:root {
-  /* Palette (warm pastels, no black, no white) */
-  --clr-cream:      #fdfbf7;
-  --clr-sand:       #f4eee1;
-  --clr-sage:       #d2e3c6;
-  --clr-sage-mid:   #c8dfc0;
-  --clr-sage-deep:  #b8d0ae;
-  --clr-blush:      #f0d5ce;
-  --clr-bark:       #2c1a0a;      /* café muy oscuro para texto claro */
-  --clr-bark-mid:   #7a5c30;
-  --clr-bark-light: #bfa58a;
-  --clr-border:     #d1bfae;
-
-  /* Semantic (Light mode) */
-  --bg-primary:      var(--clr-cream);
-  --bg-secondary:    var(--clr-sand);
-  --color-ink:       var(--clr-bark);
-  --color-muted:     var(--clr-bark-light);
-  --color-border:    var(--clr-border);
-  --color-primary:   var(--clr-sage);
+:root, [data-color-scheme="coffee"] {
+  /* Scheme 1: Coffee (Light) */
+  --bg-primary:      #FCF9F2;
+  --bg-secondary:    #F3EBE1;
+  --color-ink:       #3E2A14;
+  --color-muted:     #7A6145;
+  --color-border:    #D1C0AC;
+  --color-primary:   #C5D6B7;
 
   /* Buttons */
-  --btn-primary-bg:    var(--clr-sage-mid);
-  --btn-primary-text:  var(--clr-bark);
-  --btn-primary-hover: var(--clr-sage-deep);
-  --btn-secondary-bg:  var(--clr-blush);
-  --btn-outline-border: var(--clr-border);
+  --btn-primary-bg:    #C5D6B7;
+  --btn-primary-text:  #3E2A14;
+  --btn-primary-hover: #ADC09E;
+  --btn-secondary-bg:  #E8C1B7;
+  --btn-outline-border: #D1C0AC;
 
   /* Status */
   --color-success: #4a7c59;
@@ -40,42 +28,107 @@
   --color-warning: #8b6914;
   --color-info:    #4a5c8a;
 
-  /* Radius */
+  /* Radius & Shadow (kept) */
   --radius-sm:   6px;
   --radius-md:   10px;
   --radius-lg:   16px;
   --radius-xl:   24px;
   --radius-pill: 999px;
-
-  /* Shadow (using brown, no black) */
   --shadow-sm:  0 1px 3px rgba(74,51,17,0.08);
   --shadow-md:  0 4px 16px rgba(74,51,17,0.10);
   --shadow-lg:  0 8px 40px rgba(74,51,17,0.14);
   --shadow-xl:  0 24px 80px rgba(74,51,17,0.18);
-
-  /* Motion */
+  
   --t-fast: 0.15s ease;
   --t-std:  0.25s ease;
   --t-slow: 0.4s ease;
-
-  /* Font */
+  
   --font-base-size: 16px;
   --font-family: 'Inter', 'Segoe UI', Tahoma, Verdana, sans-serif;
 }
 
-/* ─── Dark Mode (texto hueso sobre fondo café muy oscuro) ─── */
-[data-theme="dark"] {
-  --bg-primary:      #2d2a26;     /* café muy oscuro, no negro */
-  --bg-secondary:    #3b3732;     /* café un poco más claro */
-  --color-ink:       #f5f0e6;     /* hueso / marfil */
-  --color-muted:     #d1c5b5;     /* hueso más suave */
-  --color-border:    #52473c;
-  --color-primary:   #3d4a34;
-  --btn-primary-bg:  #4a5c40;
-  --btn-primary-text:#f5f0e6;
-  --btn-primary-hover:#5a6e50;
-  --btn-secondary-bg:#73544a;
-  --btn-outline-border:#52473c;
+[data-color-scheme="coffee"][data-theme="dark"],
+[data-theme="dark"]:not([data-color-scheme]) {
+  /* Scheme 1: Coffee (Dark) */
+  --bg-primary:      #312B26;
+  --bg-secondary:    #403831;
+  --color-ink:       #F2EBE1;
+  --color-muted:     #CBBAB0;
+  --color-border:    #5E5248;
+  --color-primary:   #4A5A40;
+  --btn-primary-bg:  #4A5A40;
+  --btn-primary-text: #F2EBE1;
+  --btn-primary-hover: #5A6A4E;
+  --btn-secondary-bg: #634C45;
+  --btn-outline-border: #5E5248;
+}
+
+[data-color-scheme="purple"] {
+  /* Scheme 2: Purple (Light) */
+  --bg-primary:      #F8F5FB;
+  --bg-secondary:    #EFE8F5;
+  --color-ink:       #2C1A3A;
+  --color-muted:     #6A567A;
+  --color-border:    #D2C4DF;
+  --color-primary:   #BBA0D0;
+  --btn-primary-bg:  #BBA0D0;
+  --btn-primary-text: #2C1A3A;
+  --btn-primary-hover: #A58BBA;
+  --btn-secondary-bg: #E0C9D9;
+  --btn-outline-border: #D2C4DF;
+  --shadow-sm:  0 1px 3px rgba(44,26,58,0.08);
+  --shadow-md:  0 4px 16px rgba(44,26,58,0.10);
+  --shadow-lg:  0 8px 40px rgba(44,26,58,0.14);
+  --shadow-xl:  0 24px 80px rgba(44,26,58,0.18);
+}
+
+[data-color-scheme="purple"][data-theme="dark"] {
+  /* Scheme 2: Purple (Dark) */
+  --bg-primary:      #2B2533;
+  --bg-secondary:    #3A3245;
+  --color-ink:       #F0EAF5;
+  --color-muted:     #C8B9D6;
+  --color-border:    #574B66;
+  --color-primary:   #70558A;
+  --btn-primary-bg:  #70558A;
+  --btn-primary-text: #F0EAF5;
+  --btn-primary-hover: #82649E;
+  --btn-secondary-bg: #5C4155;
+  --btn-outline-border: #574B66;
+}
+
+[data-color-scheme="mint"] {
+  /* Scheme 3: Mint (Light) */
+  --bg-primary:      #F2FAF8;
+  --bg-secondary:    #E3F3EE;
+  --color-ink:       #12332A;
+  --color-muted:     #4A6E63;
+  --color-border:    #BBE0D6;
+  --color-primary:   #9BD2C2;
+  --btn-primary-bg:  #9BD2C2;
+  --btn-primary-text: #12332A;
+  --btn-primary-hover: #83BDAD;
+  --btn-secondary-bg: #BDE4D5;
+  --btn-outline-border: #BBE0D6;
+  --shadow-sm:  0 1px 3px rgba(18,51,42,0.08);
+  --shadow-md:  0 4px 16px rgba(18,51,42,0.10);
+  --shadow-lg:  0 8px 40px rgba(18,51,42,0.14);
+  --shadow-xl:  0 24px 80px rgba(18,51,42,0.18);
+}
+
+[data-color-scheme="mint"][data-theme="dark"] {
+  /* Scheme 3: Mint (Dark) */
+  --bg-primary:      #1E2B27;
+  --bg-secondary:    #2C3D37;
+  --color-ink:       #E6F5F1;
+  --color-muted:     #ABC7BE;
+  --color-border:    #4B6B60;
+  --color-primary:   #4A7C6B;
+  --btn-primary-bg:  #4A7C6B;
+  --btn-primary-text: #E6F5F1;
+  --btn-primary-hover: #5A907E;
+  --btn-secondary-bg: #325044;
+  --btn-outline-border: #4B6B60;
 }
 
 /* ─── Dyslexia Font ─── */
@@ -162,6 +215,39 @@ body.hide-images img { opacity: 0 !important; }
   transition: border-color var(--t-fast);
 }
 .lang-select:hover { border-color: var(--clr-bark-mid); }
+
+.theme-switch-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--bg-secondary);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background var(--t-std), border-color var(--t-fast);
+}
+
+.theme-switch-btn::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--color-ink);
+  border-radius: 50%;
+  transition: transform var(--t-std) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-switch-btn[aria-pressed="true"]::after {
+  transform: translateX(24px);
+}
+.theme-switch-btn:hover { border-color: var(--color-ink); }
 
 .theme-toggle-btn {
   padding: 0.35rem 0.6rem;

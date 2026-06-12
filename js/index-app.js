@@ -7,19 +7,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar tema, accesibilidad e idioma
   initTheme();
   initLanguage();
+  initColorScheme();
 
   // Inicializar modal y wizard
   initModalAndWizard();
 
-  // Inicializar gráfico radar (si existe)
+  // Inicializar gráfico radar y wizard del paso 3
   initRadarChart();
+  initStep3Wizard();
 
   // Inicializar botones de demostración rápida
   initDemoButtons();
 
-  // Inicializar controles de accesibilidad adicionales (tamaño texto, contraste, ocultar imágenes)
+  // Inicializar controles de accesibilidad adicionales
   initAccessibilityControls();
 });
+
+// ─────────────────────────────────────────────────────────────
+// Color Scheme
+function initColorScheme() {
+  const scheme = localStorage.getItem('app-color-scheme') || 'coffee';
+  document.documentElement.setAttribute('data-color-scheme', scheme);
+}
 
 // ─────────────────────────────────────────────────────────────
 // Idioma inicial y cambio dinámico
@@ -126,7 +135,12 @@ function initModalAndWizard() {
     currentStep = step;
     steps.forEach((s, idx) => s.classList.toggle('active', idx + 1 === step));
     dots.forEach((d, idx) => d.classList.toggle('active', idx + 1 <= step));
-    if (step === 3 && window.radarChart) setTimeout(() => window.radarChart.resize(), 50);
+    
+    // Reset sub-step when entering step 3
+    if (step === 3) {
+      goToSubStep('preview');
+      if (window.radarChart) setTimeout(() => window.radarChart.resize(), 50);
+    }
   }
 
   // Selección de rol (paso 1)
@@ -296,6 +310,103 @@ function initModalAndWizard() {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Sub-wizard Paso 3
+function initStep3Wizard() {
+  const subProgress = document.getElementById('sub-progress-3');
+  const previewStep = document.getElementById('sub-preview');
+  const condStep = document.getElementById('sub-0');
+  const axesContainer = document.getElementById('sub-axes');
+  if (!subProgress) return;
+
+  const subDots = document.querySelectorAll('.prog-dot.sub');
+  
+  window.goToSubStep = function(subId) {
+    // Hide all
+    previewStep.style.display = 'none';
+    condStep.style.display = 'none';
+    axesContainer.style.display = 'none';
+    subProgress.style.display = 'flex';
+    document.querySelectorAll('.axis-sub-step').forEach(el => el.style.display = 'none');
+
+    // Update dots
+    let passed = true;
+    subDots.forEach(dot => {
+      if (passed) dot.classList.add('active');
+      else dot.classList.remove('active');
+      if (dot.getAttribute('data-sub') === String(subId)) passed = false;
+    });
+
+    if (subId === 'preview') {
+      previewStep.style.display = 'block';
+      subProgress.style.display = 'none'; // ocultar en el preview si queremos
+    } else if (subId === '0') {
+      condStep.style.display = 'block';
+    } else {
+      axesContainer.style.display = 'block';
+      const axisEl = document.getElementById('sub-' + subId);
+      if (axisEl) axisEl.style.display = 'block';
+      if (window.radarChart) window.radarChart.resize();
+    }
+  };
+
+  // Nav buttons
+  document.getElementById('btn-next-sub0')?.addEventListener('click', () => goToSubStep('0'));
+  document.getElementById('back-to-sub-preview')?.addEventListener('click', () => goToSubStep('preview'));
+  document.getElementById('btn-next-sub1')?.addEventListener('click', () => goToSubStep('1'));
+  document.getElementById('back-to-sub-0')?.addEventListener('click', () => goToSubStep('0'));
+  document.getElementById('btn-next-sub2')?.addEventListener('click', () => goToSubStep('2'));
+  document.getElementById('back-to-sub1')?.addEventListener('click', () => goToSubStep('1'));
+  document.getElementById('btn-next-sub3')?.addEventListener('click', () => goToSubStep('3'));
+  document.getElementById('back-to-sub2')?.addEventListener('click', () => goToSubStep('2'));
+  document.getElementById('btn-next-sub4')?.addEventListener('click', () => goToSubStep('4'));
+  document.getElementById('back-to-sub3')?.addEventListener('click', () => goToSubStep('3'));
+
+  // Palette selection
+  const paletteBtns = previewStep?.querySelectorAll('[data-scheme]');
+  paletteBtns?.forEach(btn => {
+    btn.addEventListener('click', () => {
+      paletteBtns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const scheme = btn.getAttribute('data-scheme');
+      document.documentElement.setAttribute('data-color-scheme', scheme);
+      localStorage.setItem('app-color-scheme', scheme);
+    });
+  });
+
+  // Condition selection
+  const condBtns = condStep?.querySelectorAll('[data-cond]');
+  const btnNextSub1 = document.getElementById('btn-next-sub1');
+  condBtns?.forEach(btn => {
+    btn.addEventListener('click', () => {
+      condBtns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      btnNextSub1.disabled = false;
+    });
+  });
+
+  // Axes selections
+  [1, 2, 3, 4].forEach(axisNum => {
+    const opts = document.querySelectorAll(`#options-axis${axisNum} [data-val]`);
+    const nextBtnId = axisNum === 4 ? 'btn-to-step4' : `btn-next-sub${axisNum+1}`;
+    const nextBtn = document.getElementById(nextBtnId);
+    
+    opts.forEach(btn => {
+      btn.addEventListener('click', () => {
+        opts.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (nextBtn) nextBtn.disabled = false;
+        
+        const val = parseInt(btn.getAttribute('data-val'), 10);
+        if (window.radarChart) {
+          window.radarChart.data.datasets[0].data[axisNum - 1] = val;
+          window.radarChart.update();
+        }
+      });
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
 // Gráfico radar para el paso 3 (candidatos)
 function initRadarChart() {
   const canvas = document.getElementById('radarChart');
@@ -321,24 +432,10 @@ function initRadarChart() {
       responsive: true,
       maintainAspectRatio: true,
       scales: { r: { min: 1, max: 10, ticks: { stepSize: 1, backdropColor: 'transparent' } } },
-      plugins: { legend: { position: 'bottom' }, tooltip: { enabled: true } }
+      plugins: { legend: { display: false }, tooltip: { enabled: true } }
     }
   });
   window.radarChart = radarChart;
-
-  const sliders = ['axis1', 'axis2', 'axis3', 'axis4'];
-  sliders.forEach((id, idx) => {
-    const slider = document.getElementById(id);
-    const valSpan = document.getElementById(`val${idx+1}`);
-    if (slider) {
-      slider.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value, 10);
-        if (valSpan) valSpan.textContent = val;
-        radarChart.data.datasets[0].data[idx] = val;
-        radarChart.update();
-      });
-    }
-  });
 }
 
 // ─────────────────────────────────────────────────────────────

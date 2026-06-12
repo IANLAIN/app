@@ -44,10 +44,12 @@ function renderDashboard(user) {
   if (needsOnboarding) {
     html += renderOnboardingForm(user);
   } else {
-    html += renderProfileSection(user);
-    html += renderMatchesSection(user);
-    html += renderMentorSection();
-    html += renderFollowUpSection();
+    html += `<div style="display:grid; gap:2.5rem;">`;
+    html += renderPrepareZone(user);
+    html += renderAdaptZone(user);
+    html += renderAccompanyZone(user);
+    html += renderConnectZone(user);
+    html += `</div>`;
   }
 
   container.innerHTML = html;
@@ -129,108 +131,104 @@ function renderOnboardingForm(user) {
   `;
 }
 
-function renderProfileSection(user) {
+function renderPrepareZone(user) {
   const profile = user.profile || {};
-  const initials = (user.name || 'U').substring(0,2).toUpperCase();
-  const avatarHtml = profile.avatar 
-    ? `<img src="${profile.avatar}" alt="${user.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-primary);">`
-    : `<div style="width: 80px; height: 80px; border-radius: 50%; background: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;">${initials}</div>`;
-
-  const renderBadges = (arr) => (arr && arr.length) ? arr.map(i => `<span style="background: var(--color-surface-alt); border: 1px solid var(--color-border); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; display: inline-block; margin-right: 6px; margin-bottom: 6px; text-transform: capitalize;">${i}</span>`).join('') : '<span style="color:var(--color-muted);">Ninguna</span>';
-
   return `
-    <div class="card profile-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
-      <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
-        ${avatarHtml}
-        <div>
-          <h2 style="margin: 0; font-size: 1.8rem;">${user.name}</h2>
-          <p style="margin: 4px 0 0; color: var(--color-muted); font-size: 1rem;">Candidato/a</p>
-        </div>
+    <section class="pillar-zone">
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">PREPARAR · Desarrollo y Confianza</h2>
+      <div class="card">
+         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+           <div>
+             <h3 style="color:var(--color-ink);">Estado de tu perfil</h3>
+             <p style="color:var(--color-muted);">Tu perfil de habilidades y entorno está ${profile.completedOnboarding ? '100%' : '50%'} completo.</p>
+           </div>
+           <button class="btn btn-primary" id="btn-complete-profile">Actualizar perfil detallado</button>
+         </div>
+         <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--color-border);">
+            <h4 style="color:var(--color-ink); margin-bottom:0.5rem;">Sugerencias de desarrollo</h4>
+            <ul style="padding-left:1.2rem; color:var(--color-muted); font-size:0.9rem;">
+              <li style="margin-bottom:0.5rem;">Micro-curso: Comunicación efectiva en el trabajo (3 min)</li>
+              <li>Reto: Organiza tu espacio digital para mayor concentración</li>
+            </ul>
+         </div>
       </div>
-      
-      ${profile.bio ? `<div style="background: var(--color-surface-alt); padding: 1.25rem; border-radius: var(--radius-md); border-left: 4px solid var(--color-primary);"><p style="margin:0; font-style: italic;">"${profile.bio}"</p></div>` : ''}
-      
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 0.5rem;">
-        <div>
-          <h3 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--color-ink);">Detalles laborales</h3>
-          <p style="margin-bottom: 0.5rem;"><strong>Neurotipo:</strong> <span style="text-transform: capitalize;">${profile.neurotype || 'No especificado'}</span></p>
-          <p style="margin-bottom: 0.5rem;"><strong>Preferencia:</strong> <span style="text-transform: capitalize;">${profile.workPreference || 'No definida'}</span></p>
-          <p style="margin-bottom: 0;"><strong>Ambiente ideal:</strong> <span style="text-transform: capitalize;">${profile.environment || 'No definido'}</span></p>
-        </div>
-        <div>
-          <h3 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--color-ink);">Mis intereses</h3>
-          <div>${renderBadges(profile.interests)}</div>
-        </div>
-        <div>
-          <h3 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--color-ink);">Mis habilidades</h3>
-          <div>${renderBadges(profile.skills)}</div>
-        </div>
-      </div>
-    </div>
+    </section>
   `;
 }
 
-function renderMatchesSection(user) {
+function renderAdaptZone(user) {
+  const theme = localStorage.getItem('app-theme') === 'dark' ? 'Oscuro' : 'Claro';
+  const font = localStorage.getItem('app-font') === 'dyslexic' ? 'OpenDyslexic' : 'Estándar';
+  const palette = localStorage.getItem('app-color-scheme') || 'coffee';
+  const paletteName = palette === 'coffee' ? 'Café Neutro' : palette === 'purple' ? 'Púrpura Pastel' : 'Menta Pastel';
+
+  return `
+    <section class="pillar-zone">
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">ADAPTAR · Tu Entorno Digital</h2>
+      <div class="card">
+        <h3 style="color:var(--color-ink); margin-bottom:0.5rem;">Preferencias visuales activas</h3>
+        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1rem;">Tu entorno en Incluyo está configurado de la siguiente manera para adaptarse a tus necesidades sensoriales y de lectura.</p>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+           <span class="chip chip-soft">Tema: ${theme}</span>
+           <span class="chip chip-soft">Fuente: ${font}</span>
+           <span class="chip chip-soft">Paleta: ${paletteName}</span>
+        </div>
+        <button class="btn btn-outline" id="btn-adjust-prefs" onclick="document.getElementById('theme-toggle').click()">Alternar contraste rápido</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderAccompanyZone(user) {
+  return `
+    <section class="pillar-zone">
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">ACOMPAÑAR · Tu Mentoría</h2>
+      <div class="card" style="display:flex; flex-direction:column; gap:1rem;">
+        <div>
+          <h3 style="color:var(--color-ink); margin-bottom:0.25rem;">Tu Mentor Asignado</h3>
+          <p style="color:var(--color-ink); margin-bottom:0;"><strong>Carolina López</strong> · Especialista en bienestar y productividad.</p>
+          <p style="color:var(--color-muted); font-size:0.85rem; margin-bottom:0;">Última sesión: hace 2 días</p>
+        </div>
+        <div style="background:var(--bg-primary); border:1px solid var(--color-border); border-radius:var(--radius-md); padding:1rem;">
+          <p style="font-size:0.9rem; color:var(--color-muted); margin-bottom:0; font-style:italic;">"Recuerda que puedes pedir pausas cortas cuando lo necesites. Aquí estoy para guiarte."</p>
+        </div>
+        <div>
+          <a href="mentoring.html" class="btn btn-primary">Ir al Centro de Mentoría</a>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderConnectZone(user) {
   const matches = getMatchesForCandidate(user.id);
   return `
-    <div class="card">
-      <h2>Vacantes sugeridas para ti</h2>
-      <div class="match-list">
-        ${matches.map(m => `
-          <div class="match-card" style="border:1px solid var(--color-border); padding:1rem; margin-bottom:1rem; border-radius:var(--radius-md);">
-            <h3>${m.title}</h3>
-            <p>Empresa: ${m.company}</p>
-            <p>Match: ${m.match}%</p>
-            <p>Habilidades requeridas: ${m.skills.join(', ')}</p>
-            <button class="btn btn-sm btn-primary" data-vacancy-id="${m.id}">Postularme</button>
-          </div>
-        `).join('')}
+    <section class="pillar-zone">
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">CONECTAR · Oportunidades Sugeridas</h2>
+      <div class="card">
+        <p style="color:var(--color-muted); margin-bottom:1.5rem;">El sistema ha encontrado oportunidades laborales con entornos ajustados a tus características.</p>
+        <div class="match-list" style="display:grid; gap:1rem;">
+          ${matches.length ? matches.map(m => `
+            <div class="match-card" style="border:1px solid var(--color-border); padding:1.25rem; border-radius:var(--radius-md); background:var(--bg-primary);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <h3 style="margin-bottom:0.25rem; color:var(--color-ink);">${m.title}</h3>
+                  <p style="margin-bottom:0.5rem; color:var(--color-muted); font-size:0.9rem;">Empresa: <strong>${m.company}</strong></p>
+                </div>
+                <div style="background:var(--color-primary); color:var(--color-ink); padding:0.2rem 0.5rem; border-radius:var(--radius-pill); font-weight:700; font-size:0.85rem;">
+                  Match: ${m.match}%
+                </div>
+              </div>
+              <div style="margin:0.75rem 0;">
+                <span class="eyebrow">Alineación de entorno</span>
+                <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:0;">Alto soporte en estructuración de tareas, permite flexibilidad de horarios.</p>
+              </div>
+              <button class="btn btn-sm btn-primary">Ver detalles y postularme</button>
+            </div>
+          `).join('') : '<p style="color:var(--color-muted);">No hay vacantes sugeridas en este momento. Sigue desarrollando tu perfil.</p>'}
+        </div>
       </div>
-    </div>
-  `;
-}
-
-function renderMentorSection() {
-  return `
-    <div class="card">
-      <h2>Acompañamiento con mentor</h2>
-      <p>Tu mentora asignada: <strong>Carolina López (Psicóloga laboral)</strong></p>
-      <div class="chat-preview">
-        <div id="mentor-chat" class="chat-thread" style="max-height: 200px; overflow-y: auto; border:1px solid var(--color-border); padding:0.5rem; border-radius:var(--radius-md);">
-          <div class="message message-in">Hola, soy tu mentora. ¿Cómo te sientes hoy?</div>
-        </div>
-        <form id="chat-form" class="chat-form" style="margin-top:0.5rem; display:flex; gap:0.5rem;">
-          <input type="text" placeholder="Escribe un mensaje..." id="chat-input" style="flex:1">
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-      </div>
-    </div>
-  `;
-}
-
-function renderFollowUpSection() {
-  return `
-    <div class="card">
-      <h2>Seguimiento de contratación</h2>
-      <p>Registra tus avances en el proceso de inserción laboral.</p>
-      <form id="followup-form">
-        <div class="field">
-          <label>Estado actual</label>
-          <select id="followup-status">
-            <option value="buscando">Buscando oportunidades</option>
-            <option value="entrevistas">En proceso de entrevistas</option>
-            <option value="contratado">Contratado/a</option>
-            <option value="adaptacion">En periodo de adaptación</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Notas personales (dificultades, logros, sensaciones)</label>
-          <textarea id="followup-notes" rows="3" placeholder="Escribe aquí..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar seguimiento</button>
-      </form>
-      <div id="followup-history"></div>
-    </div>
+    </section>
   `;
 }
 
@@ -293,7 +291,7 @@ function attachEventListeners(user, needsOnboarding) {
       renderDashboard(user);
     });
   } else {
-    document.getElementById('edit-profile-btn')?.addEventListener('click', () => {
+    document.getElementById('btn-complete-profile')?.addEventListener('click', () => {
       isEditingProfile = true;
       renderDashboard(user);
     });
