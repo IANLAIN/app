@@ -19,40 +19,51 @@
   <!-- MODAL DE AUTENTICACIÓN (LOGIN + REGISTRO WIZARD) -->
   <div id="auth-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading" hidden>
     <div class="modal-glass" id="modal-container">
+      <div style="position:absolute; top:1.5rem; left:1.5rem; display:flex; align-items:center; gap:1rem;">
+        <div class="lang-selector">
+          <select class="lang-select modal-lang-select" onchange="document.getElementById('lang-select').value = this.value; document.getElementById('lang-select').dispatchEvent(new Event('change'));">
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+            <option value="fr">FR</option>
+            <option value="pt">PT</option>
+          </select>
+        </div>
+      </div>
       <button class="modal-close-btn" id="modal-close" aria-label="Cerrar modal">✕</button>
 
       <!-- Tabs -->
       <div class="modal-tabs" role="tablist">
-        <button class="modal-tab active" id="tab-login" data-tab="login">Iniciar Sesión</button>
-        <button class="modal-tab" id="tab-register" data-tab="register">Registrarse</button>
+        <button class="modal-tab active" id="tab-login" data-tab="login" data-i18n="tab.login">Iniciar Sesión</button>
+        <button class="modal-tab" id="tab-register" data-tab="register" data-i18n="tab.register">Registrarse</button>
       </div>
 
       <!-- PANEL LOGIN -->
       <div class="modal-panel active" id="panel-login">
         <div class="modal-header">
-          <h2 id="modal-heading">Bienvenido de vuelta</h2>
-          <p>Ingresa tus credenciales para continuar.</p>
+          <h2 id="modal-heading" data-i18n="login.welcome">Bienvenido de vuelta</h2>
+          <p data-i18n="login.desc">Ingresa tus credenciales para continuar.</p>
         </div>
 
         <button class="btn btn-google btn-full" id="google-login-btn" type="button">
           <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/></svg>
-          <span>Continuar con Google</span>
+          <span data-i18n="login.google">Continuar con Google</span>
         </button>
 
-        <div class="auth-divider">o continúa con tu correo</div>
+        <div class="auth-divider" data-i18n="login.or">o continúa con tu correo</div>
 
         <div class="demo-row">
-          <button class="btn btn-ghost btn-sm" id="demo-candidate-btn">Demo candidato</button>
-          <button class="btn btn-ghost btn-sm" id="demo-company-btn">Demo empresa</button>
+          <button class="btn btn-ghost btn-sm" id="demo-candidate-btn" data-i18n="demo.candidate">Demo candidato</button>
+          <button class="btn btn-ghost btn-sm" id="demo-company-btn" data-i18n="demo.company">Demo empresa</button>
         </div>
 
         <form id="login-form" novalidate>
           <div class="field">
-            <label for="login-email">Correo electrónico</label>
+          <div class="field">
+            <label for="login-email" data-i18n="field.email">Correo electrónico</label>
             <input type="email" id="login-email" placeholder="nombre@correo.com" required>
           </div>
           <div class="field">
-            <label for="login-password">Contraseña</label>
+            <label for="login-password" data-i18n="field.password">Contraseña</label>
             <div class="input-wrap">
               <input class="pass-input" type="password" id="login-password" placeholder="Tu contraseña" required>
               <button class="eye-btn" type="button" id="login-eye-btn" aria-label="Mostrar contraseña">
@@ -61,8 +72,8 @@
             </div>
           </div>
           <p class="ms-status" id="login-status" hidden></p>
-          <button class="btn btn-primary btn-full" type="submit">Entrar</button>
-          <p class="auth-hint">¿No tienes cuenta? <a href="#" data-switch-tab="register">Regístrate aquí</a></p>
+          <button class="btn btn-primary btn-full" type="submit" data-i18n="btn.enter">Entrar</button>
+          <p class="auth-hint"><span data-i18n="login.noaccount">¿No tienes cuenta?</span> <a href="#" data-switch-tab="register" data-i18n="login.registerHere">Regístrate aquí</a></p>
         </form>
       </div>
 
@@ -78,41 +89,51 @@
         <!-- Paso 1: Rol -->
         <div class="wizard-step active" id="wstep-1">
           <div class="modal-header">
-            <h2>¿Cómo llegas a app?</h2>
-            <p>Selecciona tu rol.</p>
+          <div class="modal-header">
+            <h2 data-i18n="reg.step1.title">¿Cómo llegas a app?</h2>
+            <p data-i18n="reg.step1.desc">Selecciona tu rol.</p>
           </div>
           <div class="role-cards">
             <button class="role-card" type="button" data-role="candidate">
-              <div><strong>Candidato / Aliado</strong></div>
+              <div><strong data-i18n="role.candidate">Candidato / Aliado</strong></div>
             </button>
             <button class="role-card" type="button" data-role="company">
-              <div><strong>Empresa / Reclutador</strong></div>
+              <div><strong data-i18n="role.company">Empresa / Reclutador</strong></div>
             </button>
           </div>
-          <button class="btn btn-primary btn-full" id="btn-to-step2" disabled>Continuar</button>
-          <p class="auth-hint">¿Ya tienes cuenta? <a href="#" data-switch-tab="login">Inicia sesión</a></p>
+          <button class="btn btn-primary btn-full" id="btn-to-step2" disabled data-i18n="btn.continue">Continuar</button>
+          <p class="auth-hint"><span data-i18n="reg.haveaccount">¿Ya tienes cuenta?</span> <a href="#" data-switch-tab="login" data-i18n="reg.loginHere">Inicia sesión</a></p>
         </div>
 
         <!-- Paso 2: Datos personales / empresa -->
         <div class="wizard-step" id="wstep-2">
           <div class="modal-header">
-            <h2>Crea tu cuenta</h2>
-            <p id="step2-subtitle">Completa tus datos para empezar.</p>
+            <h2 data-i18n="reg.step2.title">Crea tu cuenta</h2>
+            <p id="step2-subtitle" data-i18n="reg.step2.desc">Completa tus datos para empezar.</p>
           </div>
           <button class="btn btn-google btn-full" id="google-register-btn">
             <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.97 23.97 0 000 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/></svg>
-            <span id="google-reg-text">Continuar con Google</span>
+            <span id="google-reg-text" data-i18n="login.google">Continuar con Google</span>
           </button>
-          <div class="auth-divider">o completa el formulario</div>
+          <div class="auth-divider" data-i18n="reg.or">o completa el formulario</div>
           <form id="register-form">
             <div class="field">
-              <label for="reg-name">Nombre completo</label>
+              <label for="reg-name" data-i18n="reg.fullname">Nombre completo</label>
               <input type="text" id="reg-name" placeholder="Tu nombre y apellido" required>
             </div>
-            <div id="company-fields" style="display:none;">
+            <div id="company-fields" style="display:none; margin-top:1rem; margin-bottom:1rem; padding:1rem; border:1px solid var(--color-border); border-radius:var(--radius-md); background:var(--color-surface-alt);">
+              <h3 style="margin-bottom:1rem; font-size:1.1rem; color:var(--color-ink);" data-i18n="reg.comp.title">Perfil de la Organización</h3>
               <div class="field">
-                <label for="reg-company">Nombre de la empresa</label>
+                <label for="reg-company" data-i18n="reg.comp.name">Razón social o nombre de la empresa</label>
                 <input type="text" id="reg-company" placeholder="Ej. Tech Corp">
+              </div>
+              <div class="field">
+                <label for="reg-comp-skills" data-i18n="reg.comp.skills">Habilidades requeridas en su talento objetivo</label>
+                <textarea id="reg-comp-skills" rows="2" placeholder="Ej. Análisis de datos, desarrollo frontend, atención al detalle..."></textarea>
+              </div>
+              <div class="field">
+                <label for="reg-comp-highlight" data-i18n="reg.comp.highlight">Propuesta de valor e inclusión (Acomodaciones)</label>
+                <textarea id="reg-comp-highlight" rows="2" placeholder="Ej. Horarios flexibles, reducción de ruido, mentoría asíncrona..."></textarea>
               </div>
             </div>
             <div class="field">
@@ -132,8 +153,8 @@
             </div>
             <p class="ms-status" id="register-status" hidden></p>
             <div class="btn-row">
-              <button class="btn btn-outline" type="button" id="back-to-step1">Volver</button>
-              <button class="btn btn-primary" type="submit" id="register-submit">Continuar</button>
+              <button class="btn btn-outline" type="button" id="back-to-step1" data-i18n="btn.back">Volver</button>
+              <button class="btn btn-primary" type="submit" id="register-submit" data-i18n="btn.continue">Continuar</button>
             </div>
           </form>
         </div>
@@ -264,11 +285,11 @@
         <!-- Paso 4: Confirmación -->
         <div class="wizard-step" id="wstep-4">
           <div class="verification-screen">
-            <h2>¡Cuenta creada!</h2>
-            <p>Hemos enviado un enlace de confirmación a:<br><strong id="verify-email-display"></strong></p>
-            <div class="verify-tips"><p>Revisa tu carpeta de spam si no ves el correo en unos minutos.</p></div>
-            <button class="btn btn-primary btn-full" id="go-to-dashboard">Ir a mi panel</button>
-            <p class="auth-hint" style="margin-top:1rem;"><a href="#" id="resend-email">Reenviar correo</a></p>
+            <h2 data-i18n="reg.step4.title">¡Cuenta creada!</h2>
+            <p><span data-i18n="reg.step4.desc">Hemos enviado un enlace de confirmación a:</span><br><strong id="verify-email-display"></strong></p>
+            <div class="verify-tips"><p data-i18n="reg.step4.spam">Revisa tu carpeta de spam si no ves el correo en unos minutos.</p></div>
+            <button class="btn btn-primary btn-full" id="go-to-dashboard" data-i18n="btn.dashboard">Ir a mi panel</button>
+            <p class="auth-hint" style="margin-top:1rem;"><a href="#" id="resend-email" data-i18n="btn.resend">Reenviar correo</a></p>
           </div>
         </div>
       </div>
@@ -313,24 +334,24 @@
   <!-- CÓMO FUNCIONA -->
   <section class="how-section">
     <div class="how-inner">
-      <h2 class="section-heading">¿Cómo funciona?</h2>
-      <p class="section-sub">Un proceso simple, transparente y sin fricciones.</p>
+      <h2 class="section-heading" data-i18n="how.title">¿Cómo funciona?</h2>
+      <p class="section-sub" data-i18n="how.desc">Un proceso simple, transparente y sin fricciones.</p>
       <div class="steps-row">
-        <div class="step-item"><div class="step-number">1</div><h3>Crea tu perfil</h3><p>Completa el registro y caracteriza tu perfil de entorno con los 4 ejes de adaptación.</p></div>
-        <div class="step-item"><div class="step-number">2</div><h3>Recibe tu match</h3><p>El sistema empareja tu perfil con vacantes o candidatos ajustados al entorno requerido.</p></div>
-        <div class="step-item"><div class="step-number">3</div><h3>Inicia tu transición</h3><p>Accede a mentores, seguimiento personalizado y ajustes razonables desde el primer día.</p></div>
+        <div class="step-item"><div class="step-number">1</div><h3 data-i18n="how.step1.title">Crea tu perfil</h3><p data-i18n="how.step1.desc">Completa el registro y caracteriza tu perfil de entorno con los 4 ejes de adaptación.</p></div>
+        <div class="step-item"><div class="step-number">2</div><h3 data-i18n="how.step2.title">Recibe tu match</h3><p data-i18n="how.step2.desc">El sistema empareja tu perfil con vacantes o candidatos ajustados al entorno requerido.</p></div>
+        <div class="step-item"><div class="step-number">3</div><h3 data-i18n="how.step3.title">Inicia tu transición</h3><p data-i18n="how.step3.desc">Accede a mentores, seguimiento personalizado y ajustes razonables desde el primer día.</p></div>
       </div>
     </div>
   </section>
 
   <footer class="site-footer-main">
     <div class="footer-inner">
-      <div class="footer-brand"><span class="brand-mark">app</span><p>Transición laboral adaptativa, centrada en capacidades y entornos.</p></div>
-      <div class="footer-links-col"><h4>Plataforma</h4><a href="#info">Nosotros</a></div>
-      <div class="footer-links-col"><h4>Acceso</h4><a href="#" data-open-modal="login">Iniciar sesión</a><a href="#" data-open-modal="register">Registrarse</a><a href="pages/dashboard-candidate.html">Demo candidato</a><a href="pages/dashboard-company.html">Demo empresa</a></div>
-      <div class="footer-badge"><svg width="20" height="20" viewBox="0 0 23 23"><path d="M0 0H11V11H0V0Z" fill="#F25022"/><path d="M12 0H23V11H12V0Z" fill="#7FBA00"/><path d="M0 12H11V23H0V12Z" fill="#00A4EF"/><path d="M12 12H23V23H12V12Z" fill="#FFB900"/></svg><span>Supported by Microsoft</span></div>
+      <div class="footer-brand"><span class="brand-mark">app</span><p data-i18n="footer.desc">Transición laboral adaptativa, centrada en capacidades y entornos.</p></div>
+      <div class="footer-links-col"><h4 data-i18n="footer.col1">Plataforma</h4><a href="#info" data-i18n="footer.link.about">Nosotros</a></div>
+      <div class="footer-links-col"><h4 data-i18n="footer.col2">Acceso</h4><a href="#" data-open-modal="login" data-i18n="login">Iniciar sesión</a><a href="#" data-open-modal="register" data-i18n="register">Registrarse</a><a href="pages/dashboard-candidate.html" data-i18n="demo.candidate">Demo candidato</a><a href="pages/dashboard-company.html" data-i18n="demo.company">Demo empresa</a></div>
+      <div class="footer-badge"><svg width="20" height="20" viewBox="0 0 23 23"><path d="M0 0H11V11H0V0Z" fill="#F25022"/><path d="M12 0H23V11H12V0Z" fill="#7FBA00"/><path d="M0 12H11V23H0V12Z" fill="#00A4EF"/><path d="M12 12H23V23H12V12Z" fill="#FFB900"/></svg><span data-i18n="footer.badge">Supported by Microsoft</span></div>
     </div>
-    <div class="footer-copy">© 2026 app · Todos los derechos reservados</div>
+    <div class="footer-copy"><span data-i18n="footer.copy">© 2026 app · Todos los derechos reservados</span></div>
   </footer>
 
   <script type="module" src="js/index-app.js"></script>

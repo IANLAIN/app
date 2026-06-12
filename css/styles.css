@@ -1101,8 +1101,11 @@ body.hide-images img { opacity: 0 !important; }
     padding: 1.5rem;
   }
   .footer-inner { grid-template-columns: 1fr; }
-  .header-actions .btn-outline { display: none; }
   .demo-row { flex-direction: column; }
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { flex: 1; }
+  .modal-glass { max-height: 98vh; padding: 3rem 1.25rem 1.25rem 1.25rem; }
+  .modal-close-btn { top: 0.5rem; right: 0.5rem; }
   .btn-row { flex-direction: column; }
   .btn-row .btn { flex: 1; }
   .modal-glass { max-height: 98vh; padding: 1.25rem; }

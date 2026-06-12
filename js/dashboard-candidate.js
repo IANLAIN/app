@@ -1,10 +1,12 @@
 import { getCurrentUser, logout, updateUserProfile, getMatchesForCandidate } from './auth.js';
 import { initTheme } from './theme.js';
 import { initSimulator } from './simulator.js';
+import { initI18n, applyTranslations } from './i18n.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   initTheme();
   initSimulator();
+  initI18n();
 
   const user = getCurrentUser();
   if (!user || user.role !== 'candidate') {
@@ -31,12 +33,12 @@ function renderDashboard(user) {
   let html = `
     <div class="dashboard-hero card">
       <div>
-        <p class="eyebrow">Bienvenido, ${user.name}</p>
-        <h1>Tu ruta de inserción laboral</h1>
-        <p>Aquí encontrarás herramientas de acompañamiento, match y seguimiento.</p>
+        <p class="eyebrow" data-i18n="dash.cand.welcome">Bienvenido,</p> <p class="eyebrow">${user.name}</p>
+        <h1 data-i18n="dash.cand.hero.title">Tu ruta de inserción laboral</h1>
+        <p data-i18n="dash.cand.hero.desc">Aquí encontrarás herramientas de acompañamiento, match y seguimiento.</p>
       </div>
       <div class="hero-actions">
-        ${!needsOnboarding ? '<button class="btn btn-outline" id="edit-profile-btn">Editar perfil</button>' : ''}
+        ${!needsOnboarding ? '<button class="btn btn-outline" id="edit-profile-btn" data-i18n="dash.cand.btn.editProfile">Editar perfil</button>' : ''}
       </div>
     </div>
   `;
@@ -53,6 +55,7 @@ function renderDashboard(user) {
   }
 
   container.innerHTML = html;
+  applyTranslations();
   attachEventListeners(user, needsOnboarding);
 }
 
@@ -63,68 +66,68 @@ function renderOnboardingForm(user) {
 
   return `
     <div class="card" id="onboarding-card">
-      <h2>${profile.completedOnboarding ? 'Edita tu perfil' : 'Completa tu perfil'}</h2>
-      <p>Actualiza tus preferencias para personalizar tu experiencia.</p>
+      <h2>${profile.completedOnboarding ? '<span data-i18n="dash.cand.onb.editTitle">Edita tu perfil</span>' : '<span data-i18n="dash.cand.onb.title">Completa tu perfil</span>'}</h2>
+      <p data-i18n="dash.cand.onb.desc">Actualiza tus preferencias para personalizar tu experiencia.</p>
       <form id="onboarding-form">
         <div class="profile-edit-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
           <div class="field">
-            <label>Foto de perfil</label>
+            <label data-i18n="dash.cand.onb.photo">Foto de perfil</label>
             <input type="file" id="profile-avatar" accept="image/*">
-            <div style="font-size:0.8rem; color:var(--color-muted); margin-top:4px;">Elige una imagen para identificarte (máx 2MB)</div>
+            <div style="font-size:0.8rem; color:var(--color-muted); margin-top:4px;" data-i18n="dash.cand.onb.photoHint">Elige una imagen para identificarte (máx 2MB)</div>
           </div>
           <div class="field">
-            <label>Nombre completo</label>
+            <label data-i18n="dash.cand.onb.name">Nombre completo</label>
             <input type="text" id="profile-name" value="${user.name || ''}" required>
           </div>
           <div class="field" style="grid-column: 1 / -1;">
-            <label>Acerca de mí (Biografía)</label>
-            <textarea id="profile-bio" rows="3" placeholder="Cuéntanos un poco sobre ti...">${profile.bio || ''}</textarea>
+            <label data-i18n="dash.cand.onb.bio">Acerca de mí (Biografía)</label>
+            <textarea id="profile-bio" rows="3" placeholder="...">${profile.bio || ''}</textarea>
           </div>
           <div class="field">
-            <label>¿Cómo te describes?</label>
+            <label data-i18n="dash.cand.onb.neurotype">¿Cómo te describes?</label>
             <select id="neurotype" required>
-              <option value="">Selecciona...</option>
-              <option value="autismo" ${isSelected(profile.neurotype, 'autismo')}>Autismo</option>
-              <option value="tdah" ${isSelected(profile.neurotype, 'tdah')}>TDAH</option>
-              <option value="down" ${isSelected(profile.neurotype, 'down')}>Síndrome de Down</option>
-              <option value="otro" ${isSelected(profile.neurotype, 'otro')}>Otro</option>
+              <option value="" data-i18n="dash.cand.onb.select">Selecciona...</option>
+              <option value="autismo" ${isSelected(profile.neurotype, 'autismo')} data-i18n="dash.cand.onb.autism">Autismo</option>
+              <option value="tdah" ${isSelected(profile.neurotype, 'tdah')} data-i18n="dash.cand.onb.adhd">TDAH</option>
+              <option value="down" ${isSelected(profile.neurotype, 'down')} data-i18n="dash.cand.onb.down">Síndrome de Down</option>
+              <option value="otro" ${isSelected(profile.neurotype, 'otro')} data-i18n="dash.cand.onb.other">Otro</option>
             </select>
           </div>
           <div class="field">
-            <label>Preferencia de trabajo</label>
+            <label data-i18n="dash.cand.onb.workPref">Preferencia de trabajo</label>
             <select name="workPreference">
-              <option value="remoto" ${isSelected(profile.workPreference, 'remoto')}>Remoto</option>
-              <option value="presencial" ${isSelected(profile.workPreference, 'presencial')}>Presencial</option>
-              <option value="hibrido" ${isSelected(profile.workPreference, 'hibrido')}>Híbrido</option>
+              <option value="remoto" ${isSelected(profile.workPreference, 'remoto')} data-i18n="dash.cand.onb.remote">Remoto</option>
+              <option value="presencial" ${isSelected(profile.workPreference, 'presencial')} data-i18n="dash.cand.onb.onsite">Presencial</option>
+              <option value="hibrido" ${isSelected(profile.workPreference, 'hibrido')} data-i18n="dash.cand.onb.hybrid">Híbrido</option>
             </select>
           </div>
           <div class="field">
-            <label>Ambiente ideal</label>
+            <label data-i18n="dash.cand.onb.env">Ambiente ideal</label>
             <select name="environment">
-              <option value="silencioso" ${isSelected(profile.environment, 'silencioso')}>Silencioso</option>
-              <option value="musica" ${isSelected(profile.environment, 'musica')}>Con música de fondo</option>
-              <option value="equipo" ${isSelected(profile.environment, 'equipo')}>En equipo</option>
-              <option value="solo" ${isSelected(profile.environment, 'solo')}>Trabajo individual</option>
+              <option value="silencioso" ${isSelected(profile.environment, 'silencioso')} data-i18n="dash.cand.onb.silent">Silencioso</option>
+              <option value="musica" ${isSelected(profile.environment, 'musica')} data-i18n="dash.cand.onb.music">Con música de fondo</option>
+              <option value="equipo" ${isSelected(profile.environment, 'equipo')} data-i18n="dash.cand.onb.team">En equipo</option>
+              <option value="solo" ${isSelected(profile.environment, 'solo')} data-i18n="dash.cand.onb.solo">Trabajo individual</option>
             </select>
           </div>
         </div>
         
         <div class="field" style="margin-top: 1.5rem;">
-          <label>Áreas de interés laboral (puedes elegir varias)</label>
+          <label data-i18n="dash.cand.onb.interests">Áreas de interés laboral (puedes elegir varias)</label>
           <div class="options-grid">
             ${['tecnologia', 'arte', 'logistica', 'ambiente', 'atencion', 'manufactura'].map(i => `<label><input type="checkbox" name="interests" value="${i}" ${isChecked(profile.interests, i)}> ${i}</label>`).join('')}
           </div>
         </div>
         <div class="field">
-          <label>Habilidades destacadas</label>
+          <label data-i18n="dash.cand.onb.skills">Habilidades destacadas</label>
           <div class="options-grid">
             ${['computadores', 'datos', 'dibujo', 'comunicacion', 'orden', 'detalle'].map(s => `<label><input type="checkbox" name="skills" value="${s}" ${isChecked(profile.skills, s)}> ${s}</label>`).join('')}
           </div>
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 15px;">
-          ${profile.completedOnboarding ? '<button type="button" class="btn btn-outline" id="cancel-edit-btn">Cancelar</button>' : ''}
-          <button type="submit" class="btn btn-primary">Guardar perfil</button>
+          ${profile.completedOnboarding ? '<button type="button" class="btn btn-outline" id="cancel-edit-btn" data-i18n="btn.cancel">Cancelar</button>' : ''}
+          <button type="submit" class="btn btn-primary" data-i18n="btn.saveProfile">Guardar perfil</button>
         </div>
       </form>
     </div>
@@ -135,20 +138,20 @@ function renderPrepareZone(user) {
   const profile = user.profile || {};
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">PREPARAR · Desarrollo y Confianza</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.cand.prep.title">PREPARAR · Desarrollo y Confianza</h2>
       <div class="card">
          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
            <div>
-             <h3 style="color:var(--color-ink);">Estado de tu perfil</h3>
-             <p style="color:var(--color-muted);">Tu perfil de habilidades y entorno está ${profile.completedOnboarding ? '100%' : '50%'} completo.</p>
+             <h3 style="color:var(--color-ink);" data-i18n="dash.cand.prep.status">Estado de tu perfil</h3>
+             <p style="color:var(--color-muted);"><span data-i18n="dash.cand.prep.statusDesc">Tu perfil de habilidades y entorno está</span> ${profile.completedOnboarding ? '100%' : '50%'} <span data-i18n="dash.cand.prep.statusDesc2">completo.</span></p>
            </div>
-           <button class="btn btn-primary" id="btn-complete-profile">Actualizar perfil detallado</button>
+           <button class="btn btn-primary" id="btn-complete-profile" data-i18n="dash.cand.btn.updateProfile">Actualizar perfil detallado</button>
          </div>
          <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--color-border);">
-            <h4 style="color:var(--color-ink); margin-bottom:0.5rem;">Sugerencias de desarrollo</h4>
+            <h4 style="color:var(--color-ink); margin-bottom:0.5rem;" data-i18n="dash.cand.prep.sugg">Sugerencias de desarrollo</h4>
             <ul style="padding-left:1.2rem; color:var(--color-muted); font-size:0.9rem;">
-              <li style="margin-bottom:0.5rem;">Micro-curso: Comunicación efectiva en el trabajo (3 min)</li>
-              <li>Reto: Organiza tu espacio digital para mayor concentración</li>
+              <li style="margin-bottom:0.5rem;" data-i18n="dash.cand.prep.sugg1">Micro-curso: Comunicación efectiva en el trabajo (3 min)</li>
+              <li data-i18n="dash.cand.prep.sugg2">Reto: Organiza tu espacio digital para mayor concentración</li>
             </ul>
          </div>
       </div>
@@ -164,16 +167,16 @@ function renderAdaptZone(user) {
 
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">ADAPTAR · Tu Entorno Digital</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.cand.adapt.title">ADAPTAR · Tu Entorno Digital</h2>
       <div class="card">
-        <h3 style="color:var(--color-ink); margin-bottom:0.5rem;">Preferencias visuales activas</h3>
-        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1rem;">Tu entorno en Incluyo está configurado de la siguiente manera para adaptarse a tus necesidades sensoriales y de lectura.</p>
+        <h3 style="color:var(--color-ink); margin-bottom:0.5rem;" data-i18n="dash.cand.adapt.activePrefs">Preferencias visuales activas</h3>
+        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1rem;" data-i18n="dash.cand.adapt.activeDesc">Tu entorno en Incluyo está configurado de la siguiente manera para adaptarse a tus necesidades sensoriales y de lectura.</p>
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
-           <span class="chip chip-soft">Tema: ${theme}</span>
-           <span class="chip chip-soft">Fuente: ${font}</span>
-           <span class="chip chip-soft">Paleta: ${paletteName}</span>
+           <span class="chip chip-soft"><span data-i18n="dash.cand.adapt.theme">Tema:</span> ${theme}</span>
+           <span class="chip chip-soft"><span data-i18n="dash.cand.adapt.font">Fuente:</span> ${font}</span>
+           <span class="chip chip-soft"><span data-i18n="dash.cand.adapt.palette">Paleta:</span> ${paletteName}</span>
         </div>
-        <button class="btn btn-outline" id="btn-adjust-prefs" onclick="document.getElementById('theme-toggle').click()">Alternar contraste rápido</button>
+        <button class="btn btn-outline" id="btn-adjust-prefs" onclick="document.getElementById('theme-toggle').click()" data-i18n="dash.cand.btn.adjustPrefs">Alternar contraste rápido</button>
       </div>
     </section>
   `;
@@ -182,18 +185,18 @@ function renderAdaptZone(user) {
 function renderAccompanyZone(user) {
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">ACOMPAÑAR · Tu Mentoría</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.cand.acc.title">ACOMPAÑAR · Tu Mentoría</h2>
       <div class="card" style="display:flex; flex-direction:column; gap:1rem;">
         <div>
-          <h3 style="color:var(--color-ink); margin-bottom:0.25rem;">Tu Mentor Asignado</h3>
-          <p style="color:var(--color-ink); margin-bottom:0;"><strong>Carolina López</strong> · Especialista en bienestar y productividad.</p>
-          <p style="color:var(--color-muted); font-size:0.85rem; margin-bottom:0;">Última sesión: hace 2 días</p>
+          <h3 style="color:var(--color-ink); margin-bottom:0.25rem;" data-i18n="dash.cand.acc.mentor">Tu Mentor Asignado</h3>
+          <p style="color:var(--color-ink); margin-bottom:0;"><strong>Carolina López</strong> · <span data-i18n="dash.cand.acc.mentorRole">Especialista en bienestar y productividad.</span></p>
+          <p style="color:var(--color-muted); font-size:0.85rem; margin-bottom:0;" data-i18n="dash.cand.acc.lastSession">Última sesión: hace 2 días</p>
         </div>
         <div style="background:var(--bg-primary); border:1px solid var(--color-border); border-radius:var(--radius-md); padding:1rem;">
-          <p style="font-size:0.9rem; color:var(--color-muted); margin-bottom:0; font-style:italic;">"Recuerda que puedes pedir pausas cortas cuando lo necesites. Aquí estoy para guiarte."</p>
+          <p style="font-size:0.9rem; color:var(--color-muted); margin-bottom:0; font-style:italic;" data-i18n="dash.cand.acc.quote">"Recuerda que puedes pedir pausas cortas cuando lo necesites. Aquí estoy para guiarte."</p>
         </div>
         <div>
-          <a href="mentoring.html" class="btn btn-primary">Ir al Centro de Mentoría</a>
+          <a href="mentoring.html" class="btn btn-primary" data-i18n="dash.cand.btn.mentorCenter">Ir al Centro de Mentoría</a>
         </div>
       </div>
     </section>
@@ -204,28 +207,28 @@ function renderConnectZone(user) {
   const matches = getMatchesForCandidate(user.id);
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">CONECTAR · Oportunidades Sugeridas</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.cand.conn.title">CONECTAR · Oportunidades Sugeridas</h2>
       <div class="card">
-        <p style="color:var(--color-muted); margin-bottom:1.5rem;">El sistema ha encontrado oportunidades laborales con entornos ajustados a tus características.</p>
+        <p style="color:var(--color-muted); margin-bottom:1.5rem;" data-i18n="dash.cand.conn.desc">El sistema ha encontrado oportunidades laborales con entornos ajustados a tus características.</p>
         <div class="match-list" style="display:grid; gap:1rem;">
           ${matches.length ? matches.map(m => `
             <div class="match-card" style="border:1px solid var(--color-border); padding:1.25rem; border-radius:var(--radius-md); background:var(--bg-primary);">
               <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <div>
                   <h3 style="margin-bottom:0.25rem; color:var(--color-ink);">${m.title}</h3>
-                  <p style="margin-bottom:0.5rem; color:var(--color-muted); font-size:0.9rem;">Empresa: <strong>${m.company}</strong></p>
+                  <p style="margin-bottom:0.5rem; color:var(--color-muted); font-size:0.9rem;"><span data-i18n="dash.cand.conn.company">Empresa:</span> <strong>${m.company}</strong></p>
                 </div>
                 <div style="background:var(--color-primary); color:var(--color-ink); padding:0.2rem 0.5rem; border-radius:var(--radius-pill); font-weight:700; font-size:0.85rem;">
                   Match: ${m.match}%
                 </div>
               </div>
               <div style="margin:0.75rem 0;">
-                <span class="eyebrow">Alineación de entorno</span>
-                <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:0;">Alto soporte en estructuración de tareas, permite flexibilidad de horarios.</p>
+                <span class="eyebrow" data-i18n="dash.cand.conn.align">Alineación de entorno</span>
+                <p style="font-size:0.85rem; color:var(--color-muted); margin-bottom:0;" data-i18n="dash.cand.conn.alignDesc">Alto soporte en estructuración de tareas, permite flexibilidad de horarios.</p>
               </div>
-              <button class="btn btn-sm btn-primary">Ver detalles y postularme</button>
+              <button class="btn btn-sm btn-primary" data-i18n="dash.cand.btn.apply">Ver detalles y postularme</button>
             </div>
-          `).join('') : '<p style="color:var(--color-muted);">No hay vacantes sugeridas en este momento. Sigue desarrollando tu perfil.</p>'}
+          `).join('') : '<p style="color:var(--color-muted);" data-i18n="dash.cand.conn.empty">No hay vacantes sugeridas en este momento. Sigue desarrollando tu perfil.</p>'}
         </div>
       </div>
     </section>

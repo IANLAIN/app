@@ -1,10 +1,12 @@
 import { getCurrentUser, logout, updateUserProfile, getMatchesForCompany } from './auth.js';
 import { initTheme } from './theme.js';
 import { initSimulator } from './simulator.js';
+import { initI18n, applyTranslations } from './i18n.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initSimulator();
+  initI18n();
 
   const user = getCurrentUser();
   if (!user || user.role !== 'company') {
@@ -24,13 +26,13 @@ function renderDashboard(user) {
   let html = `
     <div class="dashboard-hero card" style="margin-bottom:2.5rem;">
       <div>
-        <p class="eyebrow">Gestión de Talento Inclusivo</p>
-        <h1>Hola, ${user.name}</h1>
-        <p>Encuentra candidatos neurodivergentes, genera guías de adaptación y mide tu impacto ESG.</p>
+        <p class="eyebrow" data-i18n="dash.comp.eyebrow">Gestión de Talento Inclusivo</p>
+        <h1 data-i18n="dash.comp.hero.title">Hola, ${user.name}</h1>
+        <p data-i18n="dash.comp.hero.desc">Encuentra candidatos neurodivergentes, genera guías de adaptación y mide tu impacto ESG.</p>
       </div>
       <div class="hero-actions">
-        <button class="btn btn-outline" id="edit-company-btn">Actualizar perfil de empresa</button>
-        <button class="btn btn-primary" id="new-vacancy-btn">Publicar nueva vacante</button>
+        <button class="btn btn-outline" id="edit-company-btn" data-i18n="dash.comp.btn.editProfile">Actualizar perfil de empresa</button>
+        <button class="btn btn-primary" id="new-vacancy-btn" data-i18n="dash.comp.btn.newVacancy">Publicar nueva vacante</button>
       </div>
     </div>
     
@@ -43,6 +45,7 @@ function renderDashboard(user) {
   `;
 
   container.innerHTML = html;
+  applyTranslations();
 
   // Inicializar gráficos
   import('../js/ai-sim.js').then(({ renderCharts }) => renderCharts(container));
@@ -53,17 +56,17 @@ function renderPrepareZone(user) {
   const profile = user.profile || {};
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">PREPARAR · Perfil de Empresa Inclusiva</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.comp.prep.title">PREPARAR · Perfil de Empresa Inclusiva</h2>
       <div class="card">
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;">
           <div>
-            <h3 style="color:var(--color-ink); margin-bottom:0.5rem; font-size:1rem;">Sector y Filosofía</h3>
-            <p style="margin-bottom:0.25rem;"><strong>Sector:</strong> <span style="color:var(--color-muted);">${profile.industry || 'Tecnología y Software'}</span></p>
-            <p style="margin-bottom:0.25rem;"><strong>Filosofía:</strong> <span style="color:var(--color-muted);">${profile.philosophy || 'Promovemos equipos diversos para mayor innovación'}</span></p>
-            <p style="margin-bottom:0;"><strong>Entorno laboral:</strong> <span style="color:var(--color-muted);">${profile.workEnvironment || 'Híbrido, oficinas silenciosas'}</span></p>
+            <h3 style="color:var(--color-ink); margin-bottom:0.5rem; font-size:1rem;" data-i18n="dash.comp.prep.sectorTitle">Sector y Filosofía</h3>
+            <p style="margin-bottom:0.25rem;"><strong data-i18n="dash.comp.prep.sector">Sector:</strong> <span style="color:var(--color-muted);">${profile.industry || 'Tecnología y Software'}</span></p>
+            <p style="margin-bottom:0.25rem;"><strong data-i18n="dash.comp.prep.philosophy">Filosofía:</strong> <span style="color:var(--color-muted);">${profile.philosophy || 'Promovemos equipos diversos para mayor innovación'}</span></p>
+            <p style="margin-bottom:0;"><strong data-i18n="dash.comp.prep.env">Entorno laboral:</strong> <span style="color:var(--color-muted);">${profile.workEnvironment || 'Híbrido, oficinas silenciosas'}</span></p>
           </div>
           <div>
-            <h3 style="color:var(--color-ink); margin-bottom:0.5rem; font-size:1rem;">Ajustes Razonables Disponibles</h3>
+            <h3 style="color:var(--color-ink); margin-bottom:0.5rem; font-size:1rem;" data-i18n="dash.comp.prep.accTitle">Ajustes Razonables Disponibles</h3>
             <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
               ${(profile.accommodations || ['Flexibilidad horaria', 'Auriculares con cancelación', 'Mentoría 1:1']).map(a => `<span class="chip chip-soft">${a}</span>`).join('')}
             </div>
@@ -77,19 +80,19 @@ function renderPrepareZone(user) {
 function renderAdaptZone(user) {
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">ADAPTAR · GenAI para Inclusión</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.comp.adapt.title">ADAPTAR · GenAI para Inclusión</h2>
       <div class="card">
-        <h3 style="color:var(--color-ink); margin-bottom:0.5rem;">Generador de Guías de Adaptación</h3>
-        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1rem;">Ingresa un rol y el contexto del puesto para generar una guía estructurada con IA sobre cómo adaptar el entorno para candidatos neurodivergentes.</p>
+        <h3 style="color:var(--color-ink); margin-bottom:0.5rem;" data-i18n="dash.comp.adapt.guideTitle">Generador de Guías de Adaptación</h3>
+        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1rem;" data-i18n="dash.comp.adapt.guideDesc">Ingresa un rol y el contexto del puesto para generar una guía estructurada con IA sobre cómo adaptar el entorno para candidatos neurodivergentes.</p>
         <div class="field" style="margin-bottom:1rem;">
-          <label>Rol a adaptar</label>
-          <input type="text" id="role-guide" placeholder="Ej. Desarrollador Frontend Semi-Senior">
+          <label data-i18n="dash.comp.adapt.roleLabel">Rol a adaptar</label>
+          <input type="text" id="role-guide" placeholder="...">
         </div>
         <div class="field" style="margin-bottom:1rem;">
-          <label>Contexto o limitaciones del puesto</label>
-          <textarea id="context-guide" rows="2" placeholder="Ej. Equipo ágil, reuniones diarias (dailies), open-space">Entorno dinámico, reuniones frecuentes (Agile)</textarea>
+          <label data-i18n="dash.comp.adapt.contextLabel">Contexto o limitaciones del puesto</label>
+          <textarea id="context-guide" rows="2" placeholder="...">Entorno dinámico, reuniones frecuentes (Agile)</textarea>
         </div>
-        <button class="btn btn-outline" id="generate-guide-btn">Generar sugerencias de IA</button>
+        <button class="btn btn-outline" id="generate-guide-btn" data-i18n="dash.comp.btn.generateGuide">Generar sugerencias de IA</button>
         <div id="guide-output" class="guide-output" style="margin-top:1.5rem;"></div>
       </div>
     </section>
@@ -99,20 +102,20 @@ function renderAdaptZone(user) {
 function renderAccompanyZone(user) {
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">ACOMPAÑAR · Impacto y Seguimiento ESG</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.comp.acc.title">ACOMPAÑAR · Impacto y Seguimiento ESG</h2>
       <div class="card">
-        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1.5rem;">Mide el impacto de tus políticas de inclusión. Estos datos te ayudan a cumplir con estándares ESG (Environmental, Social, and Governance).</p>
+        <p style="color:var(--color-muted); font-size:0.9rem; margin-bottom:1.5rem;" data-i18n="dash.comp.acc.desc">Mide el impacto de tus políticas de inclusión. Estos datos te ayudan a cumplir con estándares ESG (Environmental, Social, and Governance).</p>
         <div class="grid grid-3">
           <div style="background:var(--bg-primary); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--color-border);">
-            <strong style="display:block; margin-bottom:0.5rem;">Retención del Talento</strong>
+            <strong style="display:block; margin-bottom:0.5rem;" data-i18n="dash.comp.acc.retention">Retención del Talento</strong>
             <div class="chart" data-chart data-values="72,84,91" data-labels="Q1,Q2,Q3"></div>
           </div>
           <div style="background:var(--bg-primary); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--color-border);">
-            <strong style="display:block; margin-bottom:0.5rem;">Índice de Bienestar</strong>
+            <strong style="display:block; margin-bottom:0.5rem;" data-i18n="dash.comp.acc.wellness">Índice de Bienestar</strong>
             <div class="chart" data-chart data-values="68,74,82" data-labels="Q1,Q2,Q3"></div>
           </div>
           <div style="background:var(--bg-primary); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--color-border);">
-            <strong style="display:block; margin-bottom:0.5rem;">Horas de Capacitación</strong>
+            <strong style="display:block; margin-bottom:0.5rem;" data-i18n="dash.comp.acc.training">Horas de Capacitación</strong>
             <div class="chart" data-chart data-values="55,69,88" data-labels="Q1,Q2,Q3"></div>
           </div>
         </div>
@@ -125,9 +128,9 @@ function renderConnectZone(user) {
   const matches = getMatchesForCompany(user.id);
   return `
     <section class="pillar-zone">
-      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);">CONECTAR · Talento Sugerido</h2>
+      <h2 style="font-size:1.4rem; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; margin-bottom:1rem; color:var(--color-ink);" data-i18n="dash.comp.conn.title">CONECTAR · Talento Sugerido</h2>
       <div class="card">
-        <p style="color:var(--color-muted); margin-bottom:1.5rem;">El sistema ha encontrado candidatos cuyo perfil de entorno hace "match" perfecto con las características de tu empresa.</p>
+        <p style="color:var(--color-muted); margin-bottom:1.5rem;" data-i18n="dash.comp.conn.desc">El sistema ha encontrado candidatos cuyo perfil de entorno hace "match" perfecto con las características de tu empresa.</p>
         <div class="match-list" style="display:grid; gap:1rem;">
           ${matches.length ? matches.map(c => `
             <div class="match-card" style="border:1px solid var(--color-border); padding:1.25rem; border-radius:var(--radius-md); background:var(--bg-primary);">
@@ -137,11 +140,11 @@ function renderConnectZone(user) {
                   Match: ${c.match}%
                 </div>
               </div>
-              <p style="margin-bottom:0.25rem;"><strong>Neurotipo:</strong> <span style="text-transform:capitalize;">${c.profile?.neurotype || 'Autismo'}</span></p>
-              <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--color-muted);"><strong>Habilidades:</strong> ${(c.profile?.skills || ['Desarrollo Web', 'Atención al detalle']).join(', ')}</p>
-              <button class="btn btn-sm btn-primary" data-candidate-id="${c.id}">Contactar vía Mentor Intermediario</button>
+              <p style="margin-bottom:0.25rem;"><strong data-i18n="dash.comp.conn.neurotype">Neurotipo:</strong> <span style="text-transform:capitalize;">${c.profile?.neurotype || 'Autismo'}</span></p>
+              <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--color-muted);"><strong data-i18n="dash.comp.conn.skills">Habilidades:</strong> ${(c.profile?.skills || ['Desarrollo Web', 'Atención al detalle']).join(', ')}</p>
+              <button class="btn btn-sm btn-primary" data-candidate-id="${c.id}" data-i18n="dash.comp.btn.contact">Contactar vía Mentor Intermediario</button>
             </div>
-          `).join('') : '<p style="color:var(--color-muted);">Actualmente no hay nuevos candidatos sugeridos.</p>'}
+          `).join('') : '<p style="color:var(--color-muted);" data-i18n="dash.comp.conn.empty">Actualmente no hay nuevos candidatos sugeridos.</p>'}
         </div>
       </div>
     </section>

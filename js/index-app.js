@@ -190,6 +190,8 @@ function initModalAndWizard() {
       localStorage.setItem('reg_temp_role', selectedRole);
       if (selectedRole === 'company') {
         localStorage.setItem('reg_temp_company', document.getElementById('reg-company').value.trim());
+        localStorage.setItem('reg_temp_comp_skills', document.getElementById('reg-comp-skills').value.trim() || '');
+        localStorage.setItem('reg_temp_comp_highlight', document.getElementById('reg-comp-highlight').value.trim() || '');
       }
 
       if (selectedRole === 'candidate') {
@@ -220,17 +222,24 @@ function initModalAndWizard() {
       const password = localStorage.getItem('reg_temp_password');
       const role = localStorage.getItem('reg_temp_role');
       const companyName = localStorage.getItem('reg_temp_company');
+      const compSkills = localStorage.getItem('reg_temp_comp_skills');
+      const compHighlight = localStorage.getItem('reg_temp_comp_highlight');
 
       try {
         let additional = {};
         let finalName = name;
         if (role === 'company') {
-          additional = { contactName: name, industry: '' };
+          additional = { 
+            contactName: name, 
+            industry: '',
+            requiredSkills: compSkills,
+            accommodations: compHighlight ? [compHighlight] : []
+          };
           finalName = companyName || name;
         }
         const newUser = registerUser(email, password, finalName, role, additional);
         // Limpiar temporales
-        ['reg_temp_name', 'reg_temp_email', 'reg_temp_password', 'reg_temp_role', 'reg_temp_company'].forEach(k => localStorage.removeItem(k));
+        ['reg_temp_name', 'reg_temp_email', 'reg_temp_password', 'reg_temp_role', 'reg_temp_company', 'reg_temp_comp_skills', 'reg_temp_comp_highlight'].forEach(k => localStorage.removeItem(k));
         // Redirigir al dashboard correspondiente
         if (newUser.role === 'candidate') window.location.href = 'pages/dashboard-candidate.html';
         else window.location.href = 'pages/dashboard-company.html';
